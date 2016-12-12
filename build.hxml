@@ -1,0 +1,5 @@
+-cp Source 
+-cp Tests
+-lib minject tink_core ash
+-main nanogarch.Main 
+--interp 
