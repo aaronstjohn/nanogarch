@@ -10,8 +10,7 @@ import Type;
 class PositionSystem extends ListIteratingSystem<PositionNode>
 {
 	@inject("MainGrid") public var grid:Grid;
-	// private var _grid:Grid;
-
+    
 	public function new()
     {
         super(PositionNode, null, nodeAdded, nodeRemoved);

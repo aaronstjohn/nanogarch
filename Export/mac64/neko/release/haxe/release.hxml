@@ -5,6 +5,10 @@
 --macro lime.Lib.extraParams()
 -cp /usr/local/lib/haxe/lib/lime/3,5,0
 -D lime=3.5.0
+-cp /usr/local/lib/haxe/lib/ash/git/src
+-D ash=1.5.4
+-cp /usr/local/lib/haxe/lib/minject/git/src/lib
+-D minject=2.0.0-rc.1
 -cp Source
 -D lime-openal
 -D tools=3.5.0

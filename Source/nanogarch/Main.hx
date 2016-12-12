@@ -8,6 +8,7 @@ class Main {
 
   	var injector:Injector = Nanogarch.configure();
   	var game:Nanogarch = injector.getInstance(Nanogarch);
+  	// injector.map()
   	game.initialize();
 
   }

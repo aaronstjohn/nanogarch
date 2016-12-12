@@ -26,7 +26,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "2",
+			build: "1",
 			company: "Company Name",
 			file: "Nanogarch",
 			fps: 30,
