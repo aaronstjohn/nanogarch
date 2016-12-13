@@ -14,11 +14,10 @@ class Main extends Sprite {
 	public function new () {
 		
 		super ();
-		var injector:Injector = Nanogarch.configure();
+		var injector:Injector = Nanogarch.configure(this);
 	  	var game:Nanogarch = injector.getInstance(Nanogarch);
-	  	injector.map(DisplayObjectContainer,"GameDisplayObject").toValue(this);
+	  	
 	  	game.initialize();
-		trace("Hello");
 		
 	}
 	

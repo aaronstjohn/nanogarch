@@ -7,6 +7,8 @@ import nanogarch.systems.RenderSystem;
 import nanogarch.systems.SystemPriorities;
 import minject.Injector;
 import hex.*;
+import openfl.display.DisplayObjectContainer;
+
 class Nanogarch
 {
 	
@@ -23,7 +25,7 @@ class Nanogarch
 		engine.addSystem(positionSystem, SystemPriorities.NONE);	
 		engine.addSystem(renderSystem, SystemPriorities.NONE);	
 	}
-	public static function configure()
+	public static function configure(container:DisplayObjectContainer)
 	{
 		var injector:Injector = new Injector();
 		var hexes:Array<Cube> = Grid.hexagonalShape(5);
@@ -35,6 +37,8 @@ class Nanogarch
 		
 		injector.map(GameController).asSingleton();
 		injector.map(PositionSystem).asSingleton();
+
+		injector.map(DisplayObjectContainer,"GameDisplayObject").toValue(container);
 		injector.map(RenderSystem).asSingleton();
 
 		injector.map(Injector).toValue(injector);

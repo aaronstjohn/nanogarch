@@ -10,6 +10,7 @@ class GameController extends System
 	override public function addToEngine(engine:Engine):Void
     {
         trace("Adding Game controller ");
+        creator.createUnit();
     }
     override public function update(time:Float):Void
     {

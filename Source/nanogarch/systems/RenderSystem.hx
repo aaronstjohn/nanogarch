@@ -36,6 +36,8 @@ class RenderSystem extends System
 
     private function addToDisplay(node:RenderNode):Void
     {
+    	trace("Adding Render node to display List ");
+    	trace("Container :" + container);
         container.addChild(node.displayObject);
     }
 
@@ -51,8 +53,8 @@ class RenderSystem extends System
             var displayObject:DisplayObject = node.displayObject;
             var position:Position = node.position;
 
-            // displayObject.x = position.position.x;
-            // displayObject.y = position.position.y;
+            displayObject.x = position.cube.x;
+            displayObject.y = position.cube.y;
             // displayObject.rotation = position.rotation * 180 / Math.PI;
         }
     }
