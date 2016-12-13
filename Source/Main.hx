@@ -14,7 +14,7 @@ class Main extends Sprite {
 	public function new () {
 		
 		super ();
-		var injector:Injector = Nanogarch.configure(this);
+		var injector:Injector = Nanogarch.configure(this,stage.stageWidth, stage.stageHeight );
 	  	var game:Nanogarch = injector.getInstance(Nanogarch);
 	  	
 	  	game.initialize();

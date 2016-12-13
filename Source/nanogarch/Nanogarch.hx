@@ -25,13 +25,19 @@ class Nanogarch
 		engine.addSystem(positionSystem, SystemPriorities.NONE);	
 		engine.addSystem(renderSystem, SystemPriorities.NONE);	
 	}
-	public static function configure(container:DisplayObjectContainer)
+	public static function configure(container:DisplayObjectContainer,viewWidth:Int,viewHeight:Int)
 	{
 		var injector:Injector = new Injector();
 		var hexes:Array<Cube> = Grid.hexagonalShape(5);
-		var grid:Grid  = new Grid(1.0,true,hexes);
+		var grid:Grid  = new Grid(100.0,true,hexes);
 		injector.map(Grid,"MainGrid").toValue(grid);
-		
+
+		var config:GameConfig = new GameConfig();
+		config.viewWidth = viewWidth;
+		config.viewHeight = viewHeight;
+	
+
+		injector.map(GameConfig).toValue(config);
 		injector.map(Engine).asSingleton();
 		injector.map(EntityCreator).asSingleton();
 		

@@ -6,17 +6,26 @@ import nanogarch.components.Position;
 import nanogarch.components.Display;
 
 import nanogarch.graphics.UnitView;
+import nanogarch.graphics.MapView;
+import hex.Grid;
 
 
 class EntityCreator
 {
     @inject public var engine:Engine;
-
+    @inject("MainGrid") public var grid:Grid;
     public function new(){}
 
     public function destroyEntity(entity:Entity):Void
     {
         engine.removeEntity(entity);
+    }
+    public function createMap()
+    {
+        var map: Entity = new Entity();
+        map.add(new Position(0,0,0))
+           .add(new Display(new MapView(grid)));
+        engine.addEntity(map);
     }
     public function createUnit()
     {

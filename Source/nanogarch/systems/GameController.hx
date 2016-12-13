@@ -11,6 +11,7 @@ class GameController extends System
     {
         trace("Adding Game controller ");
         creator.createUnit();
+        creator.createMap();
     }
     override public function update(time:Float):Void
     {

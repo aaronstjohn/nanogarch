@@ -2,6 +2,7 @@ package nanogarch.systems;
 
 import openfl.display.DisplayObject;
 import openfl.display.DisplayObjectContainer;
+import openfl.geom.Matrix;
 
 import ash.core.Engine;
 import ash.core.NodeList;
@@ -11,10 +12,12 @@ import nanogarch.components.Display;
 import nanogarch.components.Position;
 import nanogarch.nodes.RenderNode;
 import minject.Injector;
+import nanogarch.GameConfig;
 
 class RenderSystem extends System
 {
     @inject("GameDisplayObject") public var container:DisplayObjectContainer;
+    @inject public var config:GameConfig;
     private var nodes:NodeList<RenderNode>;
 
     public function new()
@@ -25,7 +28,11 @@ class RenderSystem extends System
 
     override public function addToEngine(engine:Engine):Void
     {
-
+  		//Center the view at (0,0)
+  		var txMatrix:Matrix = new Matrix();
+		txMatrix.translate(config.viewWidth*0.5,config.viewHeight*0.5);
+		container.transform.matrix = txMatrix;
+		
         nodes = engine.getNodeList(RenderNode);
         for (node in nodes)
             addToDisplay(node);
