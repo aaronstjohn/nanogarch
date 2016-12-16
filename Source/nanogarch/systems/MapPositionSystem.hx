@@ -1,19 +1,19 @@
 package nanogarch.systems;
 import ash.core.Engine;
 import ash.tools.ListIteratingSystem;
-import nanogarch.components.Position;
-import nanogarch.nodes.PositionNode;
+import nanogarch.components.Frame;
+import nanogarch.nodes.GridPositionNode;
 import hex.Grid;
 import minject.Injector;
 import Type;
 
-class PositionSystem extends ListIteratingSystem<PositionNode>
+class MapPositionSystem extends ListIteratingSystem<MapPositionNode>
 {
-	@inject("MainGrid") public var grid:Grid;
+	@inject("MainMap") public var map:HexMap;
     
 	public function new()
     {
-        super(PositionNode, null, nodeAdded, nodeRemoved);
+        super(MapPositionNode, null, nodeAdded, nodeRemoved);
         
     }
     override public function addToEngine(engine:Engine):Void
@@ -28,7 +28,7 @@ class PositionSystem extends ListIteratingSystem<PositionNode>
         super.removeFromEngine(engine);
         
     }
-    private function nodeAdded(node:PositionNode):Void
+    private function nodeAdded(node:MapPositionNode):Void
     {
     	trace("Adding Node  to position system ");
         // map.get(node.position.x, node.position.y).entities.push(node.entity);
@@ -37,7 +37,7 @@ class PositionSystem extends ListIteratingSystem<PositionNode>
         // moveListeners.set(node, listener);
         // node.position.moveRequested.add(listener);
     }
-     private function nodeRemoved(node:PositionNode):Void
+     private function nodeRemoved(node:MapPositionNode):Void
     {
     	trace("Removing Node  from position system ");
         // map.get(node.position.x, node.position.y).entities.remove(node.entity);

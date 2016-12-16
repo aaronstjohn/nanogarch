@@ -2,7 +2,8 @@ package nanogarch;
 import ash.core.Entity;
 import ash.core.Engine;
 import nanogarch.components.Unit;
-import nanogarch.components.Position;
+import nanogarch.components.GridPosition;
+import nanogarch.components.Frame;
 import nanogarch.components.Display;
 
 import nanogarch.graphics.UnitView;
@@ -20,10 +21,18 @@ class EntityCreator
     {
         engine.removeEntity(entity);
     }
+    // public function createTurn()
+    // {
+    //     var turn:Entity = new Entity();
+    //     turn.add(new GameState())
+    //         .add(new GameMap())
+    //         .add(new TurnActions())
+    //     // engine.addEntity(turn);
+    // }
     public function createMap()
     {
         var map: Entity = new Entity();
-        map.add(new Position(0,0,0))
+        map.add(new Frame())
            .add(new Display(new MapView(grid)));
         engine.addEntity(map);
     }
@@ -31,9 +40,9 @@ class EntityCreator
     {
     	var unit : Entity = new Entity();
         
-        unit.add( new Unit(  ) )
-        	.add( new Position( 0, 0, 0 ) )
-            .add( new Display( new UnitView() ) );
+        unit.add( new Frame() )
+            .add(new MapPosition())
+        	.add( new Display( new UnitView() ) );
 		engine.addEntity(unit);
 
         return unit;

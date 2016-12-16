@@ -9,6 +9,8 @@
 	<haxelib name="openfl" />
 	<haxelib name="ash" />
 	<haxelib name="minject" />
+	<haxelib name ="hxmath"/>
+	<haxelib name ="tink_core"/>
 	
 	<assets path="Assets" rename="assets" />
 	

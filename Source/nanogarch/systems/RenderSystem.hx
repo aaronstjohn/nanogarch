@@ -9,17 +9,19 @@ import ash.core.NodeList;
 import ash.core.System;
 
 import nanogarch.components.Display;
-import nanogarch.components.Position;
+import nanogarch.components.Frame;
 import nanogarch.nodes.RenderNode;
 import minject.Injector;
 import nanogarch.GameConfig;
+import hxmath.frames.Frame2;
 
 class RenderSystem extends System
 {
     @inject("GameDisplayObject") public var container:DisplayObjectContainer;
     @inject public var config:GameConfig;
-    private var nodes:NodeList<RenderNode>;
-
+    private var renderableNodes:NodeList<RenderableNode>;
+    private var renderableMapNodes:NodeList<RenderableMapNode>;
+    
     public function new()
     
     {
@@ -58,10 +60,10 @@ class RenderSystem extends System
         for (node in nodes)
         {
             var displayObject:DisplayObject = node.displayObject;
-            var position:Position = node.position;
+            var frame:Frame2 = node.frameObject;
 
-            displayObject.x = position.cube.x;
-            displayObject.y = position.cube.y;
+            displayObject.x = frame.offset.x;
+            displayObject.y = frame.offset.y;
             // displayObject.rotation = position.rotation * 180 / Math.PI;
         }
     }
