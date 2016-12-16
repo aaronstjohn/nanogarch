@@ -2,9 +2,10 @@ package nanogarch.systems;
 import ash.core.Engine;
 import ash.tools.ListIteratingSystem;
 import nanogarch.components.Frame;
-import nanogarch.nodes.GridPositionNode;
+import nanogarch.nodes.MapPositionNode;
 import hex.Grid;
 import minject.Injector;
+import nanogarch.map.HexMap;
 import Type;
 
 class MapPositionSystem extends ListIteratingSystem<MapPositionNode>

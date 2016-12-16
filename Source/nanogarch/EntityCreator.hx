@@ -2,19 +2,19 @@ package nanogarch;
 import ash.core.Entity;
 import ash.core.Engine;
 import nanogarch.components.Unit;
-import nanogarch.components.GridPosition;
+import nanogarch.components.MapPosition;
 import nanogarch.components.Frame;
 import nanogarch.components.Display;
 
 import nanogarch.graphics.UnitView;
 import nanogarch.graphics.MapView;
-import hex.Grid;
+import nanogarch.map.HexMap;
 
 
 class EntityCreator
 {
     @inject public var engine:Engine;
-    @inject("MainGrid") public var grid:Grid;
+    @inject("MainMap") public var hexmap:HexMap;
     public function new(){}
 
     public function destroyEntity(entity:Entity):Void
@@ -33,7 +33,7 @@ class EntityCreator
     {
         var map: Entity = new Entity();
         map.add(new Frame())
-           .add(new Display(new MapView(grid)));
+           .add(new Display(new MapView(hexmap)));
         engine.addEntity(map);
     }
     public function createUnit()

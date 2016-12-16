@@ -10,7 +10,9 @@ import ash.core.System;
 
 import nanogarch.components.Display;
 import nanogarch.components.Frame;
-import nanogarch.nodes.RenderNode;
+import nanogarch.nodes.RenderableNode;
+
+import nanogarch.nodes.RenderableMapNode;
 import minject.Injector;
 import nanogarch.GameConfig;
 import hxmath.frames.Frame2;
@@ -21,7 +23,7 @@ class RenderSystem extends System
     @inject public var config:GameConfig;
     private var renderableNodes:NodeList<RenderableNode>;
     private var renderableMapNodes:NodeList<RenderableMapNode>;
-    
+
     public function new()
     
     {
@@ -35,29 +37,29 @@ class RenderSystem extends System
 		txMatrix.translate(config.viewWidth*0.5,config.viewHeight*0.5);
 		container.transform.matrix = txMatrix;
 		
-        nodes = engine.getNodeList(RenderNode);
-        for (node in nodes)
+        renderableNodes = engine.getNodeList(RenderableNode);
+        for (node in renderableNodes)
             addToDisplay(node);
-        nodes.nodeAdded.add(addToDisplay);
-        nodes.nodeRemoved.add(removeFromDisplay);
+        renderableNodes.nodeAdded.add(addToDisplay);
+        renderableNodes.nodeRemoved.add(removeFromDisplay);
         trace("Added Render System");
     }
 
-    private function addToDisplay(node:RenderNode):Void
+    private function addToDisplay(node:RenderableNode):Void
     {
     	trace("Adding Render node to display List ");
     	trace("Container :" + container);
         container.addChild(node.displayObject);
     }
 
-    private function removeFromDisplay(node:RenderNode):Void
+    private function removeFromDisplay(node:RenderableNode):Void
     {
         container.removeChild(node.displayObject);
     }
 
     override public function update(time:Float):Void
     {
-        for (node in nodes)
+        for (node in renderableNodes)
         {
             var displayObject:DisplayObject = node.displayObject;
             var frame:Frame2 = node.frameObject;
@@ -70,7 +72,7 @@ class RenderSystem extends System
 
     override public function removeFromEngine(engine:Engine):Void
     {
-        nodes = null;
+        renderableNodes = null;
          trace("Removed Render System");
     }
 }

@@ -1,5 +1,5 @@
 package nanogarch.map;
-import nanogarch.components.MapObject;
+import ash.core.Entity;
 
 class HexCell
 {
@@ -7,8 +7,8 @@ class HexCell
 	{
 		this.position = pos;
 	}
-	var position:Hex;
-	var neighbors:Std.Map<Direction,HexCell>;
-	var units:Array<Entity>;
+	public var position:Hex;
+	public var neighbors:Map<Hex,HexCell>;
+	public var entities:Array<Entity>;
 
 }

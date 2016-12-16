@@ -1,5 +1,6 @@
 package nanogarch.nodes;
-
+import nanogarch.components.MapPosition;
+import nanogarch.map.Hex;
 import ash.core.Node;
 
 class MapPositionNode extends Node<MapPositionNode>

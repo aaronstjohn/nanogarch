@@ -1,6 +1,9 @@
 package nanogarch.map;
 class Hex
 {
+    public var x:Int;
+    public var y:Int;
+    public var z:Int;
 	public function new(x:Int, y:Int, z:Int)
     {
         this.x = x;
@@ -13,19 +16,19 @@ class Hex
 
     static public function add(a:Hex, b:Hex):Hex
     {
-        return new Hex(a.q + b.q, a.r + b.r, a.s + b.s);
+        return new Hex(a.x + b.x, a.y + b.y, a.z + b.z);
     }
 
 
     static public function subtract(a:Hex, b:Hex):Hex
     {
-        return new Hex(a.q - b.q, a.r - b.r, a.s - b.s);
+        return new Hex(a.x - b.x, a.y - b.y, a.z - b.z);
     }
 
 
     static public function scale(a:Hex, k:Int):Hex
     {
-        return new Hex(a.q * k, a.r * k, a.s * k);
+        return new Hex(a.x * k, a.y * k, a.z * k);
     }
     static public function neighbor(hex:Hex, direction:Int):Hex
     {

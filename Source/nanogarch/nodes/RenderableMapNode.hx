@@ -1,3 +1,11 @@
+package nanogarch.nodes;
+import ash.core.Node;
+import nanogarch.components.Frame;
+import nanogarch.components.MapPosition;
+import nanogarch.components.Display;
+import openfl.display.DisplayObject;
+import nanogarch.map.Hex;
+import hxmath.frames.Frame2;
 class RenderableMapNode extends Node<RenderableMapNode>
 {
     public var frame:Frame;

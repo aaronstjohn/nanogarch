@@ -8,7 +8,7 @@ import minject.Injector;
 class GameController extends System
 {
 	@inject public var creator:EntityCreator;
-    @inject public var contract:NanogarchContract;
+    // @inject public var contract:NanogarchContract;
     @inject public var injector:Injector;
     // private var orderQueue:Array<Order>;
 
@@ -20,14 +20,14 @@ class GameController extends System
     public function handleTurnResolved():Void
     {
         trace("TURN RESOLVED!!");
-        var currentState:GameState = injector.getInstance(GameState,'CurrentState');
+        // var currentState:GameState = injector.getInstance(GameState,'CurrentState');
         
 
     }
 	override public function addToEngine(engine:Engine):Void
     {
         trace("Adding Game controller ");
-        contract.turnResolved.handle(handleTurnResolved);
+        // contract.turnResolved.handle(handleTurnResolved);
         creator.createUnit();
         creator.createMap();
     }

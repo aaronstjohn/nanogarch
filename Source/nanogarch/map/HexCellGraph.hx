@@ -1,9 +1,10 @@
 package nanogarch.map;
-import graphx.Graph;
+// import graphx.Graph;
 import graphx.Edge;
-using util.GraphExtensions;
+import graphx.NodeFunctions;
+import util.GraphExt;
 
-class HexCellGraph extends Graph<HexCell> {
+class HexCellGraph extends GraphExt<HexCell> {
 
 	public function new() {
 	
@@ -24,9 +25,9 @@ class HexCellGraph extends Graph<HexCell> {
 		if(!contains(hexCell))
 			return this;
 
-		for( dir in 0..6)
+		for( dir in 0...6)
 		{
-			edgeInDirection(dir,hex)
+			edgeInDirection(dir,hexCell);
 		}
 		return this;
 	}
@@ -35,16 +36,16 @@ class HexCellGraph extends Graph<HexCell> {
 		if(!contains(from))
 			return this;
 
-		var toHex:Hex = Hex.neighbor(from.hex,direction);
+		var toHex:Hex = Hex.neighbor(from.position,direction);
 
-		// var potentialEdge = new Edge(from,new HexCell(to) );
+		var toNodes = nodes.filter( function(n){return n.value.position.equals(toHex);});
 
-		if ( !anyEdge(function(e){
-				return e.from.position.equals(from.position) && e.to.position.equals(toHex)
-			}))
+		if( toNodes.length == 1 && !containsEdge(from,toNodes[0]))
 		{
-			addEdgeFrom(from,to);
+			addEdgeFrom(from,toNodes[0]);
 		}
+
+		
 		return this;
 	}
 	

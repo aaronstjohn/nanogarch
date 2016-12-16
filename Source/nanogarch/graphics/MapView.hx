@@ -1,17 +1,18 @@
 package nanogarch.graphics;
 
 import openfl.display.Shape;
-import hex.*;
+import nanogarch.map.HexMap;
+import nanogarch.map.ScreenCoordinate;
 
 class MapView extends Shape
 {
-    public function new(grid:Grid)
+    public function new(map:HexMap)
     {
         super();
-        var polyPoints =grid.polygonVertices();
-        for( hex in grid.hexes)
+        var polyPoints =map.grid.polygonVertices();
+        for( hex in map.grid.hexes)
         {
-        	var coord:ScreenCoordinate = grid.hexToCenter(hex);
+        	var coord:ScreenCoordinate = map.grid.hexToCenter(hex);
         	graphics.beginFill(0xA2C0F2,0.5);
         	graphics.lineStyle (1, 0x000000);
         	graphics.moveTo(polyPoints[0].x+coord.x,polyPoints[0].y+coord.y);

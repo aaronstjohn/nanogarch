@@ -1,5 +1,4 @@
 package nanogarch.map;
-using util.GraphExtensions;
 
 class HexMap  {
 	
@@ -12,10 +11,10 @@ class HexMap  {
 	{
 		grid=hexgrid;
 		graph = new HexCellGraph();
-		hexCellMap = new Map<Hex,HexCell>;
+		hexCellMap = new Map<Hex,HexCell>();
 		for (hex in grid.hexes)
 		{
-			var cell:HexCell = new HexCell(hex)
+			var cell:HexCell = new HexCell(hex);
 			graph.addNode(cell);
 			hexCellMap.set(hex,cell);
 		}
@@ -27,6 +26,6 @@ class HexMap  {
 		}
 	}
   
-  
+
 	 
 }
