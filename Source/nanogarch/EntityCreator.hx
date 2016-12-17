@@ -34,7 +34,8 @@ class EntityCreator
         var map: Entity = new Entity();
         map.add(new Frame())
            .add(new Display(new MapView(hexmap)));
-        engine.addEntity(map);
+        // engine.addEntity(map);
+        return map;
     }
     public function createUnit()
     {
@@ -43,7 +44,7 @@ class EntityCreator
         unit.add( new Frame() )
             .add(new MapPosition())
         	.add( new Display( new UnitView() ) );
-		engine.addEntity(unit);
+		// engine.addEntity(unit);
 
         return unit;
     }

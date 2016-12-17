@@ -3,6 +3,7 @@ package nanogarch;
 import ash.core.Engine;
 import nanogarch.systems.GameController;
 import nanogarch.systems.MapPositionSystem;
+import nanogarch.components.MapPosition;
 import nanogarch.systems.RenderSystem;
 import nanogarch.systems.SystemPriorities;
 import nanogarch.map.HexGrid;
@@ -18,6 +19,7 @@ class Nanogarch
 	@inject public var gameController:GameController;
 	@inject public var positionSystem:MapPositionSystem;
 	@inject public var renderSystem:RenderSystem;
+	@inject public var creator:EntityCreator;
    
 	public function new(){}
 
@@ -26,6 +28,13 @@ class Nanogarch
 		engine.addSystem(gameController, SystemPriorities.NONE);
 		engine.addSystem(positionSystem, SystemPriorities.NONE);	
 		engine.addSystem(renderSystem, SystemPriorities.NONE);	
+
+		var map = creator.createMap();
+		var unit = creator.createUnit();
+		unit.get(MapPosition).moveTo(new Hex(-2,2,0));
+		engine.addEntity(unit);
+		engine.addEntity(map);
+        
 	}
 	public static function createMap(size:Int,scale:Float,orientation:Bool):HexMap
 	{

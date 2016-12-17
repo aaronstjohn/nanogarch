@@ -28,8 +28,7 @@ class GameController extends System
     {
         trace("Adding Game controller ");
         // contract.turnResolved.handle(handleTurnResolved);
-        creator.createUnit();
-        creator.createMap();
+        
     }
 
     override public function update(time:Float):Void

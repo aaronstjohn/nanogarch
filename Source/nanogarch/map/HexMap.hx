@@ -1,8 +1,8 @@
 package nanogarch.map;
-
+import haxe.ds.HashMap;
 class HexMap  {
 	
-	public var hexCellMap:Map<Hex,HexCell>;
+	public var cellMap:HashMap<Hex,HexCell>;
 
 	public var graph:HexCellGraph;
 	public var grid:HexGrid;
@@ -11,19 +11,20 @@ class HexMap  {
 	{
 		grid=hexgrid;
 		graph = new HexCellGraph();
-		hexCellMap = new Map<Hex,HexCell>();
+		cellMap = new HashMap<Hex,HexCell>();
 		for (hex in grid.hexes)
 		{
 			var cell:HexCell = new HexCell(hex);
 			graph.addNode(cell);
-			hexCellMap.set(hex,cell);
+			cellMap.set(hex,cell);
 		}
 		//Fully connect the graph 
 		for (hex in grid.hexes)
 		{
-			var cell:HexCell = hexCellMap.get(hex);
+			var cell:HexCell = cellMap.get(hex);
 			graph.addAllDirectedEdges(cell);
 		}
+		
 	}
   
 

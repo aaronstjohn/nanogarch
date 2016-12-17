@@ -13,7 +13,21 @@ class Hex
     public function equals(other:Hex):Bool {
         return x == other.x && y == other.y && z == other.z;
     }
-
+    public function hashCode():Int
+    {
+        //http://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-an-overridden-system-object-gethashcode/263416#263416
+        var hash:Int = 17;
+        hash = hash*486187739 + x;
+        hash = hash*486187739 + y;
+        hash = hash*486187739 + z;
+        return hash;
+        
+    }
+    
+    public function toString()
+    {
+        return '($x,$y,$z)';
+    }
     static public function add(a:Hex, b:Hex):Hex
     {
         return new Hex(a.x + b.x, a.y + b.y, a.z + b.z);
