@@ -24,7 +24,7 @@ class HexMap  {
 			var cell:HexCell = cellMap.get(hex);
 			graph.addAllDirectedEdges(cell);
 		}
-		
+
 	}
   
 

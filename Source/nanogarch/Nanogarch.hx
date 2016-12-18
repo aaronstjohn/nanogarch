@@ -8,8 +8,9 @@ import nanogarch.systems.RenderSystem;
 import nanogarch.systems.SystemPriorities;
 import nanogarch.map.HexGrid;
 import nanogarch.map.HexMap;
+import nanogarch.map.Hex;
 import minject.Injector;
-import hex.*;
+// import hex.*;
 import openfl.display.DisplayObjectContainer;
 
 class Nanogarch

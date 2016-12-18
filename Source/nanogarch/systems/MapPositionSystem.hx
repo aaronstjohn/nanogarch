@@ -3,7 +3,7 @@ import ash.core.Engine;
 import ash.tools.ListIteratingSystem;
 import nanogarch.components.Frame;
 import nanogarch.nodes.MapPositionNode;
-import hex.Grid;
+// import hex.Grid;
 import minject.Injector;
 import nanogarch.map.HexMap;
 import nanogarch.map.HexDirection;
@@ -34,10 +34,23 @@ class MapPositionSystem extends ListIteratingSystem<MapPositionNode>
     }
     private function nodeAdded(node:MapPositionNode):Void
     {
-    	trace("Adding Node  to position system ");
-        var hexCell = map.cellMap.get(node.position); //.entities.push(node.entity);
-        // node.mapPosition.moveRequest.
-        // map.get(node.position.x, node.position.y).entities.push(node.entity);
+        if( map.cellMap.exists(node.position))
+        {
+            map.cellMap.get(node.position).entities.push(node.entity);   
+        }
+        else
+        {
+            throw "Can't add entity:  "+node.entity+" to position: "+node.position+" no map cell exists";
+        }
+    	// trace("Adding Node  to position system ");
+     //    // trace ("Hex map is "+map);
+     //    trace ("Cell map is "+map.cellMap);
+     //    trace("node position is "+node.position);
+     //    trace("EXISTS "+map.cellMap.exists(node.position));
+     // /var hexCell = map.cellMap.get(node.position); //.entities.push(node.entity);
+     //    // node.mapPosition.moveRequest.
+        // if(map.exists)
+        // map.cellMap.get(node.position.x, node.position.y).entities.push(node.entity);
 
         var listener = onNodeMoveRequested.bind(node);
         moveListeners.set(node, listener);
