@@ -32,11 +32,19 @@ class MapPositionSystem extends ListIteratingSystem<MapPositionNode>
         super.removeFromEngine(engine);
         
     }
+    function updateFrame(node:MapPositionNode):Void
+    {
+        var screen = map.grid.hexToCenter(node.position);
+        node.frameObject.offset = screen.toVector2();
+        trace ("node is at position: "+ node.frameObject.offset);
+    }
     private function nodeAdded(node:MapPositionNode):Void
     {
         if( map.cellMap.exists(node.position))
         {
-            map.cellMap.get(node.position).entities.push(node.entity);   
+            trace ("Adding node to "+node.position);
+            map.cellMap.get(node.position).entities.push(node.entity);
+            updateFrame(node);   
         }
         else
         {

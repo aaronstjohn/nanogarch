@@ -1,4 +1,5 @@
 package nanogarch.map;
+import hxmath.math.Vector2;
 class ScreenCoordinate {
     public var x:Float;
     public var y:Float;
@@ -7,7 +8,7 @@ class ScreenCoordinate {
         this.x = x;
         this.y = y;
     }
-
+    public function toVector2(){return new Vector2(x,y);}
     public function equals(p) { return x == p.x && y == p.y; }
     public function toString() { return x + "," + y; }
     public function length_squared() { return x * x + y * y; }

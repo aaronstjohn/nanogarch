@@ -12,7 +12,7 @@ import nanogarch.components.Display;
 import nanogarch.components.Frame;
 import nanogarch.nodes.RenderableNode;
 
-import nanogarch.nodes.RenderableMapNode;
+// import nanogarch.nodes.RenderableMapNode;
 import minject.Injector;
 import nanogarch.GameConfig;
 import hxmath.frames.Frame2;
@@ -22,7 +22,7 @@ class RenderSystem extends System
     @inject("GameDisplayObject") public var container:DisplayObjectContainer;
     @inject public var config:GameConfig;
     private var renderableNodes:NodeList<RenderableNode>;
-    private var renderableMapNodes:NodeList<RenderableMapNode>;
+    // private var renderableMapNodes:NodeList<RenderableMapNode>;
 
     public function new()
     

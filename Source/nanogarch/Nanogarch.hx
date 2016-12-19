@@ -1,6 +1,8 @@
 /* A simple multiplayer strategy game */
 package nanogarch;
 import ash.core.Engine;
+import ash.tick.ITickProvider;
+import ash.tick.FrameTickProvider;
 import nanogarch.systems.GameController;
 import nanogarch.systems.MapPositionSystem;
 import nanogarch.components.MapPosition;
@@ -21,6 +23,8 @@ class Nanogarch
 	@inject public var positionSystem:MapPositionSystem;
 	@inject public var renderSystem:RenderSystem;
 	@inject public var creator:EntityCreator;
+	@inject public var tickProvider:FrameTickProvider;
+	@inject("GameDisplayObject") public var container:DisplayObjectContainer;
    
 	public function new(){}
 
@@ -35,20 +39,24 @@ class Nanogarch
 		unit.get(MapPosition).moveTo(new Hex(-2,2,0));
 		engine.addEntity(unit);
 		engine.addEntity(map);
+		tickProvider.add(engine.update);
         
 	}
+	public function start():Void
+    {
+        tickProvider.start();
+    }
 	public static function createMap(size:Int,scale:Float,orientation:Bool):HexMap
 	{
-			var hexes = HexGrid.hexagonalShape(size);
-			var grid = new HexGrid(scale,orientation,hexes);
-			var map:HexMap = new HexMap(grid);
-			return map;
-			
+		var hexes = HexGrid.hexagonalShape(size);
+		var grid = new HexGrid(scale,orientation,hexes);
+		var map:HexMap = new HexMap(grid);
+		return map;
 	}
 	public static function configure(container:DisplayObjectContainer,viewWidth:Int,viewHeight:Int)
 	{
 		var injector:Injector = new Injector();
-		injector.map(HexMap,"MainMap").toValue(createMap(5,100.0,false));
+		injector.map(HexMap,"MainMap").toValue(createMap(5,75.0,true));
 
 		var config:GameConfig = new GameConfig();
 		config.viewWidth = viewWidth;
@@ -66,7 +74,7 @@ class Nanogarch
 		injector.map(RenderSystem).asSingleton();
 
 
-		
+		injector.map(FrameTickProvider).toValue(new FrameTickProvider(container));
 		injector.map(Injector).toValue(injector);
 		injector.map(Nanogarch).asSingleton();
 

@@ -21,6 +21,7 @@ class MapPosition
 	public function moveTo(hex:Hex)
 	{
 		position=hex;
+		trace("Position is "+position);
 		positionChangedTrigger.trigger(hex);
 		// moveRequestTrigger.trigger(hex);
 	}

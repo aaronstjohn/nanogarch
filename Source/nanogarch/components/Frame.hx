@@ -10,4 +10,5 @@ class Frame
 	{
 		this.frame = new Frame2(new Vector2(x,y),angle);
 	}
+
 }

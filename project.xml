@@ -14,5 +14,6 @@
 	<haxelib name ="graphx"/>
 	
 	<assets path="Assets" rename="assets" />
+	<assets path="Assets/Fonts" rename="assets/fonts" />
 	
 </project>
