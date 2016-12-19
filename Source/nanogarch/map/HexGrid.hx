@@ -20,7 +20,32 @@ class HexGrid
         }
         return points;
     }
-
+       public function cartesianToHex(p:ScreenCoordinate) {
+        // NOTE: this is really the inverse matrix multiply. For the
+        // matrix M defined in hexToCenter, get the inverse. It's
+        // M**-1 in SymPy or M.I in NumPy.
+        //
+        // then [q, r] = (M**-1) * ([x, y] / size)
+        //
+        // Viewing these as matrix operations makes the transformation
+        // from pixel to hex and hex to pixel easier to understand. I
+        // used http://live.sympy.org/ to calculate them.
+        var size = this.scale/2;
+        p = p.scale(1/size);
+        // NOTE: I calculate x,z cube coordinates and then calculate y
+        // from those. That's because hex to pixel and pixel to hex
+        // are defined in terms of axial coordinates, not cube
+        // coordinates, and I am converting from axial to cube here.
+        if (orientation) {
+            var q = Math.sqrt(3)/3 * p.x + -1/3 * p.y;
+            var r = 2/3 * p.y;
+            return new FractionalHex(q, -q-r, r);
+        } else {
+            var q = 2/3 * p.x;
+            var r = -1/3 * p.x + Math.sqrt(3)/3 * p.y;
+            return new FractionalHex(q, -q-r, r);
+        }
+    }
     public function hexToCenter(hex:Hex) {
         // NOTE: this is really a matrix multiply turning a 3-vector
         // into a 2-vector, and there's one matrix for each

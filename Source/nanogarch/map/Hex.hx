@@ -38,8 +38,14 @@ class Hex
     {
         return new Hex(a.x - b.x, a.y - b.y, a.z - b.z);
     }
-
-
+    static public function distance(a:Hex, b:Hex):Int
+    {
+        return Hex.length(Hex.subtract(a, b));
+    }
+    static public function length(hex:Hex):Int
+    {
+        return Std.int((Math.abs(hex.x) + Math.abs(hex.y) + Math.abs(hex.z)) / 2);
+    }
     static public function scale(a:Hex, k:Int):Hex
     {
         return new Hex(a.x * k, a.y * k, a.z * k);
