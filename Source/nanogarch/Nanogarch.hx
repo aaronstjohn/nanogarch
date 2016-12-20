@@ -12,6 +12,8 @@ import nanogarch.map.HexGrid;
 import nanogarch.map.HexMap;
 import nanogarch.map.Hex;
 import minject.Injector;
+
+using tink.CoreApi;
 // import hex.*;
 import openfl.display.DisplayObjectContainer;
 
@@ -37,8 +39,9 @@ class Nanogarch
 		var map = creator.createMap();
 		var unit = creator.createUnit();
 		unit.get(MapPosition).moveTo(new Hex(-2,2,0));
-		engine.addEntity(unit);
+		
 		engine.addEntity(map);
+		engine.addEntity(unit);
 		tickProvider.add(engine.update);
         
 	}
@@ -73,6 +76,14 @@ class Nanogarch
 		injector.map(DisplayObjectContainer,"GameDisplayObject").toValue(container);
 		injector.map(RenderSystem).asSingleton();
 
+
+		var hexSelectedSignal:Signals.HexSignal;
+		var hexSelectedSignalTrigger:Signals.HexSignalTrigger;
+		hexSelectedSignal = hexSelectedSignalTrigger = Signal.trigger();
+
+		injector.map(Signals.HexSignalTrigger,"HexSelectedSignalTrigger").toValue(hexSelectedSignalTrigger);
+		injector.map(Signals.HexSignal,"HexSelectedSignal").toValue(hexSelectedSignal);
+		
 
 		injector.map(FrameTickProvider).toValue(new FrameTickProvider(container));
 		injector.map(Injector).toValue(injector);

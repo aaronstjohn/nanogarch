@@ -9,12 +9,14 @@ import nanogarch.components.Display;
 import nanogarch.graphics.UnitView;
 import nanogarch.graphics.MapView;
 import nanogarch.map.HexMap;
+import minject.Injector;
 
 
 class EntityCreator
 {
     @inject public var engine:Engine;
     @inject("MainMap") public var hexmap:HexMap;
+    @inject public var injector:Injector;
     public function new(){}
 
     public function destroyEntity(entity:Entity):Void
@@ -32,8 +34,10 @@ class EntityCreator
     public function createMap()
     {
         var map: Entity = new Entity();
+        var mapview = new MapView();
+        injector.injectInto(mapview);
         map.add(new Frame())
-           .add(new Display(new MapView(hexmap)));
+           .add(new Display(mapview));
         // engine.addEntity(map);
         return map;
     }

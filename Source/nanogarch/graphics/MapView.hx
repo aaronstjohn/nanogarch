@@ -11,16 +11,26 @@ import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFormatAlign;
 
 import openfl.events.MouseEvent;
+import openfl.events.Event;
+using tink.CoreApi;
 class MapView extends Sprite
 {
-    public function new(map:HexMap)
+   
+    @inject("HexSelectedSignalTrigger") public var hexSelected:Signals.HexSignalTrigger;
+    @inject("MainMap") public var map:HexMap;
+    public function new()
     {
         super();
+        addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+    }
+    public function onAddedToStage(e:Event):Void
+    {
+        removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
         var polyPoints =map.grid.polygonVertices();
         for( hex in map.grid.hexes)
         {
-        	var coord:ScreenCoordinate = map.grid.hexToCenter(hex);
-        	
+            var coord:ScreenCoordinate = map.grid.hexToCenter(hex);
+            
             
             // var hexView: HexView = new HexView(hex);
             var hexView = new HexView(hex);
@@ -52,11 +62,17 @@ class MapView extends Sprite
             hexView.addChild(text);
             hexView.addEventListener (MouseEvent.MOUSE_OVER, onMouseOverHex);
             hexView.addEventListener (MouseEvent.MOUSE_OUT, onMouseOutHex);
+            hexView.addEventListener(MouseEvent.CLICK,onMouseClick);
 
         }
-
-        
     }
+    public function onMouseClick(e:MouseEvent):Void
+    {
+        var hex:Hex = cast(e.currentTarget,HexView).hex;
+        trace("Mouse CLICK on hex ! " + hex);
+        hexSelected.trigger(hex);
+        // cast(e.currentTarget,HexView).alpha=0.5;
+    }  
     public function onMouseOverHex(e:MouseEvent):Void
     {
         // trace("Mouse OVER hex ! " + cast(e.currentTarget,HexView).hex );
