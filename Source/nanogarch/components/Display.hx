@@ -6,8 +6,14 @@ class Display
 {
     public var displayObject(default, null):DisplayObject;
 
-    public function new(displayObject:DisplayObject)
+    public function new()
     {
-        this.displayObject = displayObject;
+        
+    }
+    public function initialize(displayObject:DisplayObject):Display
+    {
+    	this.displayObject = displayObject;
+    	
+    	return this;
     }
 }

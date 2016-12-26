@@ -1,12 +1,13 @@
 package nanogarch.nodes;
-
-import openfl.display.DisplayObject;
-
 import ash.core.Node;
-
-import nanogarch.components.Display;
 import nanogarch.components.Frame;
 import hxmath.frames.Frame2;
+import openfl.display.DisplayObject;
+
+
+
+import nanogarch.components.Display;
+
 
 /**
  * Node for rendering. Note that here it demonstrates how nodes work:
@@ -21,13 +22,19 @@ class RenderableNode extends Node<RenderableNode>
     private var display:Display;
 
     public var displayObject(get_displayObject, never):DisplayObject;
-    public var frameObject(get_frameObject,never):Frame2;
-    private inline function get_frameObject():Frame2
-    {
-        return frame.frame;
-    }
+    
     private inline function get_displayObject():DisplayObject
     {
         return display.displayObject;
+    }
+    public var x(get_x,null):Float;
+    public var y(get_y,null):Float;
+    private inline function get_x():Float
+    {
+      return frame.x;
+    }
+    private inline function get_y():Float
+    {
+      return frame.y;
     }
 }
