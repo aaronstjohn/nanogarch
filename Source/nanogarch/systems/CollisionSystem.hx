@@ -23,10 +23,12 @@ class CollisionSystem extends System
 {
 	@inject("GameDisplayObject") public var container:DisplayObjectContainer;
 	private var mouseOverListeners:Map<CollisionNode, CallbackLink>;
+	private var mouseOutListeners:Map<CollisionNode, CallbackLink>;
 	private var collisionNodes:NodeList<CollisionNode>;
 	public function new(){
 		super();
 		mouseOverListeners = new Map<CollisionNode, CallbackLink>();
+		mouseOutListeners = new Map<CollisionNode, CallbackLink>();
 	}
 
 	override public function addToEngine(engine:Engine):Void
@@ -44,27 +46,36 @@ class CollisionSystem extends System
     {
     	container.addChild(node.collider.collisionShape);
     	// node.collider.registerSignals();
-    	node.collider.collisionShape.x = node.x+50;
-    	node.collider.collisionShape.y= node.y+50;
+    	node.collider.collisionShape.x = node.x;
+    	node.collider.collisionShape.y= node.y;
     	
         var listener = onMouseOverCollision.bind(node);
         var link = node.collider.mouseOver.handle(listener);
         mouseOverListeners.set(node,link);
+
+        listener = onMouseOutCollision.bind(node);
+        link = node.collider.mouseOut.handle(listener);
+        mouseOutListeners.set(node,link);
     
     }
     private function onMouseOverCollision(node:CollisionNode,event:MouseEvent)
     {
         trace("Mouse Over!");
     }
-    // private function onFrameChanged(node:CollisionNode,frame:Frame)
-    // {
-
-    // }
+    private function onMouseOutCollision(node:CollisionNode,event:MouseEvent)
+    {
+        trace("Mouse Out!");
+    }
+  
     private function removeCollisionNode(node:CollisionNode)
     {
 
-        // var link = hexFrameChangeListeners.get(node);
-        // hexFrameChangeListeners.remove(node);
-        // link.dissolve();
+        var link = mouseOverListeners.get(node);
+        mouseOverListeners.remove(node);
+        link.dissolve();
+        
+        link = mouseOutListeners.get(node);
+        mouseOutListeners.remove(node);
+        link.dissolve();
     }
 }

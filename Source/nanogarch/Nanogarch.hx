@@ -80,6 +80,7 @@ class Nanogarch
 
 		injector.map(Collider).toClass(Collider);
 		injector.map(Display).toClass(Display);
+		injector.map(Terrain).toClass(Terrain);
 
 		
 		// injector.map(WorldCreator).asSingleton();

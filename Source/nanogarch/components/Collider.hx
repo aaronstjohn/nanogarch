@@ -23,12 +23,10 @@ class Collider
 	public var outlineColor:UInt;
 	public var lineThickness:Float;
 	public var mouseOver:Signal<MouseEvent>;
+	public var mouseOut:Signal<MouseEvent>;
 
 	public function new(){}
-	// function test(ev:MouseEvent)
-	// {
-	// 	trace("TESSSTTTT");
-	// }
+	
 	public function initialize(poly:Array<Vector2>):Collider
 	{
 		fillColor = styleConfig.defaultColliderFillColor;
@@ -42,18 +40,9 @@ class Collider
 		GraphicsExt.drawPoly(collisionShape.graphics,poly,lineThickness,fillColor,outlineColor);
 		
 		mouseOver =   SignalUtil.makeSignal(collisionShape,MouseEvent.MOUSE_OVER);
-		
-		// mouseOverCollider = SignalUtil.makeSignal<MouseEvent>(collisionShape,MouseEvent.MOUSE_OVER);
-		// SignalUtil.makeSignal(node.collider.collisionShape,MouseEvent.MOUSE_OVER);
-		// SignalUtil.makeSignal(node.collider.collisionShape,MouseEvent.MOUSE_OVER);
+		mouseOut  =   SignalUtil.makeSignal(collisionShape,MouseEvent.MOUSE_OUT);
 		return this;
 
 	}
-	// public function registerSignals()
-	// {
-	// 	mouseOver =   SignalUtil.makeSignal(collisionShape,MouseEvent.MOUSE_OVER);
-	// 	mouseOver.handle(test);
-	// 	collisionShape.addEventListener(MouseEvent.MOUSE_OVER,test);
-	// 	trace ("MOUSE OVER "+mouseOver);
-	// }
+	
 }

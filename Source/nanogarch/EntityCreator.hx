@@ -8,6 +8,7 @@ import nanogarch.components.HexFrame;
 import nanogarch.components.Frame;
 import nanogarch.components.Display;
 import nanogarch.components.Collider;
+import nanogarch.components.Terrain;
 
 // import nanogarch.graphics.UnitView;
 // import nanogarch.graphics.MapView;
@@ -38,8 +39,15 @@ class EntityCreator
         cell.add(injector.getInstance(HexFrame));
         cell.add(injector.getInstance(Collider).initialize(hexPoly));
         cell.add(injector.getInstance(Display).initialize(view));
+        cell.add(injector.getInstance(Terrain).initialize("grass"));
 
         return cell;
+    }
+    public function createCellInfo()
+    {
+        var cell:Entity = injector.getInstance(Entity);
+        cell.add(injector.getInstance(Frame));
+        // cell.add(injector.getInstance(Display).initialize(view));
     }
     // public function createTurn()
     // {
