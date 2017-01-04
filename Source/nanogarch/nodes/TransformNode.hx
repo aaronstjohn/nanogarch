@@ -2,12 +2,12 @@
 package nanogarch.nodes;
 import ash.core.Node;
 import nanogarch.components.Frame;
-import nanogarch.components.HexFrame;
+import nanogarch.components.MapGridFrame;
 import hxmath.frames.Frame2;
 class TransformNode extends Node<TransformNode>
 {
     public var frame:Frame;
-    public var hexFrame:HexFrame;
+    public var mapGridFrame:MapGridFrame;
 
     // public var displayObject(get_displayObject, never):DisplayObject;
     // public var frameObject(get_frameObject,never):Frame2;

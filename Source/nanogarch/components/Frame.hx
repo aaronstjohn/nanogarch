@@ -17,7 +17,7 @@ class Frame
 		frameChanged= frameChangedTrigger = Signal.trigger();
 
 	}
-	public function set_offset(x:Float,y:Float)
+	public function offset(x:Float,y:Float)
 	{
 		frame.offset.set(x,y);
 		frameChangedTrigger.trigger(this);

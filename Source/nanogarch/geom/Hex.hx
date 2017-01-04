@@ -1,4 +1,5 @@
 package nanogarch.geom;
+import hxmath.math.Vector2;
 class Hex
 {
     public var x:Int;
@@ -55,6 +56,34 @@ class Hex
     static public function scale(a:Hex, k:Int):Hex
     {
         return new Hex(a.x * k, a.y * k, a.z * k);
+    }
+    public function toCartesian(scale:Float,orientation:HexOrientation) :Vector2
+    {
+        // NOTE: this is really a matrix multiply turning a 3-vector
+        // into a 2-vector, and there's one matrix for each
+        // orientation. In SymPy or NumPy you can write:
+        //
+        // M = Matrix( [ [ sqrt(3), sqrt(3)/2 ], [ 0, 3./2 ] ] )
+        // or
+        // M = Matrix( [ [ 3./2, 0 ], [ sqrt(3)/2, sqrt(3) ] ] )
+        //
+        // then [x, y] = size * M * [q, r]
+        var s:Vector2;
+        var size = scale/2;
+        // NOTE: I am ignoring cube.y. Why? Because I'm implicitly
+        // converting cube coordinates to axial coordinates here. I
+        // have hex to pixel and pixel to hex defined for axial
+        // coordinates, *not* cube coordinates.
+        if (orientation==HexOrientation.POINTY_TOP) {
+            s = new Vector2(Math.sqrt(3) * x
+                                     + Math.sqrt(3)/2 * z,
+                                     1.5 * z);
+        } else {
+            s = new Vector2(1.5 * x,
+                                     Math.sqrt(3)/2 * x
+                                     + Math.sqrt(3) * z);
+        }
+        return s*size;
     }
     // static public function neighbor(hex:Hex, direction:Int):Hex
     // {

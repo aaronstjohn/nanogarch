@@ -10,7 +10,7 @@ import ash.core.System;
 
 import nanogarch.components.Display;
 import nanogarch.components.Frame;
-import nanogarch.components.HexFrame;
+import nanogarch.components.MapGridFrame;
 import nanogarch.nodes.RenderableNode;
 import nanogarch.nodes.TransformNode;
 
@@ -19,6 +19,8 @@ import minject.Injector;
 import nanogarch.GameConfig;
 import hxmath.frames.Frame2;
 
+import hxmath.math.Vector2;
+
 // typedef HexFrameChangeListener = HexFrame -> Void;
 using tink.CoreApi; 
 class RenderSystem extends System
@@ -26,14 +28,14 @@ class RenderSystem extends System
     @inject("GameDisplayObject") public var container:DisplayObjectContainer;
     @inject public var config:GameConfig;
 
-    private var hexFrameChangeListeners:Map<TransformNode, CallbackLink>;
+    private var mapGridFrameChangeListeners:Map<TransformNode, CallbackLink>;
 
     private var renderableNodes:NodeList<RenderableNode>;
     private var transformNodes:NodeList<TransformNode>;
    
     public function new(){
         super();
-        hexFrameChangeListeners = new Map<TransformNode, CallbackLink>();
+        mapGridFrameChangeListeners = new Map<TransformNode, CallbackLink>();
     }
 
     override public function addToEngine(engine:Engine):Void
@@ -58,28 +60,32 @@ class RenderSystem extends System
     }
     private function addTransformNode(node:TransformNode)
     {
-        var listener = onHexFrameChanged.bind(node);
-        var link = node.hexFrame.frameChanged.handle(listener);
-        hexFrameChangeListeners.set(node,link);
+        transformMapGridFrame(node);
+        var listener = onMapGridFrameChanged.bind(node);
+        var link = node.mapGridFrame.frameChanged.handle(listener);
+        mapGridFrameChangeListeners.set(node,link);
     }
-    private function onHexFrameChanged(node:TransformNode,hexFrame:HexFrame)
+    private function onMapGridFrameChanged(node:TransformNode,mapGridFrame:MapGridFrame)
     {
-        trace("HEX FRAME CHANGED!");
+        trace("MapGridFrame FRAME CHANGED!");
+        transformMapGridFrame(node);
+
     }
     private function removeTransformNode(node:TransformNode)
     {
-
-        var link = hexFrameChangeListeners.get(node);
-        hexFrameChangeListeners.remove(node);
+        var link = mapGridFrameChangeListeners.get(node);
+        mapGridFrameChangeListeners.remove(node);
         link.dissolve();
     }
-    // private function transformHexFrame(node:HexFrameTransformNode)
-    // {
-
-    // }
+    private function transformMapGridFrame(node:TransformNode)
+    {
+        var offset:Vector2 = node.mapGridFrame.position.toCartesian(config.worldHexScale,config.worldHexOrientation);
+    
+        node.frame.offset(offset.x,offset.y);
+    }
     private function addToDisplay(node:RenderableNode):Void
     {
-    	trace("Adding Render node to display List ");
+    	// trace("Adding Render node to display List ");
     	container.addChild(node.displayObject);
     }
 

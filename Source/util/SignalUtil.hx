@@ -12,4 +12,5 @@ class SignalUtil
 	        dispatcher.removeEventListener.bind(type)
 	    );
 	}
+	
 }

@@ -60,7 +60,8 @@ class CollisionSystem extends System
     }
     private function onMouseOverCollision(node:CollisionNode,event:MouseEvent)
     {
-        trace("Mouse Over!");
+        trace("Mouse Over!"+event);
+        // node.relay.relay(event.type,node.entity);
     }
     private function onMouseOutCollision(node:CollisionNode,event:MouseEvent)
     {

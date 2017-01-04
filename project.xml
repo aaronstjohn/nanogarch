@@ -12,6 +12,7 @@
 	<haxelib name ="hxmath"/>
 	<haxelib name ="tink_core"/>
 	<haxelib name ="graphx"/>
+	<haxelib name ="hxrandom"/>
 	
 	<assets path="Assets" rename="assets" />
 	<assets path="Assets/Fonts" rename="assets/fonts" />
