@@ -16,19 +16,26 @@ using tink.CoreApi;
 
 class SignalPair<T>
 {
-	public var trigger(get,null):SignalTrigger<T>;
-	public var signal(get,null):Signal<T>;
+	public var signalTrigger(default,null):SignalTrigger<T>;
+	public var signal(default,null):Signal<T>;
 	
 	public function new(){
-		this.signal=this.trigger=Signal<T>.trigger();
+		this.signal=this.signalTrigger=Signal.trigger();
 	}
+	public function trigger(t:T){signalTrigger.trigger(t);}
 }
-class InjectorSignal extends SignalPair<Injector>
-{
+class StartSignal extends SignalPair<Noise>{public function new(){super();}}
 
-}
-class TerrainInfo extends SignalPair<Injector> {public function new(){}}
-class MovementQuery:SignalPair<Injector>{public function new(){}}
+class OverMapCellSignal extends SignalPair<Entity>{public function new(){super();}}
+class OutMapCellSignal extends SignalPair<Entity>{public function new(){super();}}
+class ClickMapCellSignal extends SignalPair<Entity>{public function new(){super();}}
+
+// class InjectorSignal extends SignalPair<Injector>
+// {
+
+// }
+// class TerrainInfo extends SignalPair<Injector> {public function new(){}}
+// class MovementQuery:SignalPair<Injector>{public function new(){}}
 
 // typedef TerrainInfoCommandSignal = Signal<Entity>;
 // typedef TerrainInfoSignal = Signal<Noise>;

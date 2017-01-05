@@ -1,10 +1,12 @@
 package nanogarch.nodes;
 import ash.core.Node;
 import nanogarch.components.MapGridFrame;
+import nanogarch.components.Collider;
 import nanogarch.geom.Hex;
 class MapGridNode extends Node<MapGridNode>
 {
 	public var gridFrame:MapGridFrame;
+    public var collider:Collider;
     public var x(get,null):Int;
     public var y(get,null):Int;
     public var z(get,null):Int;

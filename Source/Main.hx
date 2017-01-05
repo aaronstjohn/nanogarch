@@ -1,8 +1,9 @@
 package;
-import nanogarch.Nanogarch;
 import nanogarch.ConfigurationFactory;
 import minject.Injector;
 import Type;
+using tink.CoreApi;
+import nanogarch.Signals;
 import flash.events.Event;
 
 import openfl.display.Sprite;
@@ -25,8 +26,10 @@ class Main extends Sprite {
                                 .configureSystems()
                                 .configureEntities()
 			    				.configureMap()
-			    				.generateRandomMap().injector;
-			    				 
-    	injector.getInstance(Nanogarch).start();
+			    				.generateRandomMap()
+                                .configureSignals().injector;
+			
+        injector.getInstance(nanogarch.Signals.StartSignal).trigger(Noise);    				 
+    	// injector.getInstance(Nanogarch).start();
     }
 }

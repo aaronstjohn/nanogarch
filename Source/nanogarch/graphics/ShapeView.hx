@@ -21,6 +21,6 @@ class ShapeView extends Sprite
 	public function redraw()
 	{
 		GraphicsExt.drawPoly(graphics,shape,style.thickness,style.fill,style.outline);
-    	this.mouseEnabled = false;
+    	this.mouseEnabled = true;
 	}
 }

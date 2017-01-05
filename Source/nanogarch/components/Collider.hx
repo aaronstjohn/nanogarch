@@ -6,7 +6,7 @@ import openfl.display.Sprite;
 import util.GraphicsExt;
 import openfl.events.Event;
 import openfl.events.MouseEvent;
-import openfl.display.DisplayObjectContainer;
+import openfl.display.Sprite;
 import openfl.events.IEventDispatcher;
 import util.SignalUtil;
 using tink.CoreApi; 
@@ -29,7 +29,7 @@ class Collider
 
 	public function new(){}
 	
-	public function initialize(parent:DisplayObjectContainer,poly:Array<Vector2>):Collider
+	public function initialize(parent:Sprite,poly:Array<Vector2>):Collider
 	{
 		fillColor = styleConfig.defaultColliderFillColor;
 		outlineColor = styleConfig.defaultColliderLineColor;
@@ -39,13 +39,15 @@ class Collider
 		collisionFrame = new Frame2(new Vector2(0,0),0);
 
 		collisionShape = new Sprite();
-
+		collisionShape.visible = false;
+		collisionShape.mouseEnabled = false;
 		GraphicsExt.drawPoly(collisionShape.graphics,poly,lineThickness,fillColor,outlineColor);
-		
-		mouseOver =   SignalUtil.makeSignal(collisionShape,MouseEvent.MOUSE_OVER);
-		mouseOut  =   SignalUtil.makeSignal(collisionShape,MouseEvent.MOUSE_OUT);
-		mouseClick =  SignalUtil.makeSignal(collisionShape,MouseEvent.CLICK);
+		parent.hitArea=collisionShape;
+		mouseOver =   SignalUtil.makeSignal(parent,MouseEvent.MOUSE_OVER);
+		mouseOut  =   SignalUtil.makeSignal(parent,MouseEvent.MOUSE_OUT);
+		mouseClick =  SignalUtil.makeSignal(parent,MouseEvent.CLICK);
 		parent.addChild(collisionShape);
+		
 		return this;
 
 	}

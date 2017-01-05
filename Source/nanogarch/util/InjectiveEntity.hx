@@ -4,8 +4,7 @@ import minject.Injector;
 
 class InjectiveEntity extends Entity 
 {
-	// @inject public var globalInjector:Injector;
-	public var injector(get,null):Injector;
+	public var injector(default,null):Injector;
 	@inject public function new( globalInjector:Injector)
 	{
 		super();
@@ -21,5 +20,5 @@ class InjectiveEntity extends Entity
 		return super.add(component,componentClass);
 
 	}
-	function get_injector():Injector {return this.injector;}
+	
 }

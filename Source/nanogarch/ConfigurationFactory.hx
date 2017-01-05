@@ -13,14 +13,15 @@ import nanogarch.graphics.*;
 import nanogarch.components.*;
 import nanogarch.model.*;
 import nanogarch.creators.*;
+import nanogarch.commands.*;
 
 class ConfigurationFactory
 {
-	public var injector:Injector;
+	public var injector:CommandBinder;
 
 	public function new(container:DisplayObjectContainer,viewWidth:Int,viewHeight:Int)
 	{
-		injector 				= new Injector();
+		injector 				= new CommandBinder();
 		var config:GameConfig 	= new GameConfig();
 		config.viewWidth 	= viewWidth;
 		config.viewHeight 	= viewHeight;
@@ -32,7 +33,6 @@ class ConfigurationFactory
 		injector.map(DisplayObjectContainer,"GameDisplayObject").toValue(container);
 		injector.map(FrameTickProvider).toValue(new FrameTickProvider(container));
 		injector.map(Injector).toValue(injector);
-		injector.map(Nanogarch).asSingleton();
 
 	}
 	public function configureSystems()
@@ -49,6 +49,7 @@ class ConfigurationFactory
 		injector.map(Frame).toClass(Frame);
 		injector.map(MapGridFrame).toClass(MapGridFrame);
 		injector.map(Display).toClass(Display);
+		injector.map(Collider).toClass(Collider);
 
 
 		injector.map(ShapeView).toClass(ShapeView);
@@ -76,6 +77,15 @@ class ConfigurationFactory
 		var mapGrid:MapGrid = mapGridCreator.create();
 		injector.map(MapGrid,"MainMap").toValue(mapGrid);
 		return this;
+	}
+
+	public function configureSignals()
+	{
+		injector.bind(Signals.StartSignal,StartCommand).toClass(StartCommand);
+		injector.bind(Signals.OverMapCellSignal,MapCellInfoCommand).toClass(MapCellInfoCommand);
+
+		return this;
+
 	}
 	///Major test cases 
 	// 0.) Generate a world map 
