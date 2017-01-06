@@ -41,6 +41,7 @@ class MapGridSystem extends ListIteratingSystem<MapGridNode>
     }
 	override public function addToEngine(engine:Engine):Void
     {
+        trace("Adding Map Grid System!");
         moveListeners = new Map<MapGridNode, CallbackLink>();
 
         mouseOverListeners = new Map<MapGridNode, CallbackLink>();
@@ -52,6 +53,7 @@ class MapGridSystem extends ListIteratingSystem<MapGridNode>
            engine.addEntity(entity);
         
         super.addToEngine(engine);
+        trace("DONE Adding Map Grid System!");
     }
 
     override public function removeFromEngine(engine:Engine):Void
@@ -65,6 +67,7 @@ class MapGridSystem extends ListIteratingSystem<MapGridNode>
 
 	private function nodeAdded(node:MapGridNode):Void
     {
+        trace("Adding node" + node);
     	var mapCell:MapCell = map.get(node.position);
     	mapCell.addEntity(node.entity);
 

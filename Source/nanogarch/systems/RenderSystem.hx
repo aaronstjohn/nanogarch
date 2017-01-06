@@ -40,6 +40,7 @@ class RenderSystem extends System
 
     override public function addToEngine(engine:Engine):Void
     {
+        trace("Adding Render System!");
   		//Center the view at (0,0)
   		var txMatrix:Matrix = new Matrix();
 		txMatrix.translate(config.viewWidth*0.5,config.viewHeight*0.5);

@@ -19,9 +19,15 @@ class StartCommand extends Command<Noise>
 	override public function Execute(arg:Noise)
 	{
 		trace("START COMMAND EXECUTED!!");
+		trace("ENGINE "+engine);
+		trace("MapGridSystem "+mapGridSystem);
+		trace("Priority : "+SystemPriorities.LOGIC);
 		engine.addSystem(mapGridSystem, SystemPriorities.LOGIC);
+		trace("Added mapGridSystem");
     	engine.addSystem(renderSystem, SystemPriorities.RENDER);
     	tickProvider.add(engine.update);
         tickProvider.start();
+        trace("TICK PROVIDER IS "+tickProvider);
+        trace("START COMMAND COMPLETED!!");
 	}
 }
