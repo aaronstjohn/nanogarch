@@ -1,5 +1,0 @@
--cp Source
--cp Tests 
--lib minject
--main entity.EntityTests
---interp
