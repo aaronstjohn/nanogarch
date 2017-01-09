@@ -5,8 +5,8 @@ Thumbs.db
 .DS_Store
 
 # Unity
-Library
-Temp
+Nanogarch/Library
+Nanogarch/Temp
 *.unitypackage
 
 *-CSharp-vs.csproj
@@ -23,5 +23,5 @@ obj
 test-results
 
 # Custom
-Entitas Shmup.sln
-Build
+Nanogarch/Nanogarch.sln
+Nanogarch/Build
