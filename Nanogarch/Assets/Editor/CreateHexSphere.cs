@@ -44,8 +44,13 @@ public class CreateHexSphere : ScriptableWizard
 		sphere.AddComponent(typeof(MeshRenderer));
 
 		string sphereAssetName = sphere.name + recursionLevel  + ".asset";
-		IcoSphere icoSphere = new IcoSphere(radius);
-		Mesh mesh = Generate.CreateMesh(icoSphere,sphere.name);
+		Icosahedron icosahedron = new Icosahedron(radius,recursionLevel);
+		// icosahedron.SubdivideFaces();
+		TruncatedIcosahedron trunc = new TruncatedIcosahedron(icosahedron);
+		// icoSphere.ConvertToTruncatedIsocahedron();
+		// MeshData singlePoly = icoSphere.GetPolyData(0);
+
+		Mesh mesh = Generate.CreateMesh(trunc,sphere.name);
 		AssetDatabase.CreateAsset(mesh, "Assets/Editor/" + sphereAssetName);
 		AssetDatabase.SaveAssets();
 		

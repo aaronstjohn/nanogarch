@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 using System.Linq;
+using MathNet.Numerics;
+using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra.Double;
 public class MeshData
 {
 	protected List<Vector3> verts;
@@ -13,19 +16,44 @@ public class MeshData
 		faces = new List<TriangleIndices>();
 		vertFaces = new Dictionary<int,HashSet<TriangleIndices>>();
 	}
-
+	public Dictionary<int,HashSet<TriangleIndices>> GetVertFaces()
+	{
+		return vertFaces;
+	}
 	public List<Vector3> GetVertices(){return verts;}
+	public Dictionary<int,HashSet<TriangleIndices>>  GetFacesAroundVertices(){return vertFaces.Clone();}
 	public List<TriangleIndices> GetFaces() {return faces;}
 	public TriangleIndices[] GetFacesAroundVertex(int vert)
 	{
 		return vertFaces[vert].ToArray();
 		
 	}
-	protected int InsertVertex(Vector3 vert )
+
+	public int InsertVertex(Vector3 vert )
 	{
+		if(verts.Contains(vert))
+		{
+			throw new Exception("Don't add copies of verts to MeshData!");
+			// Debug.Log("FOUND COPY of VERT!!");
+			//return verts.IndexOf(vert);
+		}
+		
 		int i = verts.Count;
 		verts.Add(vert);
 		return i;
+		
+		
+	}
+	protected void InsertVertices(List<Vector3> verts)
+	{
+		foreach(Vector3 v in verts)
+			InsertVertex(v);
+
+	}
+	protected void InsertFaces(List<TriangleIndices> tris)
+	{
+		foreach( TriangleIndices tri in tris)
+			InsertFace(tri);
 	}
 	public Vector3 GetVertex(int index)
 	{
@@ -44,16 +72,139 @@ public class MeshData
 		}
 		
 	}
-	protected void InsertFaces(List<TriangleIndices> tris)
-	{
-		foreach( TriangleIndices tri in tris)
-			InsertFace(tri);
+	// public void StartReOrderTris()
+	// {
+	// 	List<TriangleIndices> newTris = new List<TriangleIndices>();
+	// 	List<TriangleIndices> oldTris = new List<TriangleIndices>();
+	// 	foreach(var tri in faces)
+	// 		newTris.Add(new TriangleIndices(tri.v1,tri.v2,tri.v3));
+
+	// 	ReorderTris(ref oldTris,ref newTris);
+	// 	faces = newTris;
+		
+	// }
+	// public void ReorderTris(ref List<TriangleIndices> prevTriOrder, ref List<TriangleIndices> newTriOrder )
+	// {
+	// 	if(prevTriOrder.Count <=0)
+	// 		return;
+
+	// 	if(newTriOrder.Count <=0 )
+	// 	{
+	// 		TriangleIndices nextTri = prevTriOrder.RemoveAt(0);
+	// 		ForceTriToFaceOut(ref nextTri);
+	// 		newTriOrder.Add(nextTri);
+	// 	}
+	// 	//Get the next triangle in the new order 
+	// 	int last = newTriOrder.Count -1;
+	// 	TriangleIndices tri = newTriOrder.RemoveAt(last);
+
+	// 	//Finda triangle in the previous order with at least two of the same vertices 
+	// 	TriangleIndices matchingTri = null;
+	// 	foreach(var oldTri in prevTriOrder)
+	// 	{
+	// 		if(tri.ExactlyTwoVertsMatch(oldTri))
+	// 		{
+	// 			matchingTri = oldTri;
+	// 			break;
+	// 		}
+	// 	}
+	// 	if(matchingTri !=null)
+	// 	{
+	// 		newTriOrder.Add(tri);
+	// 		prevTriOrder.Remove(matchingTri);
+	// 		ForceTriToFaceOut(ref matchingTri);
+
+	// 		newTriOrder.Add(matchingTri);
+	// 		ReorderTris(ref prevTriOrder,ref newTriOrder);
+	// 	}
+	// 	else 
+	// 	{
+	// 		throw new Exception("Couldn't find a matching tri ");
+	// 	}
+
+
+	// }
+	// public void FlipAllFacesOutward()
+	// {
+	// 	// bool anyFacingIn = true;
+	// 	// while(anyFacingIn)
+	// 	// {
+	// 	// 	anyFacingIn = false;
+	// 	foreach(var tri in faces)
+	// 	{
+	// 		if(TriangleFacing(tri) <0 )
+	// 		{	
+	// 			Console.WriteLine("Facing before Flip: "+TriangleFacing(tri));
+	// 			tri.Flip();
+	// 			Console.WriteLine("Facing after Flip: "+TriangleFacing(tri));
+	// 			// anyFacingIn = true;
+
+	// 		}
+	// 	}
+	// 	// }
+	// }
+	public double determinant(double[,] m) {
+		return
+		 m[0,3] * m[1,2] * m[2,1] * m[3,0] - m[0,2] * m[1,3] * m[2,1] * m[3,0] -
+		 m[0,3] * m[1,1] * m[2,2] * m[3,0] + m[0,1] * m[1,3] * m[2,2] * m[3,0] +
+		 m[0,2] * m[1,1] * m[2,3] * m[3,0] - m[0,1] * m[1,2] * m[2,3] * m[3,0] -
+		 m[0,3] * m[1,2] * m[2,0] * m[3,1] + m[0,2] * m[1,3] * m[2,0] * m[3,1] +
+		 m[0,3] * m[1,0] * m[2,2] * m[3,1] - m[0,0] * m[1,3] * m[2,2] * m[3,1] -
+		 m[0,2] * m[1,0] * m[2,3] * m[3,1] + m[0,0] * m[1,2] * m[2,3] * m[3,1] +
+		 m[0,3] * m[1,1] * m[2,0] * m[3,2] - m[0,1] * m[1,3] * m[2,0] * m[3,2] -
+		 m[0,3] * m[1,0] * m[2,1] * m[3,2] + m[0,0] * m[1,3] * m[2,1] * m[3,2] +
+		 m[0,1] * m[1,0] * m[2,3] * m[3,2] - m[0,0] * m[1,1] * m[2,3] * m[3,2] -
+		 m[0,2] * m[1,1] * m[2,0] * m[3,3] + m[0,1] * m[1,2] * m[2,0] * m[3,3] +
+		 m[0,2] * m[1,0] * m[2,1] * m[3,3] - m[0,0] * m[1,2] * m[2,1] * m[3,3] -
+		 m[0,1] * m[1,0] * m[2,2] * m[3,3] + m[0,0] * m[1,1] * m[2,2] * m[3,3];
 	}
-	protected int InsertFace(TriangleIndices tri)
+	public double TriangleFacing(TriangleIndices tri)
 	{
+		Vector3 p1 = GetVertex(tri.v1);
+		Vector3 p2 = GetVertex(tri.v2);
+		Vector3 p3 = GetVertex(tri.v3);
+		double[,] m = new [,] {{ 	p1.x, p1.y, p1.z,1.0 },
+		               		   { 	p2.x, p2.y, p2.z,1.0 },
+		               		   { 	p3.x, p3.y, p3.z,1.0 },
+		               		   { 	0.0,  0.0,  0.0, 1.0 }};
+        return determinant(m);
+	}
+	public TriangleIndices? PositiveFacingPermutation(TriangleIndices tri)
+	{
+		foreach(TriangleIndices perm in tri.Permutations())
+		{
+			double facing = TriangleFacing(perm);
+			// // Debug.Log("FACING OF "+perm+" is "+facing);
+			// Vector3 p1 = GetVertex(perm.v1);
+			// Vector3 p2 = GetVertex(perm.v2);
+			// Vector3 p3 = GetVertex(perm.v3);
+			// Debug.Log("P1 x:"+p1.x+" y: "+p1.y+" z: "+p1.z);
+			// Debug.Log("P2 x:"+p2.x+" y: "+p2.y+" z: "+p2.z);
+			// Debug.Log("P3 x:"+p3.x+" y: "+p3.y+" z: "+p3.z);
+			
+			if( facing >0)
+				return perm;
+		}
+		return null;
+	}
+	
+	public int InsertFace(TriangleIndices tri)
+	{
+		Vector3 p1 = GetVertex(tri.v1);
+		Vector3 p2 = GetVertex(tri.v2);
+		Vector3 p3 = GetVertex(tri.v3);
+		if(p1==p2 || p1==p3 || p2==p3)
+		{
+			throw new Exception("All vertices of a triangle must be different");
+		}
+		TriangleIndices? positiveFacing = PositiveFacingPermutation(tri);
+		if(!positiveFacing.HasValue)
+		{	
+			throw new Exception("Can't add face, no positive winding for tri : "+ tri);
+		}
 		int i = faces.Count;
-		faces.Add(tri);
-		UpdateVertFaceMembership(tri);
+		faces.Add(positiveFacing.GetValueOrDefault());
+		UpdateVertFaceMembership(positiveFacing.GetValueOrDefault());
 		return i;
 	}
 	protected void ResetFaces()
@@ -73,7 +224,7 @@ public class MeshData
 		);
 		return midpoint;
 	}
-	virtual protected Vector3 ComputeFaceCentroid(TriangleIndices tri)
+	virtual public Vector3 ComputeFaceCentroid(TriangleIndices tri)
 	{
 		Vector3 point1 = GetVertex(tri.v1);
 		Vector3 point2 = GetVertex(tri.v2);
@@ -86,5 +237,37 @@ public class MeshData
 			(point1.z + point2.z + point3.z) / 3f
 		);
 		return centroid;
+	}
+	public static List<TriangleIndices>  OrderByTriangleAdjacency( List<TriangleIndices> triFaces)
+	{
+		List<TriangleIndices> workList = triFaces.Clone();
+		List<TriangleIndices> outputList = new List<TriangleIndices>();
+
+		TriangleIndices nextTri = workList[0];
+		workList.Remove(nextTri);
+		// outputList.Add(nextTri);
+		while(workList.Count > 0)
+		{
+			TriangleIndices? adjacent = FindAdjacentTri(nextTri,ref workList);
+			if(!adjacent.HasValue)
+				throw new Exception("Can't build polygon face, no adjacent triangle");
+			TriangleIndices adjacentTri = adjacent.GetValueOrDefault();
+			workList.Remove(adjacentTri);
+			outputList.Add(nextTri);
+			// Debug.Log(string.Format("{0} <==> {1}",nextTri,adjacentTri));
+			nextTri=adjacentTri;
+			
+		}
+		outputList.Add(nextTri);
+		return outputList;
+	}
+	public static TriangleIndices? FindAdjacentTri(TriangleIndices tri, ref  List<TriangleIndices> triList)
+	{
+		foreach(TriangleIndices cantidate in triList)
+		{
+			if(tri.ExclusiveMatchesPair(cantidate))
+				return cantidate;
+		}
+		return null;
 	}
 }

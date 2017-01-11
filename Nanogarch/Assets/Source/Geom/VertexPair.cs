@@ -20,4 +20,12 @@ public struct VertexPair: IEquatable<VertexPair>
 				return false;
 		return true;
 	}
+	override public int GetHashCode()
+	{
+		int hashcode = 23;
+		hashcode = (hashcode * 37) + sorted[0];
+		hashcode = (hashcode * 37) + sorted[1];
+		// hashcode = (hashcode * 37) + sorted[2];
+		return hashcode;
+	}
 }

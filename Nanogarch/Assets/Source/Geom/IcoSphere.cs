@@ -1,13 +1,16 @@
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using System.Linq;
 public class IcoSphere : MeshData
 {
 	
 	private float radius;
+	private List<int> dualPolyCentroids;
 	public IcoSphere(float radius) : base()
 	{
 		this.radius = radius;
+		dualPolyCentroids = new List<int>();
 		float t = (1f + Mathf.Sqrt(5f)) / 2f;
 		InsertVertex(new Vector3(-1f,  t,  0f).normalized * radius);
 		InsertVertex(new Vector3( 1f,  t,  0f).normalized * radius);
@@ -55,11 +58,14 @@ public class IcoSphere : MeshData
 		// SubdivideFaces();
 		// ConvertToTruncatedIsocahedron();
 	}
-	
+	public List<int> GetDualPolyCentroids()
+	{
+		return dualPolyCentroids;
+	}
 	public void SubdivideFaces()
 	{
 		//Grab a references to the current set of faces 
-		List<TriangleIndices> prevFaces =faces;
+		List<TriangleIndices> prevFaces = faces.Clone() ;//ObjectCopier.Clone(faces);
 
 		CachedIndexedComputation<VertexPair,Vector3 > midpointCache = new CachedIndexedComputation<VertexPair,Vector3 >(ComputeMiddlePoint,InsertVertex);
 
@@ -77,31 +83,108 @@ public class IcoSphere : MeshData
 		}
 		
 	}
+	public MeshData GetPolyData(int ithPoly)
+	{
+		int centroid = dualPolyCentroids[ithPoly];
+		MeshData md = new MeshData();
+		TriangleIndices[] trisAroundCentroid = vertFaces[centroid].ToArray();
+		
+		for(int i= 0; i<trisAroundCentroid.Length;i++)
+		{
+			TriangleIndices nextTri = trisAroundCentroid[i];
+			int a = md.InsertVertex(verts[nextTri.v1]);
+			int b = md.InsertVertex(verts[nextTri.v2]);
+			int c = md.InsertVertex(verts[nextTri.v3]);
+			// Debug.Log("Creating face ("+a+","+b+","+c+")");
+			md.InsertFace(new TriangleIndices(a,b,c));
+		}
+		return md;
+	}
+	float positiveRad(float rad)
+	{
+		while (rad <0 )
+			rad+= (float)Math.PI *2;
+		return rad;
+	}
+	public int OrderTris(int sharedVertex,int refVertex,TriangleIndices t1,TriangleIndices t2)
+	{
+		Vector3 shared = verts[sharedVertex];
+		Vector3 reference = Vector3.zero;//verts[refVertex];
+		Vector3 t1centroid = ComputeFaceCentroid(t1);
+		Vector3 t2centroid = ComputeFaceCentroid(t2);
+		Vector3 rayToreference = (reference-shared).normalized;
+		float t1angle = Vector3.Angle( rayToreference,(t1centroid-shared).normalized);
+		float t2angle = Vector3.Angle( rayToreference,(t2centroid-shared).normalized);
+
+
+		if(t1angle >t2angle)
+			return 1;
+		if(t2angle > t1angle)
+			return -1;
+		return 0;
+
+			
+	}
+	// public TriangleIndices? FindAdjacentTri(TriangleIndices tri, ref  List<TriangleIndices> triList)
+	// {
+	// 	foreach(TriangleIndices cantidate in triList)
+	// 	{
+	// 		if(tri.ExclusiveMatchesPair(cantidate))
+	// 			return cantidate;
+	// 	}
+	// 	return null;
+	// }
 	public void ConvertToTruncatedIsocahedron()
 	{
 		//Grab a references to the current set of faces 
-		Dictionary<int,HashSet<TriangleIndices>> prevVertFaces =vertFaces;
+		Dictionary<int,HashSet<TriangleIndices>> prevVertFaces = vertFaces.Clone();//ObjectCopier.Clone(vertFaces);
 		List<TriangleIndices> newFaces = new List<TriangleIndices>();
 		CachedIndexedComputation<TriangleIndices,Vector3 > faceCentroidCache = new CachedIndexedComputation<TriangleIndices,Vector3 >(ComputeFaceCentroid,InsertVertex);
 		
 		//Go through each vertex and build faces for hexes and pentagons using the vertex as the center of the poly
 		// and the centroids of the surrounding faces as the vertices 
+		Debug.Log("THERE ARE "+prevVertFaces.Count+" Verts being converted to faces ");
 		foreach ( KeyValuePair<int,HashSet<TriangleIndices>> kvp in prevVertFaces)
 		{
-			TriangleIndices[] triFaces = kvp.Value.ToArray();
-			Debug.Log("There is: "+triFaces.Length+" Faces around this point ");
-			Vector3 hexCentroid = verts[kvp.Key];
+			// TriangleIndices[] triFaces = kvp.Value.ToArray();
 
-			for(int i=0; i< triFaces.Length; i++)
+			List<TriangleIndices> triFaces = new List<TriangleIndices>(kvp.Value.ToArray());
+			TriangleIndices next = triFaces[0];
+			triFaces.RemoveAt(0);
+
+			while(triFaces.Count>0)
 			{
+				TriangleIndices? adjacent = FindAdjacentTri(next,ref triFaces);
+				if(!adjacent.HasValue)
+					throw new Exception("Can't build polygon face, no adjacent triangle");
+				TriangleIndices adjacentTri = adjacent.GetValueOrDefault();
+
 				int a = kvp.Key;
-				int b = faceCentroidCache.FetchOrCompute(triFaces[i]);
-				//Loop around to the first tri in the list
-				int c = faceCentroidCache.FetchOrCompute(triFaces[(i+1)%triFaces.Length]); 
-				newFaces.Add(new TriangleIndices(a, b, c));
+				int b = faceCentroidCache.FetchOrCompute(next);
+				int c = faceCentroidCache.FetchOrCompute(adjacentTri); 
 				// InsertFace(new TriangleIndices(a, b, c));
+				newFaces.Add(new TriangleIndices(a, b, c));
+				next=adjacentTri;
+				triFaces.Remove(adjacentTri);
 			}
+			// TriangleIndices[] triFaces = kvp.Value.ToArray();
+			
+			// Array.Sort(triFaces,(t1,t2)=>OrderTris(kvp.Key,triFaces[0].v1,t1,t2));
+			// Vector3 hexCentroid = verts[kvp.Key];
+			// dualPolyCentroids.Add(kvp.Key);
+
+			// for(int i=0; i< triFaces.Length; i++)
+			// {
+			// 	int a = kvp.Key;
+			// 	int b = faceCentroidCache.FetchOrCompute(triFaces[i]);
+			// 	//Loop around to the first tri in the list
+			// 	int c = faceCentroidCache.FetchOrCompute(triFaces[(i+1)%triFaces.Length]); 
+			// 	newFaces.Add(new TriangleIndices(a, b, c));
+			// 	// InsertFace(new TriangleIndices(a, b, c));
+			// }
 		}
+		Debug.Log("THERE ARE STILL "+prevVertFaces.Count+" Verts being converted to faces ");
+		
 		//Reset the face list 
 		ResetFaces();
 		//Insert the newly computed faces 
@@ -112,7 +195,7 @@ public class IcoSphere : MeshData
 	{
 		return base.ComputeMiddlePoint(p).normalized*radius;
 	}
-	override protected Vector3 ComputeFaceCentroid(TriangleIndices tri)
+	override public Vector3 ComputeFaceCentroid(TriangleIndices tri)
 	{
 		return base.ComputeFaceCentroid(tri).normalized*radius;
 	}
