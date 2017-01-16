@@ -55,6 +55,10 @@ public class Icosahedron : MeshData
 			SubdivideFaces();
 
 	}
+	public float GetRadius()
+	{
+		return this.radius;
+	}
 	public void SubdivideFaces()
 	{
 		//Grab a references to the current set of faces 
@@ -87,8 +91,10 @@ public class Icosahedron : MeshData
 }
 public class TruncatedIcosahedron : MeshData
 {
+	List<RadialPolyTris> polys;
 	public TruncatedIcosahedron(Icosahedron ico)
 	{
+		polys = new List<RadialPolyTris>();
 		// int count = 0;
 		Dictionary<int,HashSet<TriangleIndices>> prevVertFaces = ico.GetFacesAroundVertices();
 		//This will compute the face centroids relative to the isoc's faces but insert the new vertices in the local MeshData and return the ids for the local mesh
@@ -97,15 +103,40 @@ public class TruncatedIcosahedron : MeshData
 		foreach ( KeyValuePair<int,HashSet<TriangleIndices>> kvp in prevVertFaces)
 		{
 			List<TriangleIndices> icoTriFaces = OrderByTriangleAdjacency(new List<TriangleIndices>(kvp.Value.ToArray()));
+			List<TriangleIndices> truncatedIcoFaces = new List<TriangleIndices>();
 			//Creates a vertex representing the centroid of the poly that we are creating to replace this vertex 
 			int centroidIdx = InsertVertex(ico.GetVertex(kvp.Key).Clone());
 			for(int i=0; i<icoTriFaces.Count; i++)
 			{
 				int b = faceCentroidCache.FetchOrCompute(icoTriFaces[i]);
 				int c = faceCentroidCache.FetchOrCompute(icoTriFaces[(i+1)%icoTriFaces.Count]);
-				InsertFace(new TriangleIndices(centroidIdx,b,c));
+				truncatedIcoFaces.Add(new TriangleIndices(centroidIdx,b,c));
+				
 			}
+			InsertFaces(truncatedIcoFaces);
+			polys.Add(new RadialPolyTris(centroidIdx,truncatedIcoFaces));
 			
 		}
+	}
+	public RadialPolyTris NearestPoly(Vector3 point)
+	{
+		RadialPolyTris bestPoly = polys[0];
+		float smallestAngle = PolyCentroidAngle(bestPoly,point);
+
+		foreach(RadialPolyTris poly in polys)
+		{
+			float newAngle = PolyCentroidAngle(poly,point);
+			if(newAngle < smallestAngle)
+			{
+				smallestAngle = newAngle;
+				bestPoly = poly;
+			}
+		}
+		return bestPoly;
+	}
+	public float PolyCentroidAngle(RadialPolyTris poly, Vector3 point)
+	{
+		Vector3 centroid = verts[poly.centroid];
+		return Vector3.Angle(centroid.normalized,point.normalized);
 	}
 }

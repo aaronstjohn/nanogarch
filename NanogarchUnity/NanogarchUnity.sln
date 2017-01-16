@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{A58CCF5B-05D4-75E1-6055-7B59A792541F}") = "NanogarchUnity", "Assembly-CSharp.csproj", "{B8AF982F-58A0-7024-B2B1-54C52D5A4D7D}"
+EndProject
+Project("{A58CCF5B-05D4-75E1-6055-7B59A792541F}") = "NanogarchUnity", "Assembly-CSharp-Editor.csproj", "{441E10A9-A1CA-5D39-9219-13277F14F7DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8AF982F-58A0-7024-B2B1-54C52D5A4D7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8AF982F-58A0-7024-B2B1-54C52D5A4D7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8AF982F-58A0-7024-B2B1-54C52D5A4D7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8AF982F-58A0-7024-B2B1-54C52D5A4D7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{441E10A9-A1CA-5D39-9219-13277F14F7DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{441E10A9-A1CA-5D39-9219-13277F14F7DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{441E10A9-A1CA-5D39-9219-13277F14F7DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{441E10A9-A1CA-5D39-9219-13277F14F7DA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

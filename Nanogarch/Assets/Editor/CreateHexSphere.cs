@@ -50,7 +50,7 @@ public class CreateHexSphere : ScriptableWizard
 		// icoSphere.ConvertToTruncatedIsocahedron();
 		// MeshData singlePoly = icoSphere.GetPolyData(0);
 
-		Mesh mesh = Generate.CreateMesh(trunc,sphere.name);
+		Mesh mesh = Generate.CreateMesh(trunc.GetDuplicateVertsPerTri(),sphere.name);
 		AssetDatabase.CreateAsset(mesh, "Assets/Editor/" + sphereAssetName);
 		AssetDatabase.SaveAssets();
 		

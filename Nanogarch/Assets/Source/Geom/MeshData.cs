@@ -28,15 +28,32 @@ public class MeshData
 		return vertFaces[vert].ToArray();
 		
 	}
+	//Creates a copy of this mesh with an instance of each vertex per triangle.
+	public MeshData GetDuplicateVertsPerTri()
+	{
+		MeshData newMd = new MeshData();
 
+		foreach(TriangleIndices tri in faces)
+		{
+			Vector3 p1 = GetVertex(tri.v1).Clone();
+			Vector3 p2 = GetVertex(tri.v2).Clone();
+			Vector3 p3 = GetVertex(tri.v3).Clone();
+			int a = newMd.InsertVertex(p1);
+			int b = newMd.InsertVertex(p2);
+			int c = newMd.InsertVertex(p3);
+			newMd.InsertFace(new TriangleIndices(a,b,c));
+				
+		}
+		return newMd;
+	}
 	public int InsertVertex(Vector3 vert )
 	{
-		if(verts.Contains(vert))
-		{
-			throw new Exception("Don't add copies of verts to MeshData!");
-			// Debug.Log("FOUND COPY of VERT!!");
-			//return verts.IndexOf(vert);
-		}
+		//DEBUG ONLY
+		// if(verts.Contains(vert))
+		// {
+		// 	throw new Exception("Don't add copies of verts to MeshData!");
+		
+		// }
 		
 		int i = verts.Count;
 		verts.Add(vert);
@@ -44,13 +61,14 @@ public class MeshData
 		
 		
 	}
-	protected void InsertVertices(List<Vector3> verts)
+
+	public void InsertVertices(List<Vector3> verts)
 	{
 		foreach(Vector3 v in verts)
 			InsertVertex(v);
 
 	}
-	protected void InsertFaces(List<TriangleIndices> tris)
+	public void InsertFaces(List<TriangleIndices> tris)
 	{
 		foreach( TriangleIndices tri in tris)
 			InsertFace(tri);
@@ -72,77 +90,7 @@ public class MeshData
 		}
 		
 	}
-	// public void StartReOrderTris()
-	// {
-	// 	List<TriangleIndices> newTris = new List<TriangleIndices>();
-	// 	List<TriangleIndices> oldTris = new List<TriangleIndices>();
-	// 	foreach(var tri in faces)
-	// 		newTris.Add(new TriangleIndices(tri.v1,tri.v2,tri.v3));
-
-	// 	ReorderTris(ref oldTris,ref newTris);
-	// 	faces = newTris;
-		
-	// }
-	// public void ReorderTris(ref List<TriangleIndices> prevTriOrder, ref List<TriangleIndices> newTriOrder )
-	// {
-	// 	if(prevTriOrder.Count <=0)
-	// 		return;
-
-	// 	if(newTriOrder.Count <=0 )
-	// 	{
-	// 		TriangleIndices nextTri = prevTriOrder.RemoveAt(0);
-	// 		ForceTriToFaceOut(ref nextTri);
-	// 		newTriOrder.Add(nextTri);
-	// 	}
-	// 	//Get the next triangle in the new order 
-	// 	int last = newTriOrder.Count -1;
-	// 	TriangleIndices tri = newTriOrder.RemoveAt(last);
-
-	// 	//Finda triangle in the previous order with at least two of the same vertices 
-	// 	TriangleIndices matchingTri = null;
-	// 	foreach(var oldTri in prevTriOrder)
-	// 	{
-	// 		if(tri.ExactlyTwoVertsMatch(oldTri))
-	// 		{
-	// 			matchingTri = oldTri;
-	// 			break;
-	// 		}
-	// 	}
-	// 	if(matchingTri !=null)
-	// 	{
-	// 		newTriOrder.Add(tri);
-	// 		prevTriOrder.Remove(matchingTri);
-	// 		ForceTriToFaceOut(ref matchingTri);
-
-	// 		newTriOrder.Add(matchingTri);
-	// 		ReorderTris(ref prevTriOrder,ref newTriOrder);
-	// 	}
-	// 	else 
-	// 	{
-	// 		throw new Exception("Couldn't find a matching tri ");
-	// 	}
-
-
-	// }
-	// public void FlipAllFacesOutward()
-	// {
-	// 	// bool anyFacingIn = true;
-	// 	// while(anyFacingIn)
-	// 	// {
-	// 	// 	anyFacingIn = false;
-	// 	foreach(var tri in faces)
-	// 	{
-	// 		if(TriangleFacing(tri) <0 )
-	// 		{	
-	// 			Console.WriteLine("Facing before Flip: "+TriangleFacing(tri));
-	// 			tri.Flip();
-	// 			Console.WriteLine("Facing after Flip: "+TriangleFacing(tri));
-	// 			// anyFacingIn = true;
-
-	// 		}
-	// 	}
-	// 	// }
-	// }
+	
 	public double determinant(double[,] m) {
 		return
 		 m[0,3] * m[1,2] * m[2,1] * m[3,0] - m[0,2] * m[1,3] * m[2,1] * m[3,0] -
