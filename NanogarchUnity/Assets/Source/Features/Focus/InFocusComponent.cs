@@ -1,5 +1,7 @@
 using Entitas;
-[Core]
+using Entitas.CodeGenerator;
+
+[Core,SingleEntity]
 public sealed class InFocusComponent: IComponent
 {
 	

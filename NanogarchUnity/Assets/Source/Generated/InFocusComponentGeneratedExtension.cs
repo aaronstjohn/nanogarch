@@ -32,6 +32,25 @@ namespace Entitas {
             return this;
         }
     }
+
+    public partial class Context {
+
+        public Entity inFocusEntity { get { return GetGroup(CoreMatcher.InFocus).GetSingleEntity(); } }
+
+        public bool isInFocus {
+            get { return inFocusEntity != null; }
+            set {
+                var entity = inFocusEntity;
+                if(value != (entity != null)) {
+                    if(value) {
+                        CreateEntity().isInFocus = true;
+                    } else {
+                        DestroyEntity(entity);
+                    }
+                }
+            }
+        }
+    }
 }
 
     public partial class CoreMatcher {

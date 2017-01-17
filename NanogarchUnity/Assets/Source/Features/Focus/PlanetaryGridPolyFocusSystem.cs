@@ -12,7 +12,7 @@ public sealed class PlanetaryGridPolyFocusSystem : ReactiveSystem {
     }
 
     protected override Collector GetTrigger(Context context) {
-        return context.CreateCollector(Matcher.AllOf(CoreMatcher.InFocus,CoreMatcher.PlanetaryGridPolygon));
+        return context.CreateCollector(CoreMatcher.InFocus,GroupEvent.Added);
     }
 
     protected override bool Filter(Entity entity) {
@@ -29,7 +29,7 @@ public sealed class PlanetaryGridPolyFocusSystem : ReactiveSystem {
         spotlightEntity.view.gameObject.transform.position=focusedItem.planetaryGridPolygon.centroid.normalized*1.4f;
         spotlightEntity.view.gameObject.transform.LookAt(planetEntity.view.gameObject.transform);
 
-        focusedItem.isInFocus = false;
+        // focusedItem.isInFocus = false;
         // GameObject spotGO = GameObject.Create();
         // var res = Resources.Load<GameObject>("Spot");
         // GameObject spotGO = Object.Instantiate("Spot");

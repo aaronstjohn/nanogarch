@@ -12,7 +12,7 @@ public sealed class ProcessPlanetaryGridInputSystem : ReactiveSystem {
     }
 
     protected override Collector GetTrigger(Context context) {
-        return context.CreateCollector(InputMatcher.Input);
+        return context.CreateCollector(InputMatcher.Input,GroupEvent.Added);
     }
 
     protected override bool Filter(Entity entity) {
@@ -31,9 +31,16 @@ public sealed class ProcessPlanetaryGridInputSystem : ReactiveSystem {
         // var planet = _contexts.core.GetEntityNamed(input.targetName);
         int closestPolyIdx = planetEntity.planetaryGrid.geometry.NearestPoly(input.inputPos);
         var polyEntity = _contexts.core.GetEntityWithPlanetaryGridPolygonId(closestPolyIdx);
+
+        if(_contexts.core.inFocusEntity!=null)
+        {
+            _contexts.core.inFocusEntity.isInFocus = false;
+        }
+        polyEntity.isInFocus = true;
+        // Debug.Log(string.Format("IN FOCUS ENT ({0})",_contexts.core.inFocusEntity==null?"NULL":"NOT NULL"));
         // Debug.Log("Best poly is poly: "+closestPolyIdx);
         // Debug.Log("got planet input on poly: "+polyEntity.planetaryGridPolygon.polygonId);
-        polyEntity.IsInFocus(true);
+        // polyEntity.IsInFocus(true);
 
     }
 }
