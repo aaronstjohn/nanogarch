@@ -4,12 +4,9 @@ using UnityEngine;
 
 public sealed class CreatePlanetaryGridSystem : ReactiveSystem, IInitializeSystem {
 	readonly Context _context;
-    // readonly Group _planetGridElements;
-	public CreatePlanetaryGridSystem(Contexts contexts) :base(contexts.core)
+    public CreatePlanetaryGridSystem(Contexts contexts) :base(contexts.core)
 	{
 		_context= contexts.core;
-		// _planetGridCells = _context.GetGroup(Matcher.AllOf())
-
 	}
 	 protected override Collector GetTrigger(Context context) {
         return context.CreateCollector(CoreMatcher.View);
@@ -34,8 +31,7 @@ public sealed class CreatePlanetaryGridSystem : ReactiveSystem, IInitializeSyste
 		for(int i=0;i<points.Count;i++)
 		{
 			_context.CreateEntity()
-				// .AddPlanetaryGridPolygon(i,geom.GetPolyCentroid(polys[i]) )
-			.AddPlanetaryGridPolygon(i,points[i] )
+				.AddPlanetaryGridPolygon(i,points[i] )
 				.AddResource("PolyText")
 				.AddName(string.Format("{0}",i));
 		}
@@ -44,6 +40,7 @@ public sealed class CreatePlanetaryGridSystem : ReactiveSystem, IInitializeSyste
             .AddPlanetaryGrid(geom)
             .IsInteractive(true)
             .AddName("PlanetaryGrid")
+            .AddRotation(0.0f,0.0f)
 			.AddResource("PlanetaryGrid");
 
 	}

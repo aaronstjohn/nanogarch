@@ -9,14 +9,17 @@
 public static class InputComponentIds {
 
     public const int Input = 0;
+    public const int InputDrag = 1;
 
-    public const int TotalComponents = 1;
+    public const int TotalComponents = 2;
 
     public static readonly string[] componentNames = {
-        "Input"
+        "Input",
+        "InputDrag"
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(InputComponent)
+        typeof(InputComponent),
+        typeof(InputDragComponent)
     };
 }

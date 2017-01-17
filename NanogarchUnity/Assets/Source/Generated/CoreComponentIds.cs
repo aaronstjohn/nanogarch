@@ -15,9 +15,10 @@ public static class CoreComponentIds {
     public const int PlanetaryGrid = 4;
     public const int PlanetaryGridPolygon = 5;
     public const int Resource = 6;
-    public const int View = 7;
+    public const int Rotation = 7;
+    public const int View = 8;
 
-    public const int TotalComponents = 8;
+    public const int TotalComponents = 9;
 
     public static readonly string[] componentNames = {
         "Destroy",
@@ -27,6 +28,7 @@ public static class CoreComponentIds {
         "PlanetaryGrid",
         "PlanetaryGridPolygon",
         "Resource",
+        "Rotation",
         "View"
     };
 
@@ -38,6 +40,7 @@ public static class CoreComponentIds {
         typeof(PlanetaryGridComponent),
         typeof(PlanetaryGridPolygonComponent),
         typeof(ResourceComponent),
+        typeof(RotationComponent),
         typeof(ViewComponent)
     };
 }

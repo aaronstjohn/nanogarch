@@ -22,25 +22,24 @@ public sealed class ProcessPlanetaryGridInputSystem : ReactiveSystem {
     protected override void Execute(List<Entity> entities) {
         var inputEntity = entities.SingleEntity();
         var input = inputEntity.input;
-        // var spotlightEntity = _contexts.core.GetEntityNamed("FocusSpotlight");
-        var planetEntity = _contexts.core.GetEntityNamed("PlanetaryGrid");
+        var planetEntity = _contexts.core.planetaryGridEntity;
+
         var spotlightEntity = _contexts.core.GetEntityNamed("CursorSpotlight");
 
         spotlightEntity.view.gameObject.transform.position=input.inputPos.normalized*0.77f;
-        spotlightEntity.view.gameObject.transform.LookAt(planetEntity.view.gameObject.transform);
-        // var planet = _contexts.core.GetEntityNamed(input.targetName);
+        // spotlightEntity.view.gameObject.transform.LookAt(planetEntity.view.gameObject.transform);
+        spotlightEntity.LookAt(planetEntity);
+        
         int closestPolyIdx = planetEntity.planetaryGrid.geometry.NearestPoly(input.inputPos);
         var polyEntity = _contexts.core.GetEntityWithPlanetaryGridPolygonId(closestPolyIdx);
 
+        //Take the focus off the last entity that was in focus
         if(_contexts.core.inFocusEntity!=null)
-        {
-            _contexts.core.inFocusEntity.isInFocus = false;
-        }
+         _contexts.core.inFocusEntity.isInFocus = false;
+        
+        //Add focus to the new entity in focus 
         polyEntity.isInFocus = true;
-        // Debug.Log(string.Format("IN FOCUS ENT ({0})",_contexts.core.inFocusEntity==null?"NULL":"NOT NULL"));
-        // Debug.Log("Best poly is poly: "+closestPolyIdx);
-        // Debug.Log("got planet input on poly: "+polyEntity.planetaryGridPolygon.polygonId);
-        // polyEntity.IsInFocus(true);
+       
 
     }
 }
