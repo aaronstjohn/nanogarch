@@ -101,7 +101,8 @@ public class TruncatedIcosahedron : MeshData
 		Dictionary<int,HashSet<TriangleIndices>> prevVertFaces = icosahedron.GetFacesAroundVertices();
 		//This will compute the face centroids relative to the isoc's faces but insert the new vertices in the local MeshData and return the ids for the local mesh
 		CachedIndexedComputation<TriangleIndices,Vector3 > faceCentroidCache = new CachedIndexedComputation<TriangleIndices,Vector3 >(icosahedron.ComputeFaceCentroid,InsertVertex);
-		
+		Debug.Log(string.Format("Before Truncation there are {0} Polys ",prevVertFaces.Count));
+	
 		foreach ( KeyValuePair<int,HashSet<TriangleIndices>> kvp in prevVertFaces)
 		{
 			List<TriangleIndices> icoTriFaces = OrderByTriangleAdjacency(new List<TriangleIndices>(kvp.Value.ToArray()));
@@ -119,6 +120,8 @@ public class TruncatedIcosahedron : MeshData
 			polys.Add(new RadialPolyTris(centroidIdx,truncatedIcoFaces));
 			
 		}
+		Debug.Log(string.Format("Generated {0} Polys ",polys.Count));
+		Debug.Log(string.Format("Verts with faces count: {0} ",vertFaces.Count));
 	}
 	public List<RadialPolyTris> GetRadialPolys()
 	{
@@ -130,15 +133,16 @@ public class TruncatedIcosahedron : MeshData
 	}
 	public int NearestPoly(Vector3 point)
 	{
-		RadialPolyTris bestPoly = polys[0];
+		Vector3 bestPoly = verts[0];
 		int bestPolyIndex = 0;
-		float smallestAngle = PolyCentroidAngle(bestPoly,point);
+		float smallestAngle = Mathf.Acos(Vector3.Dot(bestPoly.normalized,point.normalized));
+		// PolyCentroidAngle(bestPoly,point);
 
 		// foreach(RadialPolyTris poly in polys)
-		for(int i=0; i<polys.Count;i++)
+		for(int i=0; i<verts.Count;i++)
 		{
-			RadialPolyTris poly = polys[i];
-			float newAngle = PolyCentroidAngle(poly,point);
+			Vector3 poly = verts[i];
+			float newAngle = Mathf.Acos(Vector3.Dot(poly.normalized,point.normalized));
 			if(newAngle < smallestAngle)
 			{
 				smallestAngle = newAngle;
@@ -148,9 +152,29 @@ public class TruncatedIcosahedron : MeshData
 		}
 		return bestPolyIndex;
 	}
+	// public int NearestPoly(Vector3 point)
+	// {
+	// 	RadialPolyTris bestPoly = polys[0];
+	// 	int bestPolyIndex = 0;
+	// 	float smallestAngle = PolyCentroidAngle(bestPoly,point);
+
+	// 	// foreach(RadialPolyTris poly in polys)
+	// 	for(int i=0; i<polys.Count;i++)
+	// 	{
+	// 		RadialPolyTris poly = polys[i];
+	// 		float newAngle = PolyCentroidAngle(poly,point);
+	// 		if(newAngle < smallestAngle)
+	// 		{
+	// 			smallestAngle = newAngle;
+	// 			bestPoly = poly;
+	// 			bestPolyIndex = i;
+	// 		}
+	// 	}
+	// 	return bestPolyIndex;
+	// }
 	public float PolyCentroidAngle(RadialPolyTris poly, Vector3 point)
 	{
 		Vector3 centroid = verts[poly.centroid];
-		return Vector3.Angle(centroid.normalized,point.normalized);
+		return Mathf.Acos(Vector3.Dot(centroid.normalized,point.normalized));
 	}
 }

@@ -19,7 +19,7 @@ public sealed class EmitInputSystem : IExecuteSystem, ICleanupSystem {
         if(Physics.Raycast(ray, out hit))
         {
             _context.CreateEntity()
-                .AddInput(hit.point.Clone(),hit.collider.name);
+                .AddInput(hit.point,hit.collider.name);
             // Debug.Log("Emitting Input "+hit.point+" On collider "+hit.collider.name);
         }
         

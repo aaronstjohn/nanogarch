@@ -12,7 +12,10 @@ public sealed class CreateFocusSpotlightSystem :  IInitializeSystem {
 	public void Initialize() {
 	
 		_context.CreateEntity()
-            .AddName("FocusSpotlight")
+            .AddName("CursorSpotlight")
+			.AddResource("Spotlight");
+		_context.CreateEntity()
+            .AddName("PolygonFocusSpotlight")
 			.AddResource("Spotlight");
 
 	}

@@ -15,17 +15,17 @@ namespace Entitas {
         public PlanetaryGridPolygonComponent planetaryGridPolygon { get { return (PlanetaryGridPolygonComponent)GetComponent(CoreComponentIds.PlanetaryGridPolygon); } }
         public bool hasPlanetaryGridPolygon { get { return HasComponent(CoreComponentIds.PlanetaryGridPolygon); } }
 
-        public Entity AddPlanetaryGridPolygon(int newPolygonId, RadialPolyTris newTris) {
+        public Entity AddPlanetaryGridPolygon(int newPolygonId, UnityEngine.Vector3 newCentroid) {
             var component = CreateComponent<PlanetaryGridPolygonComponent>(CoreComponentIds.PlanetaryGridPolygon);
             component.polygonId = newPolygonId;
-            component.tris = newTris;
+            component.centroid = newCentroid;
             return AddComponent(CoreComponentIds.PlanetaryGridPolygon, component);
         }
 
-        public Entity ReplacePlanetaryGridPolygon(int newPolygonId, RadialPolyTris newTris) {
+        public Entity ReplacePlanetaryGridPolygon(int newPolygonId, UnityEngine.Vector3 newCentroid) {
             var component = CreateComponent<PlanetaryGridPolygonComponent>(CoreComponentIds.PlanetaryGridPolygon);
             component.polygonId = newPolygonId;
-            component.tris = newTris;
+            component.centroid = newCentroid;
             ReplaceComponent(CoreComponentIds.PlanetaryGridPolygon, component);
             return this;
         }

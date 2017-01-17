@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: f549dc1213fda48ffa366711b132a2d0
+timeCreated: 1484605964
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: 'Targa '
+  fontNames:
+  - 'Targa '
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -22,9 +22,16 @@ public sealed class ProcessPlanetaryGridInputSystem : ReactiveSystem {
     protected override void Execute(List<Entity> entities) {
         var inputEntity = entities.SingleEntity();
         var input = inputEntity.input;
-        var planet = _contexts.core.GetEntityNamed(input.targetName);
-        int closestPolyIdx = planet.planetaryGrid.geometry.NearestPoly(input.inputPos);
+        // var spotlightEntity = _contexts.core.GetEntityNamed("FocusSpotlight");
+        var planetEntity = _contexts.core.GetEntityNamed("PlanetaryGrid");
+        var spotlightEntity = _contexts.core.GetEntityNamed("CursorSpotlight");
+
+        spotlightEntity.view.gameObject.transform.position=input.inputPos.normalized*0.77f;
+        spotlightEntity.view.gameObject.transform.LookAt(planetEntity.view.gameObject.transform);
+        // var planet = _contexts.core.GetEntityNamed(input.targetName);
+        int closestPolyIdx = planetEntity.planetaryGrid.geometry.NearestPoly(input.inputPos);
         var polyEntity = _contexts.core.GetEntityWithPlanetaryGridPolygonId(closestPolyIdx);
+        // Debug.Log("Best poly is poly: "+closestPolyIdx);
         // Debug.Log("got planet input on poly: "+polyEntity.planetaryGridPolygon.polygonId);
         polyEntity.IsInFocus(true);
 

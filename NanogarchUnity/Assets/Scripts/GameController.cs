@@ -35,7 +35,9 @@ public class GameController : MonoBehaviour {
             .Add(new ProcessPlanetaryGridInputSystem(contexts))
             .Add(new PlanetaryGridPolyFocusSystem(contexts))
 
+
             // // Update
+            .Add(new LabelGridPolysSystem(contexts))
             // .Add(new AccelerateSystem(contexts))
             // .Add(new MoveSystem(contexts))
             // .Add(new ReachedFinishSystem(contexts))

@@ -23,11 +23,13 @@ public sealed class PlanetaryGridPolyFocusSystem : ReactiveSystem {
         var focusedItem = entities.SingleEntity();
         // Debug.Log("Got Focus on pol "+focusedItem.planetaryGridPolygon.polygonId);
         var planetEntity = _contexts.core.GetEntityNamed("PlanetaryGrid");
-        var spotlightEntity = _contexts.core.GetEntityNamed("FocusSpotlight");
+        var spotlightEntity = _contexts.core.GetEntityNamed("PolygonFocusSpotlight");
 
-        Vector3 centroid = planetEntity.planetaryGrid.geometry.GetPolyCentroid(focusedItem.planetaryGridPolygon.tris);
-        spotlightEntity.view.gameObject.transform.position=centroid.normalized*0.77f;
+        // Vector3 centroid = planetEntity.planetaryGrid.geometry.GetPolyCentroid(focusedItem.planetaryGridPolygon.tris);
+        spotlightEntity.view.gameObject.transform.position=focusedItem.planetaryGridPolygon.centroid.normalized*1.4f;
         spotlightEntity.view.gameObject.transform.LookAt(planetEntity.view.gameObject.transform);
+
+        focusedItem.isInFocus = false;
         // GameObject spotGO = GameObject.Create();
         // var res = Resources.Load<GameObject>("Spot");
         // GameObject spotGO = Object.Instantiate("Spot");

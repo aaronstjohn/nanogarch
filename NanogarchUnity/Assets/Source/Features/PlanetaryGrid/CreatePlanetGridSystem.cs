@@ -28,12 +28,16 @@ public sealed class CreatePlanetaryGridSystem : ReactiveSystem, IInitializeSyste
     	Debug.Log("View Added to planet grid"+entity.view.gameObject);
     }
 	public void Initialize() {
-		TruncatedIcosahedron geom = new TruncatedIcosahedron(0.5f, 4);
-		List<RadialPolyTris> polys = geom.GetRadialPolys();
-		for(int i=0;i<polys.Count;i++)
+		TruncatedIcosahedron geom = new TruncatedIcosahedron(0.5f, 1);
+		// List<RadialPolyTris> polys = geom.GetRadialPolys();
+		List<Vector3> points = geom.GetVertices();
+		for(int i=0;i<points.Count;i++)
 		{
 			_context.CreateEntity()
-				.AddPlanetaryGridPolygon(i,polys[i]);
+				// .AddPlanetaryGridPolygon(i,geom.GetPolyCentroid(polys[i]) )
+			.AddPlanetaryGridPolygon(i,points[i] )
+				.AddResource("PolyText")
+				.AddName(string.Format("{0}",i));
 		}
 
 		_context.CreateEntity()
