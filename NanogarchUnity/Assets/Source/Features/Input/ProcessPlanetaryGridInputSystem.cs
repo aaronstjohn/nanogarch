@@ -26,7 +26,9 @@ public sealed class ProcessPlanetaryGridInputSystem : ReactiveSystem {
 
         var spotlightEntity = _contexts.core.GetEntityNamed("CursorSpotlight");
 
-        spotlightEntity.view.gameObject.transform.position=input.inputPos.normalized*0.77f;
+        spotlightEntity.view.gameObject.transform.position=planetEntity.view.gameObject.transform.TransformPoint(input.inputPos.normalized)*0.77f;
+        // spotlightEntity.view.gameObject.transform.position=planetEntity.view.gameObject.transform.TransformPoint(focusedItem.planetaryGridPolygon.centroid.normalized)*1.4f;
+        
         // spotlightEntity.view.gameObject.transform.LookAt(planetEntity.view.gameObject.transform);
         spotlightEntity.LookAt(planetEntity);
         

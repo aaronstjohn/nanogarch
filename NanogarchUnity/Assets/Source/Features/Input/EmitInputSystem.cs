@@ -8,6 +8,7 @@ public sealed class EmitInputSystem : IExecuteSystem, ICleanupSystem {
     readonly Group _dragInputs;
     Ray ray;
     RaycastHit hit;
+    // Transform cam;
 
     public EmitInputSystem(Contexts contexts) {
         _context = contexts.input;
@@ -24,11 +25,12 @@ public sealed class EmitInputSystem : IExecuteSystem, ICleanupSystem {
         }
         else
         {
+            // cam = Camera.main.transform;
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if(Physics.Raycast(ray, out hit))
             {
                 _context.CreateEntity()
-                    .AddInput(hit.point,hit.collider.name);
+                    .AddInput(hit.collider.gameObject.transform.InverseTransformPoint(hit.point),hit.collider.name);
             }
         }
         

@@ -22,7 +22,8 @@ public sealed class PlanetaryGridPolyFocusSystem : ReactiveSystem {
         var focusedItem = entities.SingleEntity();
         var planetEntity = _contexts.core.planetaryGridEntity;
         var spotlightEntity = _contexts.core.GetEntityNamed("PolygonFocusSpotlight");
-        spotlightEntity.view.gameObject.transform.position=focusedItem.planetaryGridPolygon.centroid.normalized*1.4f;
+        
+        spotlightEntity.view.gameObject.transform.position=planetEntity.view.gameObject.transform.TransformPoint(focusedItem.planetaryGridPolygon.centroid.normalized)*1.4f;
         spotlightEntity.LookAt(planetEntity);
     }
 }

@@ -19,6 +19,8 @@ public sealed class RotateSystem : IExecuteSystem {
         foreach(var e in _rotaters.GetEntities()) {
             fromRotation = e.view.gameObject.transform.rotation;
 			toRotation = Quaternion.Euler(e.rotation.yDegrees,e.rotation.xDegrees,0);
+
+			// e.view.gameObject.transform.Rotate((e.rotation.yDegrees  * Time.deltaTime), (e.rotation.xDegrees  * Time.deltaTime), 0, Space.World);
 			e.view.gameObject.transform.rotation =Quaternion.Lerp(fromRotation,toRotation,Time.deltaTime  * lerpSpeed);
 
         }
