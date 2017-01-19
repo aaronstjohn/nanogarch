@@ -33,14 +33,17 @@ public class GameController : MonoBehaviour {
             // // Input
             .Add(new EmitInputSystem(contexts))
             .Add(new ProcessPlanetaryGridInputSystem(contexts))
+            .Add(new PlanetaryGridPolySelectionSystem(contexts))
             .Add(new PlanetaryGridPolyFocusSystem(contexts))
             .Add(new ProcessPlanetaryGridDragInputSystem(contexts))
+            .Add(new AddSpotlightSystem(contexts))
             
 
 
             // // Update
             .Add(new LabelGridPolysSystem(contexts))
             .Add(new RotateSystem(contexts))
+            .Add(new SpawnUnitSystem(contexts))
             // .Add(new AccelerateSystem(contexts))
             // .Add(new MoveSystem(contexts))
             // .Add(new ReachedFinishSystem(contexts))

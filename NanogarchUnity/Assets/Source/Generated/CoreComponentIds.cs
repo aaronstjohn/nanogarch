@@ -10,37 +10,52 @@ public static class CoreComponentIds {
 
     public const int Destroy = 0;
     public const int InFocus = 1;
-    public const int Interactive = 2;
-    public const int Name = 3;
-    public const int PlanetaryGrid = 4;
-    public const int PlanetaryGridPolygon = 5;
-    public const int Resource = 6;
-    public const int Rotation = 7;
-    public const int View = 8;
+    public const int InSpotlight = 2;
+    public const int Interactive = 3;
+    public const int Name = 4;
+    public const int PlanetaryGrid = 5;
+    public const int PlanetaryGridPolygon = 6;
+    public const int Resource = 7;
+    public const int Rotation = 8;
+    public const int Selected = 9;
+    public const int Spawn = 10;
+    public const int Spotlight = 11;
+    public const int Unit = 12;
+    public const int View = 13;
 
-    public const int TotalComponents = 9;
+    public const int TotalComponents = 14;
 
     public static readonly string[] componentNames = {
         "Destroy",
         "InFocus",
+        "InSpotlight",
         "Interactive",
         "Name",
         "PlanetaryGrid",
         "PlanetaryGridPolygon",
         "Resource",
         "Rotation",
+        "Selected",
+        "Spawn",
+        "Spotlight",
+        "Unit",
         "View"
     };
 
     public static readonly System.Type[] componentTypes = {
         typeof(DestroyComponent),
         typeof(InFocusComponent),
+        typeof(InSpotlightComponent),
         typeof(InteractiveComponent),
         typeof(NameComponent),
         typeof(PlanetaryGridComponent),
         typeof(PlanetaryGridPolygonComponent),
         typeof(ResourceComponent),
         typeof(RotationComponent),
+        typeof(SelectedComponent),
+        typeof(SpawnComponent),
+        typeof(SpotlightComponent),
+        typeof(UnitComponent),
         typeof(ViewComponent)
     };
 }

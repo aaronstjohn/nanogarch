@@ -15,23 +15,34 @@ public sealed class EmitInputSystem : IExecuteSystem, ICleanupSystem {
         _inputs = _context.GetGroup(InputMatcher.Input);
         _dragInputs = _context.GetGroup(InputMatcher.InputDrag);
     }
-
+    public void CreateMouseButtonEntity(bool isClick)
+    {
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if(Physics.Raycast(ray, out hit))
+        {
+           var input= _context.CreateEntity()
+                .AddInput(hit.collider.gameObject.transform.InverseTransformPoint(hit.point),hit.collider.name);
+            if (isClick)
+            {
+                Debug.Log("Marking input as selected ! ");
+                input.isInputSelected = true;
+            }
+        }
+    }
     public void Execute() {
-        
-        if(Input.GetMouseButton(0)) 
+        if (Input.GetMouseButtonDown(0))
+        {
+            CreateMouseButtonEntity(true);
+        }
+        else if(Input.GetMouseButton(0)) 
         {
             _context.CreateEntity()
                     .AddInputDrag(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y"));
         }
         else
         {
-            // cam = Camera.main.transform;
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if(Physics.Raycast(ray, out hit))
-            {
-                _context.CreateEntity()
-                    .AddInput(hit.collider.gameObject.transform.InverseTransformPoint(hit.point),hit.collider.name);
-            }
+            CreateMouseButtonEntity(false);
+       
         }
         
     }

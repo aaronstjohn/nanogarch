@@ -27,9 +27,6 @@ public sealed class ProcessPlanetaryGridInputSystem : ReactiveSystem {
         var spotlightEntity = _contexts.core.GetEntityNamed("CursorSpotlight");
 
         spotlightEntity.view.gameObject.transform.position=planetEntity.view.gameObject.transform.TransformPoint(input.inputPos.normalized)*0.77f;
-        // spotlightEntity.view.gameObject.transform.position=planetEntity.view.gameObject.transform.TransformPoint(focusedItem.planetaryGridPolygon.centroid.normalized)*1.4f;
-        
-        // spotlightEntity.view.gameObject.transform.LookAt(planetEntity.view.gameObject.transform);
         spotlightEntity.LookAt(planetEntity);
         
         int closestPolyIdx = planetEntity.planetaryGrid.geometry.NearestPoly(input.inputPos);
@@ -41,7 +38,8 @@ public sealed class ProcessPlanetaryGridInputSystem : ReactiveSystem {
         
         //Add focus to the new entity in focus 
         polyEntity.isInFocus = true;
-       
 
+        if(inputEntity.isInputSelected)
+            polyEntity.isSelected = true;
     }
 }

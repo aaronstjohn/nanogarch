@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public static class GeometryExtensions
 {
+	
 	public static Mesh CreateMesh(this TruncatedIcosahedron truncatedIco,string name)
 	{
 		MeshData meshData = truncatedIco.GetDuplicateVertsPerTri();
