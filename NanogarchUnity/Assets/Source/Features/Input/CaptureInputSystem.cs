@@ -14,20 +14,28 @@ public sealed class CaptureInputSystem :  IExecuteSystem, ICleanupSystem ,IIniti
     {
     	 _inputEntity = _context.inputModeEntity;
     }
+    public void CaptureSelection()
+    {
+        if(!_inputEntity.isSelectionEnabled)
+            return;
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            _inputEntity.AddMouseDownTime(Time.time);
+        }
+        else if(Input.GetMouseButtonUp(0))
+        {
+            if(Time.time - _inputEntity.mouseDownTime.time < 0.25)
+            {
+                Debug.Log("CLICK!");
+            }
+            _inputEntity.RemoveMouseDownTime();
+        }
+    }
     public void Execute() {
      	
-     	if(Input.GetMouseButtonDown(0))
-     	{
-     		_inputEntity.AddMouseDownTime(Time.time);
-     	}
-     	else if(Input.GetMouseButtonUp(0))
-     	{
-     		if(Time.time - _inputEntity.mouseDownTime.time < 0.25)
-     		{
-     			Debug.Log("CLICK!");
-     		}
-     		_inputEntity.RemoveMouseDownTime();
-     	}
+        CaptureSelection();
+     	
      	// CaptureSelect();
      	// CaptureDrag();
      	// CaptureHover();
