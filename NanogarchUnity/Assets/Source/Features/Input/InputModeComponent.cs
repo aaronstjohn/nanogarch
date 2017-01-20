@@ -5,7 +5,7 @@ using Entitas.CodeGenerator;
 public sealed class InputModeComponent : IComponent{}
 
 [Input,SingleEntity]
-public sealed class SelectionEnabledComponent : IComponent {}
+public sealed class PickingEnabledComponent : IComponent {}
 
 
 [Input,SingleEntity]

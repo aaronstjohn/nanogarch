@@ -30,7 +30,7 @@ public class GameController : MonoBehaviour {
             // .Add(new CreateFocusSpotlightSystem(contexts))
 
             // // Input
-            .Add(new CaptureInputSystem(contexts))
+            .Add(new CapturePickSystem(contexts))
             // .Add(new ProcessPlanetaryGridInputSystem(contexts))
             // .Add(new PlanetaryGridPolySelectionSystem(contexts))
             // .Add(new PlanetaryGridPolyFocusSystem(contexts))

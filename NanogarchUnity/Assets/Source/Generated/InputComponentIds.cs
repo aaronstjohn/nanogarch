@@ -15,9 +15,10 @@ public static class InputComponentIds {
     public const int InputMode = 4;
     public const int InputSelected = 5;
     public const int MouseDownTime = 6;
-    public const int SelectionEnabled = 7;
+    public const int Pick = 7;
+    public const int PickingEnabled = 8;
 
-    public const int TotalComponents = 8;
+    public const int TotalComponents = 9;
 
     public static readonly string[] componentNames = {
         "DragEnabled",
@@ -27,7 +28,8 @@ public static class InputComponentIds {
         "InputMode",
         "InputSelected",
         "MouseDownTime",
-        "SelectionEnabled"
+        "Pick",
+        "PickingEnabled"
     };
 
     public static readonly System.Type[] componentTypes = {
@@ -38,6 +40,7 @@ public static class InputComponentIds {
         typeof(InputModeComponent),
         typeof(InputSelectedComponent),
         typeof(MouseDownTimeComponent),
-        typeof(SelectionEnabledComponent)
+        typeof(PickComponent),
+        typeof(PickingEnabledComponent)
     };
 }
