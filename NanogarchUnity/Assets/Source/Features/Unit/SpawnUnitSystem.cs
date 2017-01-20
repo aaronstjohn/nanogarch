@@ -26,6 +26,7 @@ public sealed class SpawnUnitSystem : ReactiveSystem, IInitializeSystem {
     		float angle = Vector3.Angle( Vector3.up,gridEntity.planetaryGridPolygon.centroid.normalized );
     		e.view.gameObject.transform.Rotate(new Vector3(-angle,0,0));
     		e.view.gameObject.transform.parent = planetEntity.view.gameObject.transform;
+            e.AddInGridPolygon(gridEntity.planetaryGridPolygon.polygonId);
     		// e.LookAt(planetEntity);
     		e.RemoveSpawn();
     	}
