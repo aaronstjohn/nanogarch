@@ -8,21 +8,36 @@
 //------------------------------------------------------------------------------
 public static class InputComponentIds {
 
-    public const int Input = 0;
-    public const int InputDrag = 1;
-    public const int InputSelected = 2;
+    public const int DragEnabled = 0;
+    public const int HoverEnabled = 1;
+    public const int Input = 2;
+    public const int InputDrag = 3;
+    public const int InputMode = 4;
+    public const int InputSelected = 5;
+    public const int MouseDownTime = 6;
+    public const int SelectionEnabled = 7;
 
-    public const int TotalComponents = 3;
+    public const int TotalComponents = 8;
 
     public static readonly string[] componentNames = {
+        "DragEnabled",
+        "HoverEnabled",
         "Input",
         "InputDrag",
-        "InputSelected"
+        "InputMode",
+        "InputSelected",
+        "MouseDownTime",
+        "SelectionEnabled"
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(DragEnabledComponent),
+        typeof(HoverEnabledComponent),
         typeof(InputComponent),
         typeof(InputDragComponent),
-        typeof(InputSelectedComponent)
+        typeof(InputModeComponent),
+        typeof(InputSelectedComponent),
+        typeof(MouseDownTimeComponent),
+        typeof(SelectionEnabledComponent)
     };
 }

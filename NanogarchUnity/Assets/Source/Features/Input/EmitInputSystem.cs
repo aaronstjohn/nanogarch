@@ -48,7 +48,6 @@ public sealed class EmitInputSystem : IExecuteSystem, ICleanupSystem {
     }
 
     public void Cleanup() {
-        // Debug.Log("CLEANING UP "+_inputs.GetEntities().Length);
         foreach(var e in _inputs.GetEntities()) {
             _context.DestroyEntity(e);
         }

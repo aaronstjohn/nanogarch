@@ -25,18 +25,17 @@ public class GameController : MonoBehaviour {
         return new Feature("Systems")
 
             // Initialize
+            .Add(new InitializeInputSystem(contexts))
             .Add(new CreatePlanetaryGridSystem(contexts))
-            .Add(new CreateFocusSpotlightSystem(contexts))
-            // .Add(new CreateOpponentsSystem(contexts))
-            // .Add(new CreateFinishLineSystem(contexts))
+            // .Add(new CreateFocusSpotlightSystem(contexts))
 
             // // Input
-            .Add(new EmitInputSystem(contexts))
-            .Add(new ProcessPlanetaryGridInputSystem(contexts))
-            .Add(new PlanetaryGridPolySelectionSystem(contexts))
-            .Add(new PlanetaryGridPolyFocusSystem(contexts))
-            .Add(new ProcessPlanetaryGridDragInputSystem(contexts))
-            .Add(new AddSpotlightSystem(contexts))
+            .Add(new CaptureInputSystem(contexts))
+            // .Add(new ProcessPlanetaryGridInputSystem(contexts))
+            // .Add(new PlanetaryGridPolySelectionSystem(contexts))
+            // .Add(new PlanetaryGridPolyFocusSystem(contexts))
+            // .Add(new ProcessPlanetaryGridDragInputSystem(contexts))
+            // .Add(new AddSpotlightSystem(contexts))
             
 
 
@@ -44,9 +43,6 @@ public class GameController : MonoBehaviour {
             .Add(new LabelGridPolysSystem(contexts))
             .Add(new RotateSystem(contexts))
             .Add(new SpawnUnitSystem(contexts))
-            // .Add(new AccelerateSystem(contexts))
-            // .Add(new MoveSystem(contexts))
-            // .Add(new ReachedFinishSystem(contexts))
 
             // // Render
             // .Add(new RemoveViewSystem(contexts))

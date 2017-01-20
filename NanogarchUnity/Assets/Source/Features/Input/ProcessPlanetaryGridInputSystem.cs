@@ -40,6 +40,9 @@ public sealed class ProcessPlanetaryGridInputSystem : ReactiveSystem {
         polyEntity.isInFocus = true;
 
         if(inputEntity.isInputSelected)
+        {
+            //If Grid Cell Selection Enabled 
             polyEntity.isSelected = true;
+        }
     }
 }
