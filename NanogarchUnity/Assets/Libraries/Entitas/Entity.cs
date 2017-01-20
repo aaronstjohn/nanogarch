@@ -132,6 +132,17 @@ namespace Entitas {
                 );
             }
 
+            if(Array.IndexOf(_contextInfo.componentTypes,component.GetType())==-1)
+            {
+                throw new EntityDoesNotHavePoolForComponentTypeException(
+                    component.GetType(),
+                    "Cannot add component '" +
+                    component.GetType() +
+                    "' to " + this + "!",
+                    "You're creating this entity from a context " +
+                    "where this component isn't defined, rethink your choices in life."
+                );
+            }
             _components[index] = component;
             _componentsCache = null;
             _componentIndicesCache = null;
@@ -496,7 +507,18 @@ namespace Entitas {
             ) {
         }
     }
+    public class EntityDoesNotHavePoolForComponentTypeException : EntitasException {
 
+        public EntityDoesNotHavePoolForComponentTypeException(
+            Type type, string message, string hint
+        ) : base(
+                message +
+                "\nEntity doesn't have a component pool for component type "
+                + type + "!",
+                hint
+            ) {
+        }
+    }
     public class EntityDoesNotHaveComponentException : EntitasException {
 
         public EntityDoesNotHaveComponentException(

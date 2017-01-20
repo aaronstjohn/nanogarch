@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour {
 
             // Initialize
             .Add(new InitializeInputSystem(contexts))
-            .Add(new CreatePlanetaryGridSystem(contexts))
+            .Add(new InitializePlanetaryGridSystem(contexts))
             // .Add(new CreateFocusSpotlightSystem(contexts))
 
             // // Input
@@ -40,8 +40,8 @@ public class GameController : MonoBehaviour {
 
 
             // // Update
-            .Add(new LabelGridPolysSystem(contexts))
-            .Add(new RotateSystem(contexts))
+            // .Add(new LabelGridPolysSystem(contexts))
+            // .Add(new RotateSystem(contexts))
             .Add(new SpawnUnitSystem(contexts))
 
             // // Render

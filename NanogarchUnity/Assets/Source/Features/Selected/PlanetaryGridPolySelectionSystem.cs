@@ -22,7 +22,7 @@ public sealed class PlanetaryGridPolySelectionSystem : ReactiveSystem {
     	var selectedItem = entities.SingleEntity();
         // Debug.Log("Got selection on grid item: "+selectedItem.name.id);
         selectedItem.AddInSpotlight(1.4f);
-        HashSet<Entity> entsInside = _contexts.core.GetEntitiesInPlanetaryGridPolygonWithId(selectedItem.planetaryGridPolygon.polygonId);
+        HashSet<Entity> entsInside = _contexts.core.GetEntitiesInGridCell(selectedItem.planetaryGridPolygon.polygonId);
         
         foreach(var e in entsInside)
             e.isSelected = true;

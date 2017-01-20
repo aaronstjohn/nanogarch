@@ -8,7 +8,6 @@ public sealed class InitializeInputSystem :IInitializeSystem
 	}
 	public void Initialize() {
 		_context.CreateEntity()
-			.AddName("InputState")
 			.IsInputMode(true)
 			.IsPickingEnabled(true)
 			.IsDragEnabled(true)

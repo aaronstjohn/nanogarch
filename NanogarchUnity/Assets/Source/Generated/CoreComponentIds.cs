@@ -9,26 +9,30 @@
 public static class CoreComponentIds {
 
     public const int Destroy = 0;
-    public const int InFocus = 1;
-    public const int InGridPolygon = 2;
-    public const int InSpotlight = 3;
-    public const int Interactive = 4;
-    public const int Name = 5;
-    public const int PlanetaryGrid = 6;
-    public const int PlanetaryGridPolygon = 7;
-    public const int Resource = 8;
-    public const int Rotation = 9;
-    public const int Selected = 10;
-    public const int Spawn = 11;
-    public const int Spotlight = 12;
-    public const int Unit = 13;
-    public const int View = 14;
+    public const int GridCell = 1;
+    public const int InFocus = 2;
+    public const int InGridCell = 3;
+    public const int InGridPolygon = 4;
+    public const int InSpotlight = 5;
+    public const int Interactive = 6;
+    public const int Name = 7;
+    public const int PlanetaryGrid = 8;
+    public const int PlanetaryGridPolygon = 9;
+    public const int Resource = 10;
+    public const int Rotation = 11;
+    public const int Selected = 12;
+    public const int Spawn = 13;
+    public const int Spotlight = 14;
+    public const int Unit = 15;
+    public const int View = 16;
 
-    public const int TotalComponents = 15;
+    public const int TotalComponents = 17;
 
     public static readonly string[] componentNames = {
         "Destroy",
+        "GridCell",
         "InFocus",
+        "InGridCell",
         "InGridPolygon",
         "InSpotlight",
         "Interactive",
@@ -46,7 +50,9 @@ public static class CoreComponentIds {
 
     public static readonly System.Type[] componentTypes = {
         typeof(DestroyComponent),
+        typeof(GridCellComponent),
         typeof(InFocusComponent),
+        typeof(InGridCellComponent),
         typeof(InGridPolygonComponent),
         typeof(InSpotlightComponent),
         typeof(InteractiveComponent),

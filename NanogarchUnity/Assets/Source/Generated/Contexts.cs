@@ -18,20 +18,14 @@ namespace Entitas {
             return CreateContext("Input", InputComponentIds.TotalComponents, InputComponentIds.componentNames, InputComponentIds.componentTypes);
         }
 
-        public static Context CreateNewContextContext() {
-            return CreateContext("NewContext", NewContextComponentIds.TotalComponents, NewContextComponentIds.componentNames, NewContextComponentIds.componentTypes);
-        }
-
-        public Context[] allContexts { get { return new [] { core, input, newContext }; } }
+        public Context[] allContexts { get { return new [] { core, input }; } }
 
         public Context core;
         public Context input;
-        public Context newContext;
 
         public void SetAllContexts() {
             core = CreateCoreContext();
             input = CreateInputContext();
-            newContext = CreateNewContextContext();
         }
     }
 }

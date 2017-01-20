@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Entitas;
-
+using UnityEngine;
 public sealed class DestroySystem : ReactiveSystem {
     readonly Context _context;
 
@@ -18,6 +18,7 @@ public sealed class DestroySystem : ReactiveSystem {
 
     protected override void Execute(List<Entity> entities) {
         foreach(var e in entities) {
+            Debug.Log("DESTROYING ENTITY!!!");
             _context.DestroyEntity(e);
         }
     }

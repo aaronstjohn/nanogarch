@@ -3,8 +3,8 @@ using System.Collections.Generic;
 public static class EntityIndexContextExtensions {
 
     public const string NameKey = "Name";
-    public const string PlanetaryGridPolygonKey = "PlanetaryGridPolygon";
-    public const string InPlanetaryGridPolygonKey = "InPlanetaryGridPolygon";
+    public const string GridCellKey = "GridCell";
+    public const string InGridCellKey = "InGridCell";
     
     public static void AddEntityIndices(this Contexts contexts) {
         var nameIndex = new PrimaryEntityIndex<string>(
@@ -16,28 +16,28 @@ public static class EntityIndexContextExtensions {
                     : entity.name.id;
             }
         );
-        //Fetches the actual grid polygon 
-        var gridPolygonIndex = new PrimaryEntityIndex<int>(
-            contexts.core.GetGroup(CoreMatcher.PlanetaryGridPolygon),
+        //Fetches the actual grid cell 
+        var gridCellIndex = new PrimaryEntityIndex<int>(
+            contexts.core.GetGroup(CoreMatcher.GridCell),
             (entity, component) => {
-                var planetaryGridPolygon = component as PlanetaryGridPolygonComponent;
-                return planetaryGridPolygon != null
-                    ? planetaryGridPolygon.polygonId
-                    : entity.planetaryGridPolygon.polygonId;
+                var gridCell = component as GridCellComponent;
+                return gridCell != null
+                    ? gridCell.id
+                    : entity.gridCell.id;
             }
         );
-        //Indexes everything inside of a grid polygon 
-        var inGridPolygonIndex = new EntityIndex<int>(
-            contexts.core.GetGroup(CoreMatcher.InGridPolygon),
+        //Indexes everything inside of a grid cell 
+        var inGridCellIndex = new EntityIndex<int>(
+            contexts.core.GetGroup(CoreMatcher.InGridCell),
             (entity, component) => {
-                var inPlanetaryGridPolygon = component as InGridPolygonComponent;
-                return inPlanetaryGridPolygon != null
-                    ? inPlanetaryGridPolygon.gridPolyId
-                    : entity.inGridPolygon.gridPolyId;
+                var inGridCell = component as InGridCellComponent;
+                return inGridCell != null
+                    ? inGridCell.id
+                    : entity.inGridCell.id;
             }
         );
-        contexts.core.AddEntityIndex(PlanetaryGridPolygonKey, gridPolygonIndex);
-        contexts.core.AddEntityIndex(InPlanetaryGridPolygonKey, inGridPolygonIndex);
+        contexts.core.AddEntityIndex(GridCellKey, gridCellIndex);
+        contexts.core.AddEntityIndex(InGridCellKey, inGridCellIndex);
         contexts.core.AddEntityIndex(NameKey, nameIndex);
     }
 
@@ -46,12 +46,12 @@ public static class EntityIndexContextExtensions {
         return index.GetEntity(id);
     }
 
-    public static Entity GetEntityWithPlanetaryGridPolygonId(this Context context, int polyId) {
-        var index = (PrimaryEntityIndex<int>)context.GetEntityIndex(PlanetaryGridPolygonKey);
-        return index.GetEntity(polyId);
+    public static Entity GetEntityWithGridCellId(this Context context, int id) {
+        var index = (PrimaryEntityIndex<int>)context.GetEntityIndex(GridCellKey);
+        return index.GetEntity(id);
     }
-    public static HashSet<Entity> GetEntitiesInPlanetaryGridPolygonWithId(this Context context, int polyId) {
-        var index = (EntityIndex<int>)context.GetEntityIndex(InPlanetaryGridPolygonKey);
-        return index.GetEntities(polyId);
+    public static HashSet<Entity> GetEntitiesInGridCell(this Context context, int id) {
+        var index = (EntityIndex<int>)context.GetEntityIndex(InGridCellKey);
+        return index.GetEntities(id);
     }
 }

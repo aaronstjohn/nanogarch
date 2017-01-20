@@ -15,15 +15,15 @@ namespace Entitas {
         public SpawnComponent spawn { get { return (SpawnComponent)GetComponent(CoreComponentIds.Spawn); } }
         public bool hasSpawn { get { return HasComponent(CoreComponentIds.Spawn); } }
 
-        public Entity AddSpawn(int newSpawnGridPolyId) {
+        public Entity AddSpawn(int newGridCellId) {
             var component = CreateComponent<SpawnComponent>(CoreComponentIds.Spawn);
-            component.spawnGridPolyId = newSpawnGridPolyId;
+            component.gridCellId = newGridCellId;
             return AddComponent(CoreComponentIds.Spawn, component);
         }
 
-        public Entity ReplaceSpawn(int newSpawnGridPolyId) {
+        public Entity ReplaceSpawn(int newGridCellId) {
             var component = CreateComponent<SpawnComponent>(CoreComponentIds.Spawn);
-            component.spawnGridPolyId = newSpawnGridPolyId;
+            component.gridCellId = newGridCellId;
             ReplaceComponent(CoreComponentIds.Spawn, component);
             return this;
         }

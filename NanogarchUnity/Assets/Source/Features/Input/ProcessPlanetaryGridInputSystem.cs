@@ -30,7 +30,7 @@ public sealed class ProcessPlanetaryGridInputSystem : ReactiveSystem {
         spotlightEntity.LookAt(planetEntity);
         
         int closestPolyIdx = planetEntity.planetaryGrid.geometry.NearestPoly(input.inputPos);
-        var polyEntity = _contexts.core.GetEntityWithPlanetaryGridPolygonId(closestPolyIdx);
+        var polyEntity = _contexts.core.GetEntityWithGridCellId(closestPolyIdx);
 
         //Take the focus off the last entity that was in focus
         if(_contexts.core.inFocusEntity!=null)

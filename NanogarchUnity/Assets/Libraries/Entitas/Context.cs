@@ -284,7 +284,14 @@ namespace Entitas {
         public override string ToString() {
             return _contextInfo.name;
         }
-
+        public  string[] GetComponentNames()
+        {
+            return _contextInfo.componentNames;
+        }
+        public Type[] GetComponentTypes()
+        { 
+            return _contextInfo.componentTypes;
+        }
         void updateGroupsComponentAddedOrRemoved(
             Entity entity, int index, IComponent component) {
             var groups = _groupsForIndex[index];
