@@ -4,9 +4,9 @@ using Entitas;
 public class GameController : MonoBehaviour {
 
     Systems _systems;
-
-    void Start() {
-        Random.InitState(42);
+    void Awake()
+    {
+         Random.InitState(42);
 
         var contexts = Contexts.sharedInstance;
         contexts.SetAllContexts();
@@ -14,6 +14,9 @@ public class GameController : MonoBehaviour {
 
         _systems = createSystems(contexts);
         _systems.Initialize();
+    }
+    void Start() {
+       
     }
 
     void Update() {
