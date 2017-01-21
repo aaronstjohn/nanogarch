@@ -31,6 +31,7 @@ public class GameController : MonoBehaviour {
 
             // // Input
             .Add(new CapturePickSystem(contexts))
+            .Add(new ProcessPlanetaryGridPickSystem(contexts))
             // .Add(new ProcessPlanetaryGridInputSystem(contexts))
             // .Add(new PlanetaryGridPolySelectionSystem(contexts))
             // .Add(new PlanetaryGridPolyFocusSystem(contexts))
@@ -42,7 +43,9 @@ public class GameController : MonoBehaviour {
             // // Update
             // .Add(new LabelGridPolysSystem(contexts))
             // .Add(new RotateSystem(contexts))
+            .Add(new AddCommandSystem(contexts))
             .Add(new SpawnUnitSystem(contexts))
+
 
             // // Render
             // .Add(new RemoveViewSystem(contexts))

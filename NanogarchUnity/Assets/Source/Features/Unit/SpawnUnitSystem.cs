@@ -38,6 +38,8 @@ public sealed class SpawnUnitSystem : ReactiveSystem, IInitializeSystem {
 		
 		_context.CreateEntity()
             .IsUnit(true)
+            .AddMovement(1)
+            .IsFortifiable(true)
             .AddSpawn(36)
             .AddName("Unit")
 			.AddResource("Tank");

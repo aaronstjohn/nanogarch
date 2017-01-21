@@ -9,34 +9,40 @@
 public static class CoreComponentIds {
 
     public const int Destroy = 0;
-    public const int GridCell = 1;
-    public const int InFocus = 2;
-    public const int InGridCell = 3;
-    public const int InGridPolygon = 4;
-    public const int InSpotlight = 5;
-    public const int Interactive = 6;
-    public const int Name = 7;
-    public const int PlanetaryGrid = 8;
-    public const int PlanetaryGridPolygon = 9;
-    public const int Resource = 10;
-    public const int Rotation = 11;
-    public const int Selected = 12;
-    public const int Spawn = 13;
-    public const int Spotlight = 14;
-    public const int Unit = 15;
-    public const int View = 16;
+    public const int Fortifiable = 1;
+    public const int GridCell = 2;
+    public const int InFocus = 3;
+    public const int InGridCell = 4;
+    public const int InGridPolygon = 5;
+    public const int InSpotlight = 6;
+    public const int Interactive = 7;
+    public const int Movement = 8;
+    public const int Name = 9;
+    public const int Picked = 10;
+    public const int PlanetaryGrid = 11;
+    public const int PlanetaryGridPolygon = 12;
+    public const int Resource = 13;
+    public const int Rotation = 14;
+    public const int Selected = 15;
+    public const int Spawn = 16;
+    public const int Spotlight = 17;
+    public const int Unit = 18;
+    public const int View = 19;
 
-    public const int TotalComponents = 17;
+    public const int TotalComponents = 20;
 
     public static readonly string[] componentNames = {
         "Destroy",
+        "Fortifiable",
         "GridCell",
         "InFocus",
         "InGridCell",
         "InGridPolygon",
         "InSpotlight",
         "Interactive",
+        "Movement",
         "Name",
+        "Picked",
         "PlanetaryGrid",
         "PlanetaryGridPolygon",
         "Resource",
@@ -50,13 +56,16 @@ public static class CoreComponentIds {
 
     public static readonly System.Type[] componentTypes = {
         typeof(DestroyComponent),
+        typeof(FortifiableComponent),
         typeof(GridCellComponent),
         typeof(InFocusComponent),
         typeof(InGridCellComponent),
         typeof(InGridPolygonComponent),
         typeof(InSpotlightComponent),
         typeof(InteractiveComponent),
+        typeof(MovementComponent),
         typeof(NameComponent),
+        typeof(PickedComponent),
         typeof(PlanetaryGridComponent),
         typeof(PlanetaryGridPolygonComponent),
         typeof(ResourceComponent),
