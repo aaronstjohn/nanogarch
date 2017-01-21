@@ -43,7 +43,7 @@ public class GameController : MonoBehaviour {
             // // Update
             // .Add(new LabelGridPolysSystem(contexts))
             // .Add(new RotateSystem(contexts))
-            .Add(new AddCommandSystem(contexts))
+            .Add(new ProcessUnitPickedSystem(contexts))
             .Add(new SpawnUnitSystem(contexts))
 
 

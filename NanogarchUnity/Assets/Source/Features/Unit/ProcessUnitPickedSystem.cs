@@ -2,20 +2,19 @@ using Entitas;
 using UnityEngine;
 using System.Collections.Generic;
 
-public sealed class AddCommandSystem : ReactiveSystem
+public sealed class ProcessUnitPickedSystem : ReactiveSystem
 {
 	readonly Context _context;
-    public AddCommandSystem(Contexts contexts) :base(contexts.core)
+    public ProcessUnitPickedSystem(Contexts contexts) :base(contexts.core)
 	{
 		_context= contexts.core;
 	}
-	 protected override Collector GetTrigger(Context context) {
-        return context.CreateCollector(CoreMatcher.Commands,GroupEvent.Added);
-        
+	protected override Collector GetTrigger(Context context) {
+        return context.CreateCollector(CoreMatcher.Picked,GroupEvent.Added);
     }
 
     protected override bool Filter(Entity entity) {
-        return entity.isUnit;
+        return entity.isUnit && entity.hasCommands;
     }
     protected override void Execute(List<Entity> entities) {
 

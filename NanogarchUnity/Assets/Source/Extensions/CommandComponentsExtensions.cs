@@ -7,6 +7,8 @@ namespace Entitas {
 		static ComponentTypeMap _commandMap  = new ComponentTypeMap(typeof(ICommand),
 		        												 CoreComponentIds.componentNames,
 		        												 CoreComponentIds.componentTypes);
+		 public bool hasCommands { get { return HasAnyComponent(_commandMap.componentIds); } }
+
 		public IEnumerable<IComponent> commands {
 			get{
 				if(HasAnyComponent(_commandMap.componentIds))

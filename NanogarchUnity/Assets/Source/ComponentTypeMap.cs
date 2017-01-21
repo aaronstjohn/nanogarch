@@ -17,16 +17,12 @@ public class ComponentTypeMap {
         List<int> filteredIds = new List<int>();
         for(int i=0; i<componentTypes.Length; i++)
         {
-            // Debug.Log("Checking if: "+componentTypes[i]+" is compatible with : "+t);
-
-            // if(componentTypes[i].IsAssignableFrom(t))
             if(Array.IndexOf(componentTypes[i].GetInterfaces(),t)!=-1)
             {
                 filteredTypes.Add(componentTypes[i]);
                 filteredNames.Add(componentNames[i]);
                 filteredIds.Add(i);
-                // Debug.Log("Mapping "+i+" to: "+componentNames[i]+":"+componentTypes[i]);
-            }
+             }
         }
         this.componentIds = filteredIds.ToArray();
         this.componentNames = filteredNames.ToArray();
