@@ -51,7 +51,7 @@ public class GameController : MonoBehaviour {
 
 
             // // Render
-            // .Add(new RemoveViewSystem(contexts))
+            .Add(new RemoveViewSystem(contexts))
             .Add(new AddViewSystem(contexts))
             // .Add(new RenderPositionSystem(contexts))
 

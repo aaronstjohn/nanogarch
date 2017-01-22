@@ -9,9 +9,12 @@ public class CommandPickerController : MonoBehaviour {
 
 	Dropdown _commandDropdown;
 	Context context;
+	Entity _pickedUnit;
+	// EntityLink _link;
 	void Awake()
     {
     	_commandDropdown = GetComponent<Dropdown>();
+    	// _link = GetComponent<EntityLink>();
     	
     }
 	// Use this for initialization
@@ -19,11 +22,11 @@ public class CommandPickerController : MonoBehaviour {
 		context = Contexts.sharedInstance.core;
 		// var pickedUnit = context.GetPickedUnit();
     	var group = context.GetGroup(Matcher.AllOf(CoreMatcher.ReceivingOrders,CoreMatcher.Unit)); //.OnEntityAdded += (group, entity, index, component) =>
-       	var pickedUnit = group.GetSingleEntity();
+       	_pickedUnit = group.GetSingleEntity();
        	_commandDropdown.ClearOptions();
        	_commandDropdown.options.Add (new Dropdown.OptionData() {text="No Orders"});
         
-        foreach(var c in pickedUnit.commands)
+        foreach(var c in _pickedUnit.commands)
         {
             ICommand command = c as ICommand;
             _commandDropdown.options.Add (new Dropdown.OptionData() {text=command.GetCommandName()});
@@ -35,7 +38,8 @@ public class CommandPickerController : MonoBehaviour {
      
 	}
 	private void commandSelected(int selected) {
-     Debug.Log("selected: "+_commandDropdown.options[selected].text);
+     	Debug.Log("selected: "+_commandDropdown.options[selected].text);
+     	gameObject.GetEntity().isDestroy = true;
  	}
 	
 }
