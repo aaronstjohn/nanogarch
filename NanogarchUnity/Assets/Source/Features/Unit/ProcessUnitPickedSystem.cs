@@ -2,12 +2,12 @@ using Entitas;
 using UnityEngine;
 using System.Collections.Generic;
 
-public sealed class ProcessUnitPickedSystem : ReactiveSystem
+public sealed class ProcessUnitPickedSystem : ReactiveSystem 
 {
-	readonly Context _context;
+	readonly Contexts _contexts;
     public ProcessUnitPickedSystem(Contexts contexts) :base(contexts.core)
 	{
-		_context= contexts.core;
+		_contexts= contexts;
 	}
 	protected override Collector GetTrigger(Context context) {
         return context.CreateCollector(CoreMatcher.Picked,GroupEvent.Added);
@@ -18,34 +18,17 @@ public sealed class ProcessUnitPickedSystem : ReactiveSystem
     }
     protected override void Execute(List<Entity> entities) {
 
-        foreach(var e in entities)
-        {
-            foreach(var c in e.commands)
-            {
-                Debug.Log("FOUND COMMAND "+c.GetType());
-            }
-        }
-    	// var planetEntity = _context.planetaryGridEntity;
-     //    GameObject planetGo = planetEntity.view.gameObject;
-    	// foreach(var e in entities)
-    	// {
-    	// 	var gridCellEnt = _context.GetEntityWithGridCellId(e.spawn.gridCellId);
-     //        Vector3 cellCentroid =  gridCellEnt.gridCell.centroid;
-     //        GameObject unitGo = e.view.gameObject;
-    	// 	unitGo.transform.position = cellCentroid;
-    		
+        entities.SingleEntity()
+            .isReceivingOrders = true;
 
-    	// 	float angle = Vector3.Angle( Vector3.up,cellCentroid.normalized );
-    	// 	unitGo.transform.Rotate(new Vector3(-angle,0,0));
-    	// 	unitGo.transform.parent = planetGo.transform;
-     //        e.AddInGridCell(gridCellEnt.gridCell.id);
-    	// 	e.RemoveSpawn();
-    	// }
+
+        _contexts.core.CreateEntity()
+                .AddResource("CommandPicker");
+
+        _contexts.input.inputModeEntity.isPickingEnabled = false;
+
+
   
     }
-	// public void Initialize() 
-	// {
-		
-	// }
-
+	
 }

@@ -21,15 +21,16 @@ public static class CoreComponentIds {
     public const int Picked = 10;
     public const int PlanetaryGrid = 11;
     public const int PlanetaryGridPolygon = 12;
-    public const int Resource = 13;
-    public const int Rotation = 14;
-    public const int Selected = 15;
-    public const int Spawn = 16;
-    public const int Spotlight = 17;
-    public const int Unit = 18;
-    public const int View = 19;
+    public const int ReceivingOrders = 13;
+    public const int Resource = 14;
+    public const int Rotation = 15;
+    public const int Selected = 16;
+    public const int Spawn = 17;
+    public const int Spotlight = 18;
+    public const int Unit = 19;
+    public const int View = 20;
 
-    public const int TotalComponents = 20;
+    public const int TotalComponents = 21;
 
     public static readonly string[] componentNames = {
         "Destroy",
@@ -45,6 +46,7 @@ public static class CoreComponentIds {
         "Picked",
         "PlanetaryGrid",
         "PlanetaryGridPolygon",
+        "ReceivingOrders",
         "Resource",
         "Rotation",
         "Selected",
@@ -68,6 +70,7 @@ public static class CoreComponentIds {
         typeof(PickedComponent),
         typeof(PlanetaryGridComponent),
         typeof(PlanetaryGridPolygonComponent),
+        typeof(ReceivingOrdersComponent),
         typeof(ResourceComponent),
         typeof(RotationComponent),
         typeof(SelectedComponent),

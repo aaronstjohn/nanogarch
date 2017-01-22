@@ -1,8 +1,13 @@
 
 using Entitas;
 using Entitas.CodeGenerator;
+
+// enum InputMode {FreePick,}
 [Input,SingleEntity]
-public sealed class InputModeComponent : IComponent{}
+public sealed class InputModeComponent : IComponent
+{
+
+}
 
 [Input,SingleEntity]
 public sealed class PickingEnabledComponent : IComponent {}

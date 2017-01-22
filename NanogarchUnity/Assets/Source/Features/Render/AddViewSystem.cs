@@ -17,6 +17,7 @@ public sealed class AddViewSystem : ReactiveSystem {
     }
 
     readonly Transform _viewContainer = new GameObject("Views").transform;
+    readonly Transform _canvasContainer = GameObject.Find("Canvas").transform;
 
     protected override void Execute(List<Entity> entities) {
         foreach(var e in entities) {
@@ -30,8 +31,16 @@ public sealed class AddViewSystem : ReactiveSystem {
             }
 
             if(gameObject != null) {
-                gameObject.transform.parent = _viewContainer;
-                e.AddView(gameObject);
+                if(gameObject.GetComponent<CanvasRenderer>()!=null)
+                    gameObject.transform.parent = _canvasContainer;
+                else
+                    gameObject.transform.parent = _viewContainer;
+                
+                if(gameObject.GetComponent<EntityLink>()!=null)
+                    gameObject.LinkEntity(e);
+                else
+                     e.AddView(gameObject);
+                
             }
         }
     }
