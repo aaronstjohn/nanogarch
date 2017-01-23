@@ -8,31 +8,34 @@
 //------------------------------------------------------------------------------
 public static class CoreComponentIds {
 
-    public const int Destroy = 0;
-    public const int Fortifiable = 1;
-    public const int GridCell = 2;
-    public const int InFocus = 3;
-    public const int InGridCell = 4;
-    public const int InGridPolygon = 5;
-    public const int InSpotlight = 6;
-    public const int Interactive = 7;
-    public const int Movement = 8;
-    public const int Name = 9;
-    public const int Picked = 10;
-    public const int PlanetaryGrid = 11;
-    public const int PlanetaryGridPolygon = 12;
-    public const int ReceivingOrders = 13;
-    public const int Resource = 14;
-    public const int Rotation = 15;
-    public const int Selected = 16;
-    public const int Spawn = 17;
-    public const int Spotlight = 18;
-    public const int Unit = 19;
-    public const int View = 20;
+    public const int CommandIssued = 0;
+    public const int Destroy = 1;
+    public const int Fortifiable = 2;
+    public const int GridCell = 3;
+    public const int InFocus = 4;
+    public const int InGridCell = 5;
+    public const int InGridPolygon = 6;
+    public const int InSpotlight = 7;
+    public const int Interactive = 8;
+    public const int Movement = 9;
+    public const int Name = 10;
+    public const int Picked = 11;
+    public const int PickingMoveDestination = 12;
+    public const int PlanetaryGrid = 13;
+    public const int PlanetaryGridPolygon = 14;
+    public const int ReceivingOrders = 15;
+    public const int Resource = 16;
+    public const int Rotation = 17;
+    public const int Selected = 18;
+    public const int Spawn = 19;
+    public const int Spotlight = 20;
+    public const int Unit = 21;
+    public const int View = 22;
 
-    public const int TotalComponents = 21;
+    public const int TotalComponents = 23;
 
     public static readonly string[] componentNames = {
+        "CommandIssued",
         "Destroy",
         "Fortifiable",
         "GridCell",
@@ -44,6 +47,7 @@ public static class CoreComponentIds {
         "Movement",
         "Name",
         "Picked",
+        "PickingMoveDestination",
         "PlanetaryGrid",
         "PlanetaryGridPolygon",
         "ReceivingOrders",
@@ -57,6 +61,7 @@ public static class CoreComponentIds {
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(CommandIssuedComponent),
         typeof(DestroyComponent),
         typeof(FortifiableComponent),
         typeof(GridCellComponent),
@@ -68,6 +73,7 @@ public static class CoreComponentIds {
         typeof(MovementComponent),
         typeof(NameComponent),
         typeof(PickedComponent),
+        typeof(PickingMoveDestination),
         typeof(PlanetaryGridComponent),
         typeof(PlanetaryGridPolygonComponent),
         typeof(ReceivingOrdersComponent),

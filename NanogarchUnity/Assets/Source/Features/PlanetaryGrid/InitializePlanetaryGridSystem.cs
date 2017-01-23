@@ -29,8 +29,8 @@ public sealed class InitializePlanetaryGridSystem : ReactiveSystem, IInitializeS
 		for(int i=0;i<points.Count;i++)
 		{
 			_context.CreateEntity()
-				.AddGridCell(i,points[i] )
-				// .AddResource("PolyText")
+				.AddGridCell(i,points[i],geom.GetNeighbors(i) )
+				.AddResource("PolyText")
 				.AddName(string.Format("{0}",i));
 		}
 

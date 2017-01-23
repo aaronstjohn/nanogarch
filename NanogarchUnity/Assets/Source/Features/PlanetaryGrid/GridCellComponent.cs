@@ -6,4 +6,5 @@ public sealed class GridCellComponent : IComponent
 {
 	public int id;
 	public Vector3 centroid;
+	public int[] neighbors;
 }

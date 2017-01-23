@@ -15,17 +15,19 @@ namespace Entitas {
         public GridCellComponent gridCell { get { return (GridCellComponent)GetComponent(CoreComponentIds.GridCell); } }
         public bool hasGridCell { get { return HasComponent(CoreComponentIds.GridCell); } }
 
-        public Entity AddGridCell(int newId, UnityEngine.Vector3 newCentroid) {
+        public Entity AddGridCell(int newId, UnityEngine.Vector3 newCentroid, int[] newNeighbors) {
             var component = CreateComponent<GridCellComponent>(CoreComponentIds.GridCell);
             component.id = newId;
             component.centroid = newCentroid;
+            component.neighbors = newNeighbors;
             return AddComponent(CoreComponentIds.GridCell, component);
         }
 
-        public Entity ReplaceGridCell(int newId, UnityEngine.Vector3 newCentroid) {
+        public Entity ReplaceGridCell(int newId, UnityEngine.Vector3 newCentroid, int[] newNeighbors) {
             var component = CreateComponent<GridCellComponent>(CoreComponentIds.GridCell);
             component.id = newId;
             component.centroid = newCentroid;
+            component.neighbors = newNeighbors;
             ReplaceComponent(CoreComponentIds.GridCell, component);
             return this;
         }

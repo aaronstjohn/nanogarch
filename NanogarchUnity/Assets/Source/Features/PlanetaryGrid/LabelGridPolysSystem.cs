@@ -13,10 +13,10 @@ public sealed class LabelGridPolysSystem:ReactiveSystem
   }
 
   protected override bool Filter(Entity entity) {
-      return entity.hasPlanetaryGridPolygon && entity.hasName;
+      return entity.hasGridCell && entity.hasName;
   }
   protected override void Execute(List<Entity> entities) {
-  	var planetEntity = _context.GetEntityNamed("PlanetaryGrid");
+  	var planetEntity = _context.planetaryGridEntity;
   	foreach(var e in entities)
   	{
   		var labelGO = e.view.gameObject;
@@ -24,7 +24,7 @@ public sealed class LabelGridPolysSystem:ReactiveSystem
       labelGO.transform.parent = planetEntity.view.gameObject.transform;
   		var textMesh = labelGO.GetComponent<TextMesh>();
       textMesh.text = e.name.id;
-      labelGO.transform.position=e.planetaryGridPolygon.centroid.normalized*0.5f;
+      labelGO.transform.position=e.gridCell.centroid.normalized*0.5f;
   		labelGO.transform.LookAt(planetEntity.view.gameObject.transform);
   	}
   }

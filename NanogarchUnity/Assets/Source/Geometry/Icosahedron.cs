@@ -92,16 +92,18 @@ public class Icosahedron : MeshData
 public class TruncatedIcosahedron : MeshData
 {
 	List<RadialPolyTris> polys;
+	Dictionary<int,HashSet<int>> neighborMap;
 	public TruncatedIcosahedron(float radius,int subdivisions)
 	{
 		Icosahedron icosahedron = new Icosahedron(radius, subdivisions);
+		neighborMap = new Dictionary<int,HashSet<int>>();
 
 		polys = new List<RadialPolyTris>();
 		// int count = 0;
 		Dictionary<int,HashSet<TriangleIndices>> prevVertFaces = icosahedron.GetFacesAroundVertices();
 		//This will compute the face centroids relative to the isoc's faces but insert the new vertices in the local MeshData and return the ids for the local mesh
 		CachedIndexedComputation<TriangleIndices,Vector3 > faceCentroidCache = new CachedIndexedComputation<TriangleIndices,Vector3 >(icosahedron.ComputeFaceCentroid,InsertVertex);
-		Debug.Log(string.Format("Before Truncation there are {0} Polys ",prevVertFaces.Count));
+		// Debug.Log(string.Format("Before Truncation there are {0} Polys ",prevVertFaces.Count));
 	
 		foreach ( KeyValuePair<int,HashSet<TriangleIndices>> kvp in prevVertFaces)
 		{
@@ -109,19 +111,41 @@ public class TruncatedIcosahedron : MeshData
 			List<TriangleIndices> truncatedIcoFaces = new List<TriangleIndices>();
 			//Creates a vertex representing the centroid of the poly that we are creating to replace this vertex 
 			int centroidIdx = InsertVertex(icosahedron.GetVertex(kvp.Key).Clone());
+			// HashSet<int> neighbors = new HashSet<int>();
 			for(int i=0; i<icoTriFaces.Count; i++)
 			{
 				int b = faceCentroidCache.FetchOrCompute(icoTriFaces[i]);
 				int c = faceCentroidCache.FetchOrCompute(icoTriFaces[(i+1)%icoTriFaces.Count]);
+				// neighbors.Add(centroidIdx);
+				// neighbors.Add(b);
+				// neighbors.Add(c);
 				truncatedIcoFaces.Add(new TriangleIndices(centroidIdx,b,c));
 				
 			}
+
 			InsertFaces(truncatedIcoFaces);
+			foreach(var f in truncatedIcoFaces)
+			{
+				foreach(int u in f.sorted)
+				{
+					if(!neighborMap.ContainsKey(u))
+						neighborMap.Add(u,new HashSet<int>());
+					foreach(int v in f.sorted)
+						neighborMap[u].Add(v);
+						
+				}
+			}
+			// neighborMap.Add(centroidIdx,neighbors.ToArray());
 			polys.Add(new RadialPolyTris(centroidIdx,truncatedIcoFaces));
+			Debug.Log(string.Format("Inserted {0} faces around vertex ",truncatedIcoFaces.Count));
 			
 		}
-		Debug.Log(string.Format("Generated {0} Polys ",polys.Count));
-		Debug.Log(string.Format("Verts with faces count: {0} ",vertFaces.Count));
+		// Debug.Log(string.Format("Generated {0} Polys ",polys.Count));
+		// Debug.Log(string.Format("Verts with faces count: {0} ",vertFaces.Count));
+	}
+	public int[] GetNeighbors(int polyIndex)
+	{
+		return neighborMap[polyIndex].ToArray();
 	}
 	public List<RadialPolyTris> GetRadialPolys()
 	{
