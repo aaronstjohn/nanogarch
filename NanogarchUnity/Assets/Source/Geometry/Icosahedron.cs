@@ -131,7 +131,10 @@ public class TruncatedIcosahedron : MeshData
 					if(!neighborMap.ContainsKey(u))
 						neighborMap.Add(u,new HashSet<int>());
 					foreach(int v in f.sorted)
-						neighborMap[u].Add(v);
+					{
+						if(v!=u)
+							neighborMap[u].Add(v);
+					}
 						
 				}
 			}
