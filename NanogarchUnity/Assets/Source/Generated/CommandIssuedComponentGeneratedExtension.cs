@@ -32,6 +32,38 @@ namespace Entitas {
             return RemoveComponent(CoreComponentIds.CommandIssued);
         }
     }
+
+    public partial class Context {
+
+        public Entity commandIssuedEntity { get { return GetGroup(CoreMatcher.CommandIssued).GetSingleEntity(); } }
+        public CommandIssuedComponent commandIssued { get { return commandIssuedEntity.commandIssued; } }
+        public bool hasCommandIssued { get { return commandIssuedEntity != null; } }
+
+        public Entity SetCommandIssued(CommandType newCommand) {
+            if(hasCommandIssued) {
+                throw new EntitasException("Could not set commandIssued!\n" + this + " already has an entity with CommandIssuedComponent!",
+                    "You should check if the context already has a commandIssuedEntity before setting it or use context.ReplaceCommandIssued().");
+            }
+            var entity = CreateEntity();
+            entity.AddCommandIssued(newCommand);
+            return entity;
+        }
+
+        public Entity ReplaceCommandIssued(CommandType newCommand) {
+            var entity = commandIssuedEntity;
+            if(entity == null) {
+                entity = SetCommandIssued(newCommand);
+            } else {
+                entity.ReplaceCommandIssued(newCommand);
+            }
+
+            return entity;
+        }
+
+        public void RemoveCommandIssued() {
+            DestroyEntity(commandIssuedEntity);
+        }
+    }
 }
 
     public partial class CoreMatcher {

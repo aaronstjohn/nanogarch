@@ -48,7 +48,9 @@ public class GameController : MonoBehaviour {
             // .Add(new RotateSystem(contexts))
             .Add(new ProcessUnitPickedSystem(contexts))
             .Add(new SpawnUnitSystem(contexts))
+            .Add(new PlanetaryGridCellAlignmentSystem(contexts))
             .Add(new ProcessMoveCommandIssuedSystem(contexts))
+            .Add(new ProcessMoveCommandDestinationPickedSystem(contexts))
 
 
             // // Render

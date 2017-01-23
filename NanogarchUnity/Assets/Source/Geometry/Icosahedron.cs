@@ -140,7 +140,7 @@ public class TruncatedIcosahedron : MeshData
 			}
 			// neighborMap.Add(centroidIdx,neighbors.ToArray());
 			polys.Add(new RadialPolyTris(centroidIdx,truncatedIcoFaces));
-			Debug.Log(string.Format("Inserted {0} faces around vertex ",truncatedIcoFaces.Count));
+			// Debug.Log(string.Format("Inserted {0} faces around vertex ",truncatedIcoFaces.Count));
 			
 		}
 		// Debug.Log(string.Format("Generated {0} Polys ",polys.Count));

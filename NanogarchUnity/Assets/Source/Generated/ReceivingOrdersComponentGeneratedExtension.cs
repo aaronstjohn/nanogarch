@@ -32,6 +32,25 @@ namespace Entitas {
             return this;
         }
     }
+
+    public partial class Context {
+
+        public Entity receivingOrdersEntity { get { return GetGroup(CoreMatcher.ReceivingOrders).GetSingleEntity(); } }
+
+        public bool isReceivingOrders {
+            get { return receivingOrdersEntity != null; }
+            set {
+                var entity = receivingOrdersEntity;
+                if(value != (entity != null)) {
+                    if(value) {
+                        CreateEntity().isReceivingOrders = true;
+                    } else {
+                        DestroyEntity(entity);
+                    }
+                }
+            }
+        }
+    }
 }
 
     public partial class CoreMatcher {

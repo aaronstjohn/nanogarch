@@ -23,8 +23,11 @@ public class CommandPickerController : MonoBehaviour {
 	void Start () {
 		context = Contexts.sharedInstance.core;
 		// var pickedUnit = context.GetPickedUnit();
-    	var group = context.GetGroup(Matcher.AllOf(CoreMatcher.ReceivingOrders,CoreMatcher.Unit)); //.OnEntityAdded += (group, entity, index, component) =>
-       	_pickedUnit = group.GetSingleEntity();
+        if(!context.isReceivingOrders)
+            return;
+    	// var group = context.GetGroup(Matcher.AllOf(CoreMatcher.ReceivingOrders,CoreMatcher.Unit)); //.OnEntityAdded += (group, entity, index, component) =>
+     //   	_pickedUnit = group.GetSingleEntity();
+        _pickedUnit = context.receivingOrdersEntity;
        	_commandDropdown.ClearOptions();
        	_commandDropdown.options.Add (new Dropdown.OptionData() {text="No Orders"});
         int option = 0;

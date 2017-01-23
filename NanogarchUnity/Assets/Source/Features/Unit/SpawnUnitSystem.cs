@@ -9,25 +9,26 @@ public sealed class SpawnUnitSystem : ReactiveSystem, IInitializeSystem {
 		_context= contexts.core;
 	}
 	 protected override Collector GetTrigger(Context context) {
-        return context.CreateCollector(Matcher.AllOf(CoreMatcher.View,CoreMatcher.Spawn));
+        return context.CreateCollector( Matcher.AllOf(CoreMatcher.Spawn,CoreMatcher.View));
     }
 
     protected override bool Filter(Entity entity) {
-        return entity.isUnit ;
+        return entity.isUnit && entity.hasView ;
     }
     protected override void Execute(List<Entity> entities) {
     	var planetEntity = _context.planetaryGridEntity;
         GameObject planetGo = planetEntity.view.gameObject;
     	foreach(var e in entities)
     	{
+            Debug.Log("SPAWNING UNIT");
     		var gridCellEnt = _context.GetEntityWithGridCellId(e.spawn.gridCellId);
             Vector3 cellCentroid =  gridCellEnt.gridCell.centroid;
             GameObject unitGo = e.view.gameObject;
     		unitGo.transform.position = cellCentroid;
     		
 
-    		float angle = Vector3.Angle( Vector3.up,cellCentroid.normalized );
-    		unitGo.transform.Rotate(new Vector3(-angle,0,0));
+    		// float angle = Vector3.Angle( Vector3.up,cellCentroid.normalized );
+    		// unitGo.transform.Rotate(new Vector3(-angle,0,0));
     		unitGo.transform.parent = planetGo.transform;
             e.AddInGridCell(gridCellEnt.gridCell.id);
     		e.RemoveSpawn();

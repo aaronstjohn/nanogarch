@@ -14,7 +14,10 @@ public sealed class ProcessUnitPickedSystem : ReactiveSystem
     }
 
     protected override bool Filter(Entity entity) {
-        return entity.isUnit && entity.hasCommands;
+
+        return !_contexts.core.isReceivingOrders && 
+               !_contexts.core.hasCommandIssued &&
+               entity.isUnit && entity.hasCommands;
     }
     protected override void Execute(List<Entity> entities) {
 

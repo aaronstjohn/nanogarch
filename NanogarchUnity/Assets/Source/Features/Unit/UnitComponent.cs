@@ -14,11 +14,7 @@ public class UnitComponent : IComponent
 {	
 	// public List<ICommand> commands;
 }
-[Core]
-public class CommandIssuedComponent: IComponent
-{
-	public CommandType command;
-}
+
 
 [Core]
 public class MovementComponent : IComponent, ICommand
@@ -34,4 +30,11 @@ public class FortifiableComponent : IComponent, ICommand
 {
 	public string GetCommandName(){return "Fortify";}
 	public CommandType GetCommandType(){return CommandType.Fortify;}
+}
+
+[Core]
+public class MoveCommandComponent: IComponent
+{
+	public int sourceCell;
+	public int destCell;
 }
