@@ -41,8 +41,7 @@ public sealed class CapturePickSystem :  IExecuteSystem ,ICleanupSystem, IInitia
             Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
         {
             Debug.Log("PICK");
-            _context.CreateEntity()
-                .AddPick(hit.point,hit.collider.gameObject);
+            _inputEntity.AddPick(hit.point,hit.collider.gameObject);
         }
         
     }

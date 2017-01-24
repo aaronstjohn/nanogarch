@@ -1,10 +1,10 @@
 using Entitas;
 using UnityEngine;
 using System.Collections.Generic;
-public sealed class SpawnUnitSystem : ReactiveSystem, IInitializeSystem {
+public sealed class SpawnSystem : ReactiveSystem {
 
 	readonly Context _context;
-    public SpawnUnitSystem(Contexts contexts) :base(contexts.core)
+    public SpawnSystem(Contexts contexts) :base(contexts.core)
 	{
 		_context= contexts.core;
 	}
@@ -13,37 +13,33 @@ public sealed class SpawnUnitSystem : ReactiveSystem, IInitializeSystem {
     }
 
     protected override bool Filter(Entity entity) {
-        return entity.isUnit && entity.hasView ;
+        return entity.hasView ;
     }
     protected override void Execute(List<Entity> entities) {
     	var planetEntity = _context.planetaryGridEntity;
         GameObject planetGo = planetEntity.view.gameObject;
     	foreach(var e in entities)
     	{
-            Debug.Log("SPAWNING UNIT");
+           
     		var gridCellEnt = _context.GetEntityWithGridCellId(e.spawn.gridCellId);
             Vector3 cellCentroid =  gridCellEnt.gridCell.centroid;
             GameObject unitGo = e.view.gameObject;
-    		unitGo.transform.position = cellCentroid;
     		
-
-    		// float angle = Vector3.Angle( Vector3.up,cellCentroid.normalized );
-    		// unitGo.transform.Rotate(new Vector3(-angle,0,0));
     		unitGo.transform.parent = planetGo.transform;
             e.AddInGridCell(gridCellEnt.gridCell.id);
     		e.RemoveSpawn();
     	}
   
     }
-	public void Initialize() {
+	// public void Initialize() {
 		
-		_context.CreateEntity()
-            .IsUnit(true)
-            .AddMovement(1)
-            .IsFortifiable(true)
-            .AddSpawn(36)
-            .AddName("Unit")
-			.AddResource("Tank");
+	// 	_context.CreateEntity()
+ //            .IsUnit(true)
+ //            .AddMovement(1)
+ //            .IsFortifiable(true)
+ //            .AddSpawn(36)
+ //            .AddName("Unit")
+	// 		.AddResource("Tank");
 
-	}
+	// }
 }

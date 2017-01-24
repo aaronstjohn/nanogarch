@@ -44,7 +44,15 @@ public sealed class ProcessMoveCommandDestinationPickedSystem : ReactiveSystem
   protected override void Execute(List<Entity> entities) {
       Debug.Log("PICKeD MOVE DESTINATION!");
       var gridCellEnt = entities.SingleEntity();
-      _core.receivingOrdersEntity.ReplaceInGridCell(gridCellEnt.gridCell.id);
+      _core.CreateEntity()
+            .AddSpawn(gridCellEnt.gridCell.id)
+            .AddResource("DestinationMarker");
+      var unit = _core.receivingOrdersEntity;//
+      unit.isPickingMoveDestination = false;
+      unit.isReceivingOrders = false;
+      unit.RemoveCommandIssued();
+
+      // _core.receivingOrdersEntity.ReplaceInGridCell(gridCellEnt.gridCell.id);
       
       // int cellId = unit.inGridCell.id;
       // var cell = _context.GetEntityWithGridCellId(cellId);

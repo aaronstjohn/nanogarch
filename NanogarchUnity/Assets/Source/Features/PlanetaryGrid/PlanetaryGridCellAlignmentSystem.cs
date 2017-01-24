@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public sealed class PlanetaryGridCellAlignmentSystem : ReactiveSystem
 {
 	readonly Context _context;
+    RaycastHit hit;
     public PlanetaryGridCellAlignmentSystem(Contexts contexts) :base(contexts.core)
 	{
 		_context= contexts.core;
@@ -20,16 +21,22 @@ public sealed class PlanetaryGridCellAlignmentSystem : ReactiveSystem
         GameObject planetGo = planetEntity.view.gameObject;
     	foreach(var e in entities)
     	{
-            Debug.Log("ALIGNING UNIT");
-    		var gridCellEnt = _context.GetEntityWithGridCellId(e.inGridCell.id);
-            Vector3 cellCentroid =  gridCellEnt.gridCell.centroid;
-            GameObject unitGo = e.view.gameObject;
-    		unitGo.transform.position = cellCentroid;
-    		
+            var gridCellEnt = _context.GetEntityWithGridCellId(e.inGridCell.id);
 
-    		float angle = Vector3.Angle( Vector3.up,cellCentroid.normalized );
-    		unitGo.transform.Rotate(new Vector3(-angle,0,0));
-    		// unitGo.transform.parent = planetGo.transform;
+            //CURRENTLY ALIGNS WITH ARBITRARY NEIGHBOR  NEED TO SETUP HEADING SYSTEM TO BE BETTER THAN THIS
+            var neighborEnt = _context.GetEntityWithGridCellId(gridCellEnt.gridCell.neighbors[0]);
+
+            Vector3 cellCentroid =  gridCellEnt.gridCell.centroid;
+  
+            GameObject unitGo = e.view.gameObject;
+    		
+            //JUST HERE FOR TESTING PURPOSES!!
+            // unitGo.transform.position = cellCentroid;
+    		
+            Vector3 b = Vector3.ProjectOnPlane(neighborEnt.gridCell.centroid, cellCentroid.normalized);
+    		Quaternion rotation = Quaternion.LookRotation(b,cellCentroid.normalized);
+            unitGo.transform.rotation = rotation;
+    	
            
     	}
   

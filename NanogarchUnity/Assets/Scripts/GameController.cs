@@ -4,21 +4,31 @@ using Entitas;
 public class GameController : MonoBehaviour {
 
     Systems _systems;
+    Contexts _contexts;
     void Awake()
     {
          Random.InitState(42);
 
-        var contexts = Contexts.sharedInstance;
-        contexts.SetAllContexts();
-        contexts.AddEntityIndices();
+        _contexts = Contexts.sharedInstance;
+        _contexts.SetAllContexts();
+        _contexts.AddEntityIndices();
 
-        _systems = createSystems(contexts);
+        _systems = createSystems(_contexts);
         _systems.Initialize();
     }
     void Start() {
-       
+       SpawnUnit(36, "Tank");
     }
-
+    void SpawnUnit(int gridId,string resource)
+    {
+        _contexts.core.CreateEntity()
+            .IsUnit(true)
+            .AddMovement(1)
+            .IsFortifiable(true)
+            .AddSpawn(gridId)
+            .AddName("Unit")
+            .AddResource(resource);
+    }
     void Update() {
         _systems.Execute();
         _systems.Cleanup();
@@ -47,8 +57,9 @@ public class GameController : MonoBehaviour {
             .Add(new LabelGridPolysSystem(contexts))
             // .Add(new RotateSystem(contexts))
             .Add(new ProcessUnitPickedSystem(contexts))
-            .Add(new SpawnUnitSystem(contexts))
+            .Add(new SpawnSystem(contexts))
             .Add(new PlanetaryGridCellAlignmentSystem(contexts))
+            .Add(new PlanetaryGridCellPositionSystem(contexts))
             .Add(new ProcessMoveCommandIssuedSystem(contexts))
             .Add(new ProcessMoveCommandDestinationPickedSystem(contexts))
 
