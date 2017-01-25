@@ -23,6 +23,7 @@ public sealed class PlanetaryGridCellPositionSystem : ReactiveSystem
             Vector3 cellCentroid =  gridCellEnt.gridCell.centroid;
             GameObject unitGo = e.view.gameObject;
             unitGo.transform.position = cellCentroid;
+            // e.AddPosition(cellCentroid);
            
     	}
   

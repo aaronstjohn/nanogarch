@@ -32,7 +32,7 @@ public sealed class AddViewSystem : ReactiveSystem {
 
             if(gameObject != null) {
                 if(gameObject.GetComponent<CanvasRenderer>()!=null)
-                    gameObject.transform.SetParent(_canvasContainer);
+                    gameObject.transform.SetParent(_canvasContainer,false);
                 else
                     gameObject.transform.SetParent(_viewContainer);
                 

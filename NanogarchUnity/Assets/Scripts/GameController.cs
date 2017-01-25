@@ -27,6 +27,7 @@ public class GameController : MonoBehaviour {
             .IsFortifiable(true)
             .AddSpawn(gridId)
             .AddName("Unit")
+            .AddId(1)
             .AddResource(resource);
     }
     void Update() {
@@ -39,6 +40,7 @@ public class GameController : MonoBehaviour {
 
             // Initialize
             .Add(new InitializeInputSystem(contexts))
+            .Add(new InitializeUISystem(contexts))
             .Add(new InitializePlanetaryGridSystem(contexts))
             // .Add(new CreateFocusSpotlightSystem(contexts))
 
@@ -62,11 +64,14 @@ public class GameController : MonoBehaviour {
             .Add(new PlanetaryGridCellPositionSystem(contexts))
             .Add(new ProcessMoveCommandIssuedSystem(contexts))
             .Add(new ProcessMoveCommandDestinationPickedSystem(contexts))
+            .Add(new ProcessMoveOrderSystem(contexts))
+            .Add(new ProcessDestinationSystem(contexts))
 
 
             // // Render
             .Add(new RemoveViewSystem(contexts))
             .Add(new AddViewSystem(contexts))
+            .Add(new AddExecuteOrdersButtonSystem(contexts))
             // .Add(new RenderPositionSystem(contexts))
 
             // // Destroy

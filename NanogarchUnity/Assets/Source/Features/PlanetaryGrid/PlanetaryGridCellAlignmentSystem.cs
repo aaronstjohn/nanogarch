@@ -36,6 +36,10 @@ public sealed class PlanetaryGridCellAlignmentSystem : ReactiveSystem
             Vector3 b = Vector3.ProjectOnPlane(neighborEnt.gridCell.centroid, cellCentroid.normalized);
     		Quaternion rotation = Quaternion.LookRotation(b,cellCentroid.normalized);
             unitGo.transform.rotation = rotation;
+            if(e.hasHeading)
+                e.ReplaceHeading(b.normalized);
+            else
+                e.AddHeading(b.normalized);
     	
            
     	}

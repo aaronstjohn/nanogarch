@@ -11,45 +11,57 @@ public static class CoreComponentIds {
     public const int CommandIssued = 0;
     public const int CommandState = 1;
     public const int CommandTarget = 2;
-    public const int Destroy = 3;
-    public const int Fortifiable = 4;
-    public const int GridCell = 5;
-    public const int InFocus = 6;
-    public const int InGridCell = 7;
-    public const int InGridPolygon = 8;
-    public const int InSpotlight = 9;
-    public const int Interactive = 10;
-    public const int Movement = 11;
-    public const int Name = 12;
-    public const int Picked = 13;
-    public const int PickingMoveDestination = 14;
-    public const int PlanetaryGrid = 15;
-    public const int PlanetaryGridPolygon = 16;
-    public const int ReceivingOrders = 17;
-    public const int Resource = 18;
-    public const int Rotation = 19;
-    public const int Selected = 20;
-    public const int Spawn = 21;
-    public const int Spotlight = 22;
-    public const int Unit = 23;
-    public const int View = 24;
+    public const int Destination = 3;
+    public const int Destroy = 4;
+    public const int ExecutingOrders = 5;
+    public const int Fortifiable = 6;
+    public const int GridCell = 7;
+    public const int Heading = 8;
+    public const int Id = 9;
+    public const int InFocus = 10;
+    public const int InGridCell = 11;
+    public const int InGridPolygon = 12;
+    public const int InSpotlight = 13;
+    public const int Interactive = 14;
+    public const int MoveCommand = 15;
+    public const int Movement = 16;
+    public const int Name = 17;
+    public const int Orders = 18;
+    public const int Picked = 19;
+    public const int PickingMoveDestination = 20;
+    public const int PlanetaryGrid = 21;
+    public const int PlanetaryGridPolygon = 22;
+    public const int ReceivingOrders = 23;
+    public const int Resource = 24;
+    public const int Rotation = 25;
+    public const int Selected = 26;
+    public const int Spawn = 27;
+    public const int Spotlight = 28;
+    public const int Unit = 29;
+    public const int View = 30;
 
-    public const int TotalComponents = 25;
+    public const int TotalComponents = 31;
 
     public static readonly string[] componentNames = {
         "CommandIssued",
         "CommandState",
         "CommandTarget",
+        "Destination",
         "Destroy",
+        "ExecutingOrders",
         "Fortifiable",
         "GridCell",
+        "Heading",
+        "Id",
         "InFocus",
         "InGridCell",
         "InGridPolygon",
         "InSpotlight",
         "Interactive",
+        "MoveCommand",
         "Movement",
         "Name",
+        "Orders",
         "Picked",
         "PickingMoveDestination",
         "PlanetaryGrid",
@@ -68,16 +80,22 @@ public static class CoreComponentIds {
         typeof(CommandIssuedComponent),
         typeof(CommandStateComponent),
         typeof(CommandTargetComponent),
+        typeof(DestinationComponent),
         typeof(DestroyComponent),
+        typeof(ExecutingOrdersComponent),
         typeof(FortifiableComponent),
         typeof(GridCellComponent),
+        typeof(HeadingComponent),
+        typeof(IdComponent),
         typeof(InFocusComponent),
         typeof(InGridCellComponent),
         typeof(InGridPolygonComponent),
         typeof(InSpotlightComponent),
         typeof(InteractiveComponent),
+        typeof(MoveCommandComponent),
         typeof(MovementComponent),
         typeof(NameComponent),
+        typeof(OrdersComponent),
         typeof(PickedComponent),
         typeof(PickingMoveDestination),
         typeof(PlanetaryGridComponent),

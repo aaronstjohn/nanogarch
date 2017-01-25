@@ -17,7 +17,9 @@ public sealed class ProcessUnitPickedSystem : ReactiveSystem
 
         return !_contexts.core.isReceivingOrders && 
                !_contexts.core.hasCommandIssued &&
-               entity.isUnit && entity.hasCommands;
+               entity.isUnit && 
+               entity.hasCommands  && 
+               !entity.hasOrders;
     }
     protected override void Execute(List<Entity> entities) {
 

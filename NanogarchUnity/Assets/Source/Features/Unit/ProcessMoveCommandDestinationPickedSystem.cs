@@ -38,9 +38,6 @@ public sealed class ProcessMoveCommandDestinationPickedSystem : ReactiveSystem
              _core.receivingOrdersEntity.inGridCell.id != entity.gridCell.id ? true:false;
   }
 
-  // protected override bool Filter(Entity entity) {
-  //     return entity.isUnit && entity.isReceivingOrders && entity.commandIssued.command==CommandType.Move;
-  // }
   protected override void Execute(List<Entity> entities) {
       Debug.Log("PICKeD MOVE DESTINATION!");
       var gridCellEnt = entities.SingleEntity();
@@ -48,29 +45,10 @@ public sealed class ProcessMoveCommandDestinationPickedSystem : ReactiveSystem
             .AddSpawn(gridCellEnt.gridCell.id)
             .AddResource("DestinationMarker");
       var unit = _core.receivingOrdersEntity;//
+      unit.AddOrders(new MoveOrder(unit.id.id,unit.inGridCell.id,gridCellEnt.gridCell.id));
       unit.isPickingMoveDestination = false;
       unit.isReceivingOrders = false;
       unit.RemoveCommandIssued();
-
-      // _core.receivingOrdersEntity.ReplaceInGridCell(gridCellEnt.gridCell.id);
-      
-      // int cellId = unit.inGridCell.id;
-      // var cell = _context.GetEntityWithGridCellId(cellId);
-      // int[] neighbors = cell.gridCell.neighbors;
-      // foreach(var n in neighbors)
-      // {
-      //     Debug.Log(string.Format("Cell {0} has neighbor {1}",cellId,n));
-      // }
-      // _contexts.input.inputModeEntity.isPickingEnabled = true;
-      // entities.SingleEntity()
-      //     .isReceivingOrders = true;
-
-
-      // _contexts.core.CreateEntity()
-      //         .AddResource("CommandPicker");
-
-      // _contexts.input.inputModeEntity.isPickingEnabled = false;
-
 
 
   }
