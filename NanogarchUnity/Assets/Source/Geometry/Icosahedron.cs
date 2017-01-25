@@ -93,11 +93,12 @@ public class TruncatedIcosahedron : MeshData
 {
 	List<RadialPolyTris> polys;
 	Dictionary<int,HashSet<int>> neighborMap;
+	float radius;
 	public TruncatedIcosahedron(float radius,int subdivisions)
 	{
 		Icosahedron icosahedron = new Icosahedron(radius, subdivisions);
 		neighborMap = new Dictionary<int,HashSet<int>>();
-
+		this.radius = radius;
 		polys = new List<RadialPolyTris>();
 		// int count = 0;
 		Dictionary<int,HashSet<TriangleIndices>> prevVertFaces = icosahedron.GetFacesAroundVertices();
@@ -145,6 +146,10 @@ public class TruncatedIcosahedron : MeshData
 		}
 		// Debug.Log(string.Format("Generated {0} Polys ",polys.Count));
 		// Debug.Log(string.Format("Verts with faces count: {0} ",vertFaces.Count));
+	}
+	public float GetRadius()
+	{
+		return radius;
 	}
 	public int[] GetNeighbors(int polyIndex)
 	{

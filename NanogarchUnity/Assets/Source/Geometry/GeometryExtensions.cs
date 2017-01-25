@@ -12,14 +12,20 @@ public static class GeometryExtensions
 		List<TriangleIndices> faces = meshData.GetFaces();
 		mesh.vertices = verts.ToArray();
 		List<int> triList = new List<int>();
+		List<Color> colors = new List<Color>();
+		// Random random = new Random();
 		for( int i = 0; i < faces.Count; i++ )
 		{
+			Color c = Random.value<0.5f? Color.white: Color.red;
 			triList.Add( faces[i].v1 );
 			triList.Add( faces[i].v2 );
 			triList.Add( faces[i].v3 );
+			colors.Add(c);
+			colors.Add(c);
+			colors.Add(c);
 		}
 		mesh.triangles = triList.ToArray();
-
+		mesh.colors = colors.ToArray();
 		var nVertices = mesh.vertices;
 		Vector2[] UVs = new Vector2[nVertices.Length];
 		
