@@ -16,7 +16,8 @@ public static class GeometryExtensions
 		// Random random = new Random();
 		for( int i = 0; i < faces.Count; i++ )
 		{
-			Color c = Random.value<0.5f? Color.white: Color.red;
+			// Color c = Random.value<0.5f? Color.white: Color.red;
+			Color c = Color.white;
 			triList.Add( faces[i].v1 );
 			triList.Add( faces[i].v2 );
 			triList.Add( faces[i].v3 );

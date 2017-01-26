@@ -26,11 +26,20 @@ public sealed class ProcessMoveOrderSystem : ReactiveSystem
             MoveOrder move = (MoveOrder)e.orders.order;
     		var srcCellEnt = _contexts.core.GetEntityWithGridCellId(move.srcCell);
             var dstCellEnt = _contexts.core.GetEntityWithGridCellId(move.dstCell);
-            Vector3 heading = (dstCellEnt.gridCell.centroid - srcCellEnt.gridCell.centroid).normalized;
-            
+            Vector3 dstHeading = (dstCellEnt.gridCell.centroid - srcCellEnt.gridCell.centroid).normalized;
+            Vector3 srcHeading = e.heading.heading;
+            float angleDist = Vector3.Angle(srcHeading,dstHeading);
             float distance = Vector3.Distance(srcCellEnt.gridCell.centroid,dstCellEnt.gridCell.centroid);
 
-            e.AddDestination(distance,startTime,srcCellEnt.gridCell.centroid,dstCellEnt.gridCell.centroid,dstCellEnt.gridCell.id);
+            e.AddDestination(distance,
+                                startTime,
+                                srcCellEnt.gridCell.centroid,
+                                dstCellEnt.gridCell.centroid,
+                                angleDist,
+                                srcHeading,
+                                dstHeading,
+
+                                dstCellEnt.gridCell.id);
     	}
         
   

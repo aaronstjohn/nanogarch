@@ -20,7 +20,8 @@ public sealed class DestinationComponent:IComponent
 	public float startTime;
 	public Vector3 srcPosition;
 	public Vector3 destPosition;
-	// public Vector3 srcHeading;
-	// public Vector3 destHeading;
+	public float distanceHeading;
+	public Vector3 srcHeading;
+	public Vector3 destHeading;
 	public int destCellId;
 }

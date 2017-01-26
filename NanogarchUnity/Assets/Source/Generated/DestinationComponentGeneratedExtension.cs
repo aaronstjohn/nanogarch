@@ -15,22 +15,28 @@ namespace Entitas {
         public DestinationComponent destination { get { return (DestinationComponent)GetComponent(CoreComponentIds.Destination); } }
         public bool hasDestination { get { return HasComponent(CoreComponentIds.Destination); } }
 
-        public Entity AddDestination(float newDistance, float newStartTime, UnityEngine.Vector3 newSrcPosition, UnityEngine.Vector3 newDestPosition, int newDestCellId) {
+        public Entity AddDestination(float newDistance, float newStartTime, UnityEngine.Vector3 newSrcPosition, UnityEngine.Vector3 newDestPosition, float newDistanceHeading, UnityEngine.Vector3 newSrcHeading, UnityEngine.Vector3 newDestHeading, int newDestCellId) {
             var component = CreateComponent<DestinationComponent>(CoreComponentIds.Destination);
             component.distance = newDistance;
             component.startTime = newStartTime;
             component.srcPosition = newSrcPosition;
             component.destPosition = newDestPosition;
+            component.distanceHeading = newDistanceHeading;
+            component.srcHeading = newSrcHeading;
+            component.destHeading = newDestHeading;
             component.destCellId = newDestCellId;
             return AddComponent(CoreComponentIds.Destination, component);
         }
 
-        public Entity ReplaceDestination(float newDistance, float newStartTime, UnityEngine.Vector3 newSrcPosition, UnityEngine.Vector3 newDestPosition, int newDestCellId) {
+        public Entity ReplaceDestination(float newDistance, float newStartTime, UnityEngine.Vector3 newSrcPosition, UnityEngine.Vector3 newDestPosition, float newDistanceHeading, UnityEngine.Vector3 newSrcHeading, UnityEngine.Vector3 newDestHeading, int newDestCellId) {
             var component = CreateComponent<DestinationComponent>(CoreComponentIds.Destination);
             component.distance = newDistance;
             component.startTime = newStartTime;
             component.srcPosition = newSrcPosition;
             component.destPosition = newDestPosition;
+            component.distanceHeading = newDistanceHeading;
+            component.srcHeading = newSrcHeading;
+            component.destHeading = newDestHeading;
             component.destCellId = newDestCellId;
             ReplaceComponent(CoreComponentIds.Destination, component);
             return this;
