@@ -31,10 +31,14 @@ public class Vehicle
 	}
 	public void steerTo(Vector3 desiredHeading)
 	{	
-		// steering = desiredHeading;
+
 		steering = (desiredHeading-heading).normalized;
+
+		// Plane p = new Plane(Vector3.up,Vector3.zero);
+		// Debug.Log("desired Dir dist from plane: "+p.GetDistanceToPoint(desiredHeading));
+		// Debug.Log("Heading dist from plane: "+p.GetDistanceToPoint(heading));
 		// Vector3 steerDir = (heading-desiredHeading).normalized;
-		// float realAngle = SignedAngle(steerDir,heading );
+		// float realAngle = SignedAngle(steerDir,heading);
 		// float clampedAngle = Mathf.Clamp(realAngle,minTurnAngle,maxTurnAngle);
 
 		// Debug.Log("ROTATION ANGLE "+realAngle+" clamped: "+clampedAngle);
@@ -93,8 +97,12 @@ public class Stick : MonoBehaviour {
 		gameObject.transform.position = vehicle.position;
 		UpdateStick();
 		
+		// Vector3 currentHeading = transform.TransformDirection(Vector3.forward);
+
+
 		Quaternion rotation = Quaternion.LookRotation(vehicle.heading,gameObject.transform.position.normalized);
-  		gameObject.transform.rotation = rotation;
+  		// Quaternion rotation = Quaternion.FromToRotation(currentHeading, vehicle.heading);
+  		gameObject.transform.rotation *= rotation;
 
 	}
 	void UpdateVehicle()
@@ -103,8 +111,10 @@ public class Stick : MonoBehaviour {
 		{
 			vehicle.speed = 5.0f;
 			Vector3 targetOnPlane = Vector3.ProjectOnPlane(target,gameObject.transform.position.normalized);
-			Vector3 vehicleOnPlane = Vector3.ProjectOnPlane(vehicle.position,gameObject.transform.position.normalized);
-			Vector3 desiredDir = (targetOnPlane-vehicleOnPlane).normalized;
+			// Vector3 vehicleOnPlane = Vector3.ProjectOnPlane(vehicle.position,gameObject.transform.position.normalized);
+
+			Vector3 desiredDir =Quaternion.FromToRotation(gameObject.transform.position.normalized, Vector3.up)*targetOnPlane.normalized;
+			desiredDir = Vector3.ProjectOnPlane(desiredDir,Vector3.up);
 			vehicle.steerTo(desiredDir);
 		}
 

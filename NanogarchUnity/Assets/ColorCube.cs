@@ -52,7 +52,7 @@ public class ColorCube : MonoBehaviour {
 			else
 			{
 				colors.Add(Color.green);
-				colors.Add(Color.white);
+				colors.Add(Color.green);
 				colors.Add(Color.green);
 			}
 		}
