@@ -6,7 +6,7 @@ public static class GeometryExtensions
 	public static Mesh CreateMesh(this TruncatedIcosahedron truncatedIco,string name)
 	{
 		MeshData meshData = truncatedIco.GetDuplicateVertsPerTri();
-		Mesh mesh = new Mesh();
+		Mesh mesh = new Mesh();	
 		mesh.name = name;
 		List<Vector3> verts = meshData.GetVertices();
 		List<TriangleIndices> faces = meshData.GetFaces();
