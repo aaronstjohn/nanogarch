@@ -15,8 +15,7 @@ contract MetaCoin {
 	function MetaCoin() {
 		balances[tx.origin] = 10000;
 	}
- 	/**@dev Calculates a rectangle's surface and perimeter.
-     */
+
 	function sendCoin(address receiver, uint amount) returns(bool sufficient) {
 		if (balances[msg.sender] < amount) return false;
 		balances[msg.sender] -= amount;

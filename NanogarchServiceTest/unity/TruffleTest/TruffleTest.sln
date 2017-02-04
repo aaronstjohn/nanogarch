@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 
 Project("{AFE0A8D0-1877-8A91-BDDF-93259374BCFC}") = "TruffleTest", "Assembly-CSharp.csproj", "{A5C3BD6B-0BC7-A625-14A0-F1EC33CDE43D}"
 EndProject
+Project("{AFE0A8D0-1877-8A91-BDDF-93259374BCFC}") = "TruffleTest", "Assembly-CSharp-Editor.csproj", "{5A04621D-8874-79F9-F3AE-FDDAD83C425C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{A5C3BD6B-0BC7-A625-14A0-F1EC33CDE43D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5C3BD6B-0BC7-A625-14A0-F1EC33CDE43D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5C3BD6B-0BC7-A625-14A0-F1EC33CDE43D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A04621D-8874-79F9-F3AE-FDDAD83C425C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A04621D-8874-79F9-F3AE-FDDAD83C425C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A04621D-8874-79F9-F3AE-FDDAD83C425C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A04621D-8874-79F9-F3AE-FDDAD83C425C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
