@@ -4,37 +4,7 @@ using Promises;
 using Web3;
 using System;
 using Newtonsoft.Json;
-// using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
 
-// class Web3Request
-// {
-// 	public uint id;
-// 	public string jsonrpc;
-// 	public string method;
-	
-// 	[JsonPropertyAttribute("params")]
-// 	public string[] web3params;
-
-// 	public Web3Request(uint id,string jsonrpc,string method,string[] web3params)
-// 	{
-// 		this.id = id;
-// 		this.jsonrpc = jsonrpc;
-// 		this.method= method;
-// 		this.web3params = web3params;
-// 	}
-// 	public string ToJson()
-// 	{
-// 		return JsonConvert.SerializeObject(this);
-// 	}
-// }
-// class EthAccountsResponse
-// {
-// 	public uint id;
-// 	public string jsonrpc;
-// 	public string[] result;
-// }
 class Web3Response<T>
 {
 	public uint id;
@@ -163,6 +133,10 @@ public class GetAccounts : MonoBehaviour {
 				}
 				return Nothing.AtAll;
 			});
+		Eth.Coinbase().Then<Nothing>((Address response)=>{
+			Debug.Log("COINBASE ADDRESS IS: "+response );
+			return Nothing.AtAll;
+		});
 	}
 	// Update is called once per frame
 	void Update () {
