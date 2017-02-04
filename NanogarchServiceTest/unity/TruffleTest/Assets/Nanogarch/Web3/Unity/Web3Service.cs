@@ -3,7 +3,7 @@ using UnityEngine.Networking;
 using UnityEngine;
 using Promises;
 
-namespace Web3 {
+namespace Nanogarch.Web3.Unity {
     public static class Web3Extensions {
     }
 

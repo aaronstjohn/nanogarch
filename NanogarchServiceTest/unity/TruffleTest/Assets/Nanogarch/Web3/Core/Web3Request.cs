@@ -1,5 +1,5 @@
 using Newtonsoft.Json;
-namespace Web3 {
+namespace Nanogarch.Web3.Core {
     public class Web3Request
     {
         public uint id;
