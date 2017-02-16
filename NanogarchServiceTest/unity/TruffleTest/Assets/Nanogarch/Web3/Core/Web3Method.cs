@@ -30,6 +30,19 @@ namespace Nanogarch.Web3.Core {
             
         }
     }
+    public class Web3Method1<U,T>:Web3Method<T>
+    {
+        public readonly Func<U,Promise<T>> Delegate;
+        public  Web3Method1(uint id, string json, string method ):base(id,json,method)
+        {
+            this.Delegate=new Func<U,Promise<T>>(this.Execute);
+        }
+        virtual public Promise<T> Execute(U arg0)
+        {
+            Web3Request request = new Web3Request(id,json,method,new string[]{arg0.ToString()});
+            return Web3Service.getService().Request(request.ToJson()).Then<T>(Convert);
+        }
+    }
     public class Web3Method2<U,V,T>:Web3Method<T>
     {
         public  Web3Method2(uint id, string json, string method ):base(id,json,method){}

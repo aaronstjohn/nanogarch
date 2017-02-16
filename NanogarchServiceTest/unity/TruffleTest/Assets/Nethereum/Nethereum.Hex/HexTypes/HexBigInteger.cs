@@ -19,10 +19,10 @@ namespace Nethereum.Hex.HexTypes
 
         }
 
-        // public HexBigInteger(ulong value) : base(value, new HexBigIntegerBigEndianConvertor())
-        // {
+        public HexBigInteger(long value) : base(BigInteger.ValueOf(value), new HexBigIntegerBigEndianConvertor())
+        {
 
-        // }
+        }
 
     }
 }

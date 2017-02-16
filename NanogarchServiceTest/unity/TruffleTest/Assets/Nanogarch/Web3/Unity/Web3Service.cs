@@ -12,10 +12,12 @@ namespace Nanogarch.Web3.Unity {
         public int requests { get { return _requests; } }
         public string provider {get {return _provider;}}
         static Web3Service _service;
-        
-         int _requests;
-         string _provider = "http://localhost:8545";
+    
+        int _requests;
+        string _provider = "http://localhost:8545";
 
+        public Address CurrentAccount{ get {return _currentAccount;}}
+        Address _currentAccount;
         public static Web3Service getService() {
             if (_service == null) {
                 _service = new GameObject("Web3Service").AddComponent<Web3Service>();
